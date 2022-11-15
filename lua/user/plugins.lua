@@ -132,6 +132,32 @@ local plugins = {
 				ft = 'markdown',
 				opt = true,
 			},
+			{ 'terryma/vim-expand-region',
+				commit = nil 
+			},
+			{ 'junegunn/vim-easy-align',
+				commit = nil },
+			{ 'mg979/vim-visual-multi',
+				commit = nil,
+				config = function()
+					vim.keymap.set({ "v" }, "v", "<Plug>(expand_region_expand)")
+      				vim.keymap.set({ "v" }, "V", "<Plug>(expand_region_shrink)")
+				end,
+			},
+			{ 'lambdalisue/suda.vim',
+				commit = nil,
+				config = function()
+					vim.g.suda_smart_edit=1
+				end,
+			},
+			{ 'hrsh7th/vim-eft',
+				commit = nil },
+			{ 'windwp/nvim-autopairs',
+				commit = nil,
+				config = function()
+					vim.g.AutoPairsMapCh=0
+				end,
+			},
 		},
 		layout = {
 			--{ 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness

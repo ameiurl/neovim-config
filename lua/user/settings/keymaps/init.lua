@@ -61,12 +61,39 @@ map('n', '<leader>ta', lazyscope.live_grep, { desc = "Telescope live-grep all fi
 map('n', '<leader>to', function() lazyscope.live_grep { grep_open_files = true } end, {
 	desc = "Telescope live-grep only open buffers",
 })
-map('n', '<leader>*' , lazyscope.grep_string,               { desc = "Telescope grep symbol under cursor" })
+map('n', '<leader>tw', lazyscope.grep_string,               { desc = "Telescope grep symbol under cursor" })
 map('n', '<leader>tf', lazyscope.find_files,                { desc = "Telescope fuzzy-search for files" })
 map('n', '<leader>ts', lazyscope.treesitter,                { desc = "Telescope list treesitter symbols in buffer" })
 map('n', '<leader>qh', lazyscope.quickfixhistory,           { desc = "Telescope list quickfix history" })
+map('n', '<leader>th', lazyscope.oldfiles,           		{ desc = "Telescope list history" })
 map('n', '<leader>rg', lazyscope.current_buffer_fuzzy_find, { desc = "Telescope grep inside current buffer" })
 map('n', '<leader>tt', lazyscope.resume,                    { desc = "Telescope resume last session" })
+function _G.__telescope_buffers()
+    require('telescope.builtin').buffers(
+        require('telescope.themes').get_dropdown {
+            previewer = false,
+            only_cwd = vim.fn.haslocaldir() == 1,
+            show_all_buffers = false,
+            sort_mru = true,
+            ignore_current_buffer = true,
+            sorter = require('telescope.sorters').get_substr_matcher(),
+            selection_strategy = 'closest',
+            path_display = { 'shorten' },
+            layout_strategy = 'center',
+            winblend = 0,
+            layout_config = { width = 70,height = 25 },
+            color_devicons = true,
+        }
+    )
+end
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap(
+	'n',
+	'<Leader>bb',
+	'<cmd>lua __telescope_buffers()<CR>',
+	opts
+)
+
 map('n', '<A-l>', function()
 	if not pcall(function() lazyscope.buffers() end) then
 		-- This is the kind of stupid shit I have to go through just to emulate keypresses
@@ -114,6 +141,9 @@ map('v', '<A-k>', [[:move '<-2<CR>gv=gv]])
 -- Overwrite paste
 map('v', 'p', [["vdp]])
 map('v', 'P', [["vdP]])
+
+-- map('v', 'v', [[<Plug>(expand_region_expand)]])
+-- map('v', 'V', [[<Plug>(expand_region_shrink)]])
 
 -- Collimate
 local function collimate()
@@ -188,7 +218,7 @@ M.nvim_tree = {
 local bl = require('lazy').require_on_exported_call('bufferline')
 M.bufferline = {
 	['<leader>bq'] = bl.close_with_pick,
-	['<leader>bb'] = bl.pick_buffer,
+	-- ['<leader>bb'] = bl.pick_buffer,
 	['[b']         = function() bl.cycle(-1) end,
 	[']b']         = function() bl.cycle( 1) end,
 	['<A-1>']      = function() bl.go_to(1, false) end,

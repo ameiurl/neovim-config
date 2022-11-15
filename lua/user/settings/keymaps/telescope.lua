@@ -7,9 +7,9 @@ function M.insert(actions)
 		['<C-R>'] = actions.cycle_history_next,
 		['<C-r>'] = actions.cycle_history_prev,
 
-		['<A-j>'] = actions.move_selection_next,
-		['<A-k>'] = actions.move_selection_previous,
-		['<A-d>'] = actions.delete_buffer,
+		['<C-j>'] = actions.move_selection_next,
+		['<C-k>'] = actions.move_selection_previous,
+		['<C-d>'] = actions.delete_buffer,
 
 		['<C-e>'] = actions.close,  -- deprecated
 		['<esc>'] = actions.close,

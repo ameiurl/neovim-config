@@ -1,6 +1,6 @@
 local status_ok, blankline = pcall(require, 'indent_blankline')
 if not status_ok then
-	print("Couldn't load 'indent_blankline'")
+	-- print("Couldn't load 'indent_blankline'")
 	return
 end
 
