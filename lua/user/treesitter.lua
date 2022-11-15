@@ -10,7 +10,7 @@ ts.setup {
 		'cmake'     , 'cpp'            , 'css'    ,
 		'gdscript'  , 'godot_resource' , 'html'   ,
 		'javascript', 'json'           , 'julia'  ,
-		'latex'     , 'lua'            , 'make'   ,
+		'php'       , 'lua'            , 'make'   ,
 		'markdown'  , 'markdown_inline', 'perl'   ,
 		'regex'     , 'ruby'           , 'rust'   ,
 		'scheme'    , 'scss'           , 'sql'    ,
@@ -19,13 +19,10 @@ ts.setup {
 	sync_installed = false, -- install languages synchronously (applies to above)
 	ignore_installed = { "" }, -- list of parsers to ignore installing
 	highlight = {
-		enable = true, -- false will disable the whole extension
+		enable = false, -- false will disable the whole extension
 		additional_vim_regex_highlighting = false,
 	},
 	incremental_selection = {
-		enable = true,
-	},
-	textobjects = {
 		enable = true,
 	},
 	indent = {
@@ -39,9 +36,62 @@ ts.setup {
 		extended_mode = true,
 		max_file_lines = nil,
 	},
-
 	matchup = {
 		enable = true,
+	},
+	refactor = {
+		highlight_definitions = { enable = true },
+		highlight_current_scope = { enable = false },
+		smart_rename = {
+			enable = true,
+			keymaps = {
+				smart_rename = "grr",
+			},
+		},
+		navigation = {
+			enable = true,
+			keymaps = {
+				goto_definition = "gnn",
+				list_definitions = "gnl",
+				list_definitions_toc = "gO",
+				goto_next_usage = '<space>n',
+				goto_previous_usage = '<space>N',
+			},
+		},
+	},
+	textobjects = {
+		enable = true,
+		lookahead = true,
+		select = {
+			enable = true,
+			keymaps = {
+				['if'] = '@function.inner',
+				['af'] = '@function.outer',
+				['ac'] = '@class.outer',
+				['ic'] = '@class.inner',
+			},
+		},
+		swap = {
+			enable = true,
+			swap_next = { ['<Leader>>'] = '@parameter.inner' },
+			swap_previous = { ['<Leader><'] = '@parameter.inner' },
+		},
+		move = {
+			enable = true,
+			set_jumps = true,
+			goto_next_start = {
+				["gf"] = "@function.outer",
+				["ga"] = "@parameter.inner"
+			},
+			goto_previous_start = {
+				["gt"] = "@function.outer",
+				["gb"] = "@parameter.inner"
+			}
+		}
+	},
+	context_commentstring = {
+		enable = true,
+		enable_autocmd = false,
 	},
 }
 

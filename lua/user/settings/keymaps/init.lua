@@ -7,8 +7,8 @@ end
 
 -- Remap leader key
 map('', '\\', [[<Nop>]])
-vim.g.mapleader = '\\'
-vim.g.maplocalleader = '\\'
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
 
 
 -- Normal -----------------------------------------------------------------------------
@@ -38,6 +38,14 @@ map('n', '<C-q>', [[<Cmd>Bdelete<CR>]])
 map('n', 'ZZ', [[:wqa<CR>]])
 map('n', 'ZQ', [[:qa!<CR>]])
 
+map('n', 'U', [[<C-r>]])
+map('n', 'K', [[<Esc>5<up>]])
+map('n', 'J', [[<Esc>5<down>]])
+map('n', 'gj', [[J]])
+map('n', 'gh', [[/<c-r>=expand("<cword>")<CR><CR>N]])
+
+map('n', '<leader>/', [[:nohls<CR>]])
+
 map('n', '<leader>e', function()
 	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
 		vim.api.nvim_command [[Lex 30]]
@@ -45,7 +53,8 @@ map('n', '<leader>e', function()
 end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
 map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
 map('n', '<leader>s', [[<Cmd>set hls!<CR>]])
-map('n', '<leader>w', [[<Cmd>set wrap!<CR>]])
+-- map('n', '<leader>w', [[<Cmd>set wrap!<CR>]])
+map('n', '<leader>w', [[:w<CR>]])
 
 local lazyscope = require('lazy').require_on_exported_call('telescope.builtin')
 map('n', '<leader>ta', lazyscope.live_grep, { desc = "Telescope live-grep all files" })
@@ -124,6 +133,7 @@ local function collimate()
 end
 vim.api.nvim_create_user_command("Collimate", collimate, { range = '%' })
 map('x', '<leader>c', [[:Collimate<CR>]])
+map('x', '<leader>p', [["_dP]])
 
 -- Replace text command
 local function replace_all()
@@ -197,17 +207,17 @@ M.gitsigns   = require('user.settings.keymaps.gitsigns')
 M.lsp_setup  = require('user.settings.keymaps.lsp')
 M.telescope  = require('user.settings.keymaps.telescope')
 
-M.indent_blankline = function()
-	local zmaps = {
-		'zA', 'zC', 'zD', 'zE', 'zM', 'zN', 'zO', 'zR',
-		'za', 'zc', 'zd', 'zi', 'zm', 'zn', 'zo', 'zr', 'zv', 'zx',
-	}
-	for _, lhs in ipairs(zmaps) do
-		vim.keymap.set('n', lhs, function()
-			vim.api.nvim_feedkeys(lhs, 'n', false)
-			vim.schedule(vim.F.nil_wrap(function() require('indent_blankline').refresh() end))
-		end, { desc = "Refresh IndentBlankline after fold operation", remap = false, silent = true })
-	end
-end
+-- M.indent_blankline = function()
+-- 	local zmaps = {
+-- 		'zA', 'zC', 'zD', 'zE', 'zM', 'zN', 'zO', 'zR',
+-- 		'za', 'zc', 'zd', 'zi', 'zm', 'zn', 'zo', 'zr', 'zv', 'zx',
+-- 	}
+-- 	for _, lhs in ipairs(zmaps) do
+-- 		vim.keymap.set('n', lhs, function()
+-- 			vim.api.nvim_feedkeys(lhs, 'n', false)
+-- 			vim.schedule(vim.F.nil_wrap(function() require('indent_blankline').refresh() end))
+-- 		end, { desc = "Refresh IndentBlankline after fold operation", remap = false, silent = true })
+-- 	end
+-- end
 
 return M

@@ -10,11 +10,19 @@ comment.setup {
 	ignore = '^$',
 
 	toggler = {
-		line = '<C-_>',
+        ---line-comment keymap
+		-- line = '<C-_>',
+		line = '<Leader>cc',
+        ---block-comment keymap
+        block = 'gbc',
 	},
 
 	opleader = {
-		line = 'g<C-_>',
+        ---line-comment keymap
+		-- line = 'g<C-_>',
+        line = 'gc',
+        ---block-comment keymap
+        block = 'gb',
 	},
 
 	extra = {
@@ -29,5 +37,8 @@ comment.setup {
 		extended = false,
 	},
 
-	post_hook = nil,
+	-- post_hook = nil,
+    pre_hook = function(ctx)
+        return require('ts_context_commentstring.internal').calculate_commentstring()
+    end
 }

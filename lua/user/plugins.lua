@@ -106,6 +106,10 @@ local plugins = {
 				commit = nil },
 			{ 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
 				commit = nil },
+			{ 'psliwka/vim-smoothie',                		  -- scrolling page effect
+				commit = nil },
+			{ 'machakann/vim-highlightedyank',                -- copy effect 
+				commit = nil },
 		},
 		editing = {
 			{ 'numToStr/Comment.nvim',                        -- Auto-commenting
@@ -130,8 +134,8 @@ local plugins = {
 			},
 		},
 		layout = {
-			{ 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
-				commit = nil },
+			--{ 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
+			--	commit = nil },
 			{ 'lewis6991/gitsigns.nvim',                      -- Git Signs
 				commit = nil },
 			{ 'simrat39/symbols-outline.nvim',                -- Symbols outliner
@@ -159,8 +163,14 @@ local plugins = {
 			commit = nil },
 		{ 'nvim-treesitter/nvim-treesitter-context',          -- Sticky code context
 			commit = nil },
-		{ 'p00f/nvim-ts-rainbow',                             -- Color-code brackets and parens and shit
+		{ 'nvim-treesitter/nvim-treesitter-refactor',
 			commit = nil },
+		{ 'nvim-treesitter/nvim-treesitter-textobjects',
+			commit = nil },
+		{ 'JoosepAlviste/nvim-ts-context-commentstring',
+			commit = nil },
+		--{ 'p00f/nvim-ts-rainbow',                             -- Color-code brackets and parens and shit
+		--	commit = nil },
 	},
 
 	workspace_tools = {
@@ -188,6 +198,7 @@ return packer.startup(function(use)
 
 	use 'lewis6991/impatient.nvim'  -- cache bytecode plugins for fast startup
 	use 'tjdevries/lazy.nvim'       -- Plugin lazy load/require
+	use 'ameiurl/zephyr-nvim'       -- colorschemes 
 
 	use(plugins.completion)
 	use(plugins.lsp)
