@@ -133,15 +133,55 @@ local plugins = {
 				opt = true,
 			},
 			{ 'terryma/vim-expand-region',
-				commit = nil 
-			},
-			{ 'junegunn/vim-easy-align',
-				commit = nil },
-			{ 'mg979/vim-visual-multi',
 				commit = nil,
 				config = function()
 					vim.keymap.set({ "v" }, "v", "<Plug>(expand_region_expand)")
       				vim.keymap.set({ "v" }, "V", "<Plug>(expand_region_shrink)")
+				end,
+			},
+			{ 'junegunn/vim-easy-align',
+				commit = nil,
+				config = function()
+					vim.keymap.set({ "n" }, "<Leader>a", "<Plug>(EasyAlign)")
+      				vim.keymap.set({ "v" }, "<Leader>a", "<Plug>(EasyAlign)")
+				end,
+			},
+			{ 'mg979/vim-visual-multi',
+				commit = nil,
+				config = function()
+					vim.g.VM_maps = {
+						["Find Under"]         = '<C-c>',
+						["Find Subword Under"] = '<C-c>',
+						["Find Next"]          = '',
+						['Find Prev']          = '',
+						['Remove Region']      = 'q',
+						['Skip Region']        = '<c-x>',
+						["Undo"]               = 'l',
+						["Redo"]               = '<C-r>',
+					}
+				end,
+			},
+			{ 'hrsh7th/vim-eft',
+				commit = nil,
+				config = function()
+					vim.keymap.set({ "n" }, ";", "<Plug>(eft-repeat)")
+      				vim.keymap.set({ "x" }, ";", "<Plug>(eft-repeat)")
+
+					vim.keymap.set({ "n" }, "f", "<Plug>(eft-f)")
+      				vim.keymap.set({ "x" }, "f", "<Plug>(eft-f)")
+      				vim.keymap.set({ "o" }, "f", "<Plug>(eft-f)")
+
+					vim.keymap.set({ "n" }, "F", "<Plug>(eft-F)")
+      				vim.keymap.set({ "x" }, "F", "<Plug>(eft-F)")
+      				vim.keymap.set({ "o" }, "F", "<Plug>(eft-F)")
+
+					vim.keymap.set({ "n" }, "t", "<Plug>(eft-t)")
+      				vim.keymap.set({ "x" }, "t", "<Plug>(eft-t)")
+      				vim.keymap.set({ "o" }, "t", "<Plug>(eft-t)")
+
+					vim.keymap.set({ "n" }, "T", "<Plug>(eft-T)")
+      				vim.keymap.set({ "x" }, "T", "<Plug>(eft-T)")
+      				vim.keymap.set({ "o" }, "T", "<Plug>(eft-T)")
 				end,
 			},
 			{ 'lambdalisue/suda.vim',
@@ -150,14 +190,20 @@ local plugins = {
 					vim.g.suda_smart_edit=1
 				end,
 			},
-			{ 'hrsh7th/vim-eft',
-				commit = nil },
 			{ 'windwp/nvim-autopairs',
 				commit = nil,
 				config = function()
 					vim.g.AutoPairsMapCh=0
 				end,
 			},
+			{ 'mattn/emmet-vim',
+				commit = nil,
+				config = function()
+					vim.g.user_emmet_expandabbr_key='<C-o>'
+				end,
+			},
+			{ 'kshenoy/vim-signature',                        -- Cursor-word highlighter + text objects
+				commit = nil },
 		},
 		layout = {
 			--{ 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
