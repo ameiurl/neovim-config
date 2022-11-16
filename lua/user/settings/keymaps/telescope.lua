@@ -13,7 +13,7 @@ function M.insert(actions)
 
 		['<C-e>'] = actions.close,  -- deprecated
 		['<esc>'] = actions.close,
-		['<A-esc>'] = function() vim.api.nvim_command [[stopinsert]] end,
+		['<C-esc>'] = function() vim.api.nvim_command [[stopinsert]] end,
 
 		['<Down>'] = actions.move_selection_next,
 		['<Up>']   = actions.move_selection_previous,

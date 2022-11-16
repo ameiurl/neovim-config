@@ -190,7 +190,7 @@ end
 M.setup = function()
 	buffer_wiping()
 	easy_close_window()
-	json_yaml_settings()
+	-- json_yaml_settings()
 	terminal_settings()
 	file_settings()
 end
