@@ -121,12 +121,12 @@ map('n', '<F5>', lazydap.continue,                { desc = "DAP continue" })
 map('n', '<F10>', lazydap.step_over,              { desc = "DAP step over" })
 map('n', '<F11>', lazydap.step_into,              { desc = "DAP step into" })
 map('n', '<F12>', lazydap.step_out,               { desc = "DAP step out" })
--- map('n', '<leader>db', lazydap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
--- map('n', '<leader>dB', function() lazydap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
-	-- { desc = "DAP set a breakpoint condition" })
--- map('n', '<leader>dL', function() lazydap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
-	-- { desc = "DAP set log point message" })
--- map('n', '<leader>dR', function() require('dap').repl.open() end, { desc = "DAP open repl" })
+map('n', '<localleader>db', lazydap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
+map('n', '<localleader>dB', function() lazydap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+	{ desc = "DAP set a breakpoint condition" })
+map('n', '<localleader>dL', function() lazydap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+	{ desc = "DAP set log point message" })
+map('n', '<localleader>dR', function() require('dap').repl.open() end, { desc = "DAP open repl" })
 
 -- Visual -----------------------------------------------------------------------------
 
