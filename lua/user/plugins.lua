@@ -131,18 +131,13 @@ local plugins = {
 				opt = true,
 			},
 			{ 'terryma/vim-expand-region',
-				commit = nil,
-				config = function()
-					vim.keymap.set({ "v" }, "v", "<Plug>(expand_region_expand)")
-      				vim.keymap.set({ "v" }, "V", "<Plug>(expand_region_shrink)")
-				end,
-			},
+				commit = nil },
 			{ 'junegunn/vim-easy-align',
 				commit = nil,
-				config = function()
-					vim.keymap.set({ "n" }, "<Leader>a", "<Plug>(EasyAlign)")
-      				vim.keymap.set({ "v" }, "<Leader>a", "<Plug>(EasyAlign)")
-				end,
+				-- config = function()
+				-- 	vim.keymap.set({ "n" }, "<Leader>a", "<Plug>(EasyAlign)")
+    			--  vim.keymap.set({ "v" }, "<Leader>a", "<Plug>(EasyAlign)")
+				-- end,
 			},
 			{ 'mg979/vim-visual-multi',
 				commit = nil,
@@ -160,28 +155,7 @@ local plugins = {
 				end,
 			},
 			{ 'hrsh7th/vim-eft',
-				commit = nil,
-				config = function()
-					vim.keymap.set({ "n" }, ";", "<Plug>(eft-repeat)")
-      				vim.keymap.set({ "x" }, ";", "<Plug>(eft-repeat)")
-
-					vim.keymap.set({ "n" }, "f", "<Plug>(eft-f)")
-      				vim.keymap.set({ "x" }, "f", "<Plug>(eft-f)")
-      				vim.keymap.set({ "o" }, "f", "<Plug>(eft-f)")
-
-					vim.keymap.set({ "n" }, "F", "<Plug>(eft-F)")
-      				vim.keymap.set({ "x" }, "F", "<Plug>(eft-F)")
-      				vim.keymap.set({ "o" }, "F", "<Plug>(eft-F)")
-
-					vim.keymap.set({ "n" }, "t", "<Plug>(eft-t)")
-      				vim.keymap.set({ "x" }, "t", "<Plug>(eft-t)")
-      				vim.keymap.set({ "o" }, "t", "<Plug>(eft-t)")
-
-					vim.keymap.set({ "n" }, "T", "<Plug>(eft-T)")
-      				vim.keymap.set({ "x" }, "T", "<Plug>(eft-T)")
-      				vim.keymap.set({ "o" }, "T", "<Plug>(eft-T)")
-				end,
-			},
+				commit = nil },
 			{ 'lambdalisue/suda.vim',
 				commit = nil,
 				config = function()

@@ -121,12 +121,12 @@ map('n', '<F5>', lazydap.continue,                { desc = "DAP continue" })
 map('n', '<F10>', lazydap.step_over,              { desc = "DAP step over" })
 map('n', '<F11>', lazydap.step_into,              { desc = "DAP step into" })
 map('n', '<F12>', lazydap.step_out,               { desc = "DAP step out" })
-map('n', '<leader>db', lazydap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
-map('n', '<leader>dB', function() lazydap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
-	{ desc = "DAP set a breakpoint condition" })
-map('n', '<leader>dL', function() lazydap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
-	{ desc = "DAP set log point message" })
-map('n', '<leader>dR', function() require('dap').repl.open() end, { desc = "DAP open repl" })
+-- map('n', '<leader>db', lazydap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
+-- map('n', '<leader>dB', function() lazydap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+	-- { desc = "DAP set a breakpoint condition" })
+-- map('n', '<leader>dL', function() lazydap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+	-- { desc = "DAP set log point message" })
+-- map('n', '<leader>dR', function() require('dap').repl.open() end, { desc = "DAP open repl" })
 
 -- Visual -----------------------------------------------------------------------------
 
@@ -148,6 +148,7 @@ map('i', '<C-l>', [[<Right>]])
 -- Overwrite paste
 -- map('v', 'p', [["vdp]])
 -- map('v', 'P', [["vdP]])
+map('x', 'p', [["_dP]])
 
 -- Collimate
 local function collimate()
@@ -167,7 +168,6 @@ local function collimate()
 end
 vim.api.nvim_create_user_command("Collimate", collimate, { range = '%' })
 map('x', '<leader>c', [[:Collimate<CR>]])
-map('x', '<leader>p', [["_dP]])
 
 -- Replace text command
 local function replace_all()
@@ -195,6 +195,34 @@ map('n', '<leader>`', [[<Cmd>botright split+terminal<CR>]])
 
 -- Window switch from terminal
 map('t', '<A-Esc>', [[<Cmd>stopinsert<CR>]])
+
+-- vim-expand-region
+map('v', 'v', [[<Plug>(expand_region_expand)]])
+map('v', 'v', [[<Plug>(expand_region_expand)]])
+
+-- vim-easy-align
+map('n', '<Leader>a', [[<Plug>(EasyAlign)]])
+map('v', '<Leader>a', [[<Plug>(EasyAlign)]])
+
+-- vim-eft
+map('n', ';', [[<Plug>(eft-repeat)]])
+map('x', ';', [[<Plug>(eft-repeat)]])
+
+map('n', 'f', [[<Plug>(eft-f)]])
+map('x', 'f', [[<Plug>(eft-f)]])
+map('o', 'f', [[<Plug>(eft-f)]])
+
+map('n', 'F', [[<Plug>(eft-F)]])
+map('x', 'F', [[<Plug>(eft-F)]])
+map('o', 'F', [[<Plug>(eft-F)]])
+
+map('n', 't', [[<Plug>(eft-t)]])
+map('x', 't', [[<Plug>(eft-t)]])
+map('o', 't', [[<Plug>(eft-t)]])
+
+map('n', 'T', [[<Plug>(eft-T)]])
+map('x', 'T', [[<Plug>(eft-T)]])
+map('o', 'T', [[<Plug>(eft-T)]])
 
 -- Plugin keybinds --------------------------------------------------------------------
 local M = {}
