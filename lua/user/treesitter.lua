@@ -11,6 +11,12 @@ ts.setup {
 	},
 	sync_installed = false, -- install languages synchronously (applies to above)
 	ignore_installed = { "" }, -- list of parsers to ignore installing
+	playground = {
+		enable = true,
+		disable = {},
+		updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+		persist_queries = false -- Whether the query persists across vim sessions
+	},
 	highlight = {
 		enable = false, -- false will disable the whole extension
 		additional_vim_regex_highlighting = false,

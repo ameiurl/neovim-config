@@ -8,7 +8,7 @@ end
 -- Remap leader key
 map('', '\\', [[<Nop>]])
 vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = ';'
 
 
 -- Normal -----------------------------------------------------------------------------
@@ -18,47 +18,55 @@ map('n', '<C-j>', [[<C-w>j]])
 map('n', '<C-k>', [[<C-w>k]])
 map('n', '<C-l>', [[<C-w>l]])
 
--- Center view after page up/down
--- map('n', '<C-d>', [[<C-d>zz]])
--- map('n', '<C-u>', [[<C-u>zz]])
--- map('n', '<C-f>', [[<C-f>zz]])
--- map('n', '<C-b>', [[<C-b>zz]])
-
 -- Fast scrolling
-map('n', '<C-e>', [[3<C-e>]])
-map('n', '<C-y>', [[3<C-y>]])
+map('n', '<C-e>', [[5<C-e>]])
+map('n', '<C-y>', [[5<C-y>]])
+map('n', 'K', [[<Esc>5<up>]])
+map('n', 'J', [[<Esc>5<down>]])
+
+-- map('n', 'k', [[gk]])
+-- map('n', 'gk', [[k]])
+-- map('n', 'j', [[gj]])
+-- map('n', 'gj', [[j]])
 
 -- Move lines
-map('n', '<A-j>', [[<Cmd>move .+1<CR>==]])
-map('n', '<A-k>', [[<Cmd>move .-2<CR>==]])
+-- map('n', '<S-j>', [[<Cmd>move .+1<CR>==]])
+-- map('n', '<S-k>', [[<Cmd>move .-2<CR>==]])
 
 -- Bbye commands
 map('n', '<C-q>', [[<Cmd>Bdelete<CR>]])
 map('n', '<Leader>d', [[<Cmd>Bdelete<CR>]])
 map('n', '<C-o>', [[<Cmd>b#<CR>]])
 map('n', '<Leader>0', [[<Cmd>blast<CR>]])
-
-map('n', 'ZZ', [[:wqa<CR>]])
-map('n', 'ZQ', [[:qa!<CR>]])
-
 map('n', 'U', [[<C-r>]])
-map('n', 'K', [[<Esc>5<up>]])
-map('n', 'J', [[<Esc>5<down>]])
 map('n', 'gj', [[J]])
 map('n', 'gh', [[/<c-r>=expand("<cword>")<CR><CR>N]])
-
 map('n', '<leader>/', [[:nohls<CR>]])
+map('n', '<leader>w', [[:w<CR>]])
+map('n', '<leader>sa', [[ggVG]])
 
+-- Window resizing with CTRL-Arrowkey
+map('n', '<C-Up>'   , [[2<C-w>-]])
+map('n', '<C-Down>' , [[2<C-w>+]])
+map('n', '<C-Left>' , [[2<C-w><]])
+map('n', '<C-Right>', [[2<C-w>>]])
+
+-- Navigate buffers
+map('n', '<C-n>', [[<Cmd>bnext<CR>]])
+map('n', '<C-p>', [[<Cmd>bprev<CR>]])
+
+
+-- nvim-tree
 map('n', '<leader>e', function()
 	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
 		vim.api.nvim_command [[Lex 30]]
 	end
 end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
-map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
-map('n', '<leader>s', [[<Cmd>set hls!<CR>]])
--- map('n', '<leader>w', [[<Cmd>set wrap!<CR>]])
-map('n', '<leader>w', [[:w<CR>]])
 
+-- symbol
+map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
+
+-- telescope
 local lazyscope = require('lazy').require_on_exported_call('telescope.builtin')
 map('n', '<leader>ta', lazyscope.live_grep, { desc = "Telescope live-grep all files" })
 map('n', '<leader>to', function() lazyscope.live_grep { grep_open_files = true } end, {
@@ -92,12 +100,11 @@ end
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap(
 	'n',
-	'<Leader>bb',
+	'<Leader>b',
 	'<cmd>lua __telescope_buffers()<CR>',
 	opts
 )
-
-map('n', '<A-l>', function()
+map('n', '<Leader>B', function()
 	if not pcall(function() lazyscope.buffers() end) then
 		-- This is the kind of stupid shit I have to go through just to emulate keypresses
 		local cmdstr = vim.api.nvim_replace_termcodes(':ls<CR>:b', true, false, true)
@@ -105,6 +112,7 @@ map('n', '<A-l>', function()
 	end
 end, { desc = "List open buffers in telescope, or with :ls if telescope can't be loaded" })
 
+-- lazyGit
 map('n', '<leader>gg', [[<Cmd>LazyGit<CR>]])
 
 -- DAP
@@ -120,16 +128,6 @@ map('n', '<leader>dL', function() lazydap.set_breakpoint(nil, nil, vim.fn.input(
 	{ desc = "DAP set log point message" })
 map('n', '<leader>dR', function() require('dap').repl.open() end, { desc = "DAP open repl" })
 
--- Window resizing with CTRL-Arrowkey
-map('n', '<C-Up>'   , [[2<C-w>-]])
-map('n', '<C-Down>' , [[2<C-w>+]])
-map('n', '<C-Left>' , [[2<C-w><]])
-map('n', '<C-Right>', [[2<C-w>>]])
-
--- Navigate buffers
-map('n', '<C-n>', [[<Cmd>bnext<CR>]])
-map('n', '<C-p>', [[<Cmd>bprev<CR>]])
-
 -- Visual -----------------------------------------------------------------------------
 
 
@@ -138,15 +136,18 @@ map('v', '<', [[<gv]])
 map('v', '>', [[>gv]])
 
 -- Move text up and down
-map('v', '<A-j>', [[:move '>+1<CR>gv=gv]])
-map('v', '<A-k>', [[:move '<-2<CR>gv=gv]])
+map('v', '<C-j>', [[:move '>+1<CR>gv=gv]])
+map('v', '<C-k>', [[:move '<-2<CR>gv=gv]])
+
+-- insert -----------------------------------------------------------------------------
+map('i', '<C-h>', [[<Left>]])
+map('i', '<C-j>', [[<Down>]])
+map('i', '<C-k>', [[<Up>]])
+map('i', '<C-l>', [[<Right>]])
 
 -- Overwrite paste
-map('v', 'p', [["vdp]])
-map('v', 'P', [["vdP]])
-
--- map('v', 'v', [[<Plug>(expand_region_expand)]])
--- map('v', 'V', [[<Plug>(expand_region_shrink)]])
+-- map('v', 'p', [["vdp]])
+-- map('v', 'P', [["vdP]])
 
 -- Collimate
 local function collimate()
