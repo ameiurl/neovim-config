@@ -34,6 +34,9 @@ map('n', '<A-k>', [[<Cmd>move .-2<CR>==]])
 
 -- Bbye commands
 map('n', '<C-q>', [[<Cmd>Bdelete<CR>]])
+map('n', '<Leader>d', [[<Cmd>Bdelete<CR>]])
+map('n', '<C-o>', [[<Cmd>b#<CR>]])
+map('n', '<Leader>0', [[<Cmd>blast<CR>]])
 
 map('n', 'ZZ', [[:wqa<CR>]])
 map('n', 'ZQ', [[:qa!<CR>]])
@@ -221,16 +224,16 @@ M.bufferline = {
 	-- ['<leader>bb'] = bl.pick_buffer,
 	['[b']         = function() bl.cycle(-1) end,
 	[']b']         = function() bl.cycle( 1) end,
-	['<A-1>']      = function() bl.go_to(1, false) end,
-	['<A-2>']      = function() bl.go_to(2, false) end,
-	['<A-3>']      = function() bl.go_to(3, false) end,
-	['<A-4>']      = function() bl.go_to(4, false) end,
-	['<A-5>']      = function() bl.go_to(5, false) end,
-	['<A-6>']      = function() bl.go_to(6, false) end,
-	['<A-7>']      = function() bl.go_to(7, false) end,
-	['<A-8>']      = function() bl.go_to(8, false) end,
-	['<A-9>']      = function() bl.go_to(-1, true) end,
-	['<A-0>']      = function() bl.go_to( 1, true) end,
+	['<Leader>1']      = function() bl.go_to(1, false) end,
+	['<Leader>2']      = function() bl.go_to(2, false) end,
+	['<Leader>3']      = function() bl.go_to(3, false) end,
+	['<Leader>4']      = function() bl.go_to(4, false) end,
+	['<Leader>5']      = function() bl.go_to(5, false) end,
+	['<Leader>6']      = function() bl.go_to(6, false) end,
+	['<Leader>7']      = function() bl.go_to(7, false) end,
+	['<Leader>8']      = function() bl.go_to(8, false) end,
+	['<Leader>9']      = function() bl.go_to(-1, true) end,
+	-- ['<Leader>0']      = function() bl.go_to( 1, true) end,
 }
 
 M.gitsigns   = require('user.settings.keymaps.gitsigns')
