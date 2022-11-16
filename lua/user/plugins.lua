@@ -133,12 +133,7 @@ local plugins = {
 			{ 'terryma/vim-expand-region',
 				commit = nil },
 			{ 'junegunn/vim-easy-align',
-				commit = nil,
-				-- config = function()
-				-- 	vim.keymap.set({ "n" }, "<Leader>a", "<Plug>(EasyAlign)")
-    			--  vim.keymap.set({ "v" }, "<Leader>a", "<Plug>(EasyAlign)")
-				-- end,
-			},
+				commit = nil },
 			{ 'mg979/vim-visual-multi',
 				commit = nil,
 				config = function()

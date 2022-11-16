@@ -57,3 +57,34 @@ vim.g.netrw_banner = 0        -- no banner
 vim.g.netrw_usetab = 1        -- use netrw-<C-Tab> mapping
 vim.g.netrw_wiw = 32          -- window width (cols)
 vim.g.shada = "'0f0"          -- what to save in the ShaDa file
+
+vim.cmd [[
+	" 插入模式下用绝对行号, 普通模式下用相对
+	autocmd InsertEnter * :set norelativenumber number
+	autocmd InsertLeave * :set relativenumber
+
+	" 打开自动定位到最后编辑的位置, 需要确认 .viminfo 当前用户可写
+	if has("autocmd")
+	  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	endif
+	
+	" 回车即选中当前项
+	autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+	autocmd FileType qf nnoremap <buffer> <ESC> :cclose<CR>
+
+	" quickfix高度
+	au FileType qf call AdjustWindowHeight(5, 20)
+	function! AdjustWindowHeight(minheight, maxheight)
+		let l = 1
+		let n_lines = 0
+		let w_width = winwidth(0)
+		while l <= line('$')
+			" number to float for division
+			let l_len = strlen(getline(l)) + 0.0
+			let line_width = l_len/w_width
+			let n_lines += float2nr(ceil(line_width))
+			let l += 1
+		endw
+		exe max([min([n_lines, a:maxheight]), a:minheight]) .  "wincmd _"
+	endfunction
+]]
