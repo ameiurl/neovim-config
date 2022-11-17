@@ -45,7 +45,7 @@ return function(client, bufnr)
 	map('n', 'g<C-]>', try_fancy("lsp_references"),  { desc = "LSP list references" })
 	map('n', '<A-a>',  vim.lsp.buf.code_action,      { desc = "LSP code actions" })
 	map('n', '<A-i>',  vim.diagnostic.open_float,    { desc = "Show line diagnostics" })
-	map('n', '<C-]>', (function()
+	map('n', 'go', (function()
 		if client.name == 'omnisharp' then
 			-- Override general <C-]> mapping for default vim one,
 			-- since omnisharp_extended doesn't work with Telescope or Trouble
@@ -60,11 +60,11 @@ return function(client, bufnr)
 	map('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
 	map('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 
-	map('n', '<leader>dD', nice_diagnostics { scope = 'workspace' }, { desc = "Show workspace diagnostics" })
-	map('n', '<leader>dd', nice_diagnostics { scope = 'document' }, { desc = "Show document diagnostics" })
-	map('n', '<leader>de', try_fancy("lsp_declarations"), { desc = "LSP go to declaration of symbol" })
-	map('n', '<leader>di', try_fancy("lsp_implementations"), { desc = "LSP list implementations" })
-	map('n', '<leader>dr', vim.lsp.buf.rename, { desc = "LSP rename symbol" })
+	map('n', '<localleader>dD', nice_diagnostics { scope = 'workspace' }, { desc = "Show workspace diagnostics" })
+	map('n', '<localleader>dd', nice_diagnostics { scope = 'document' }, { desc = "Show document diagnostics" })
+	map('n', '<localleader>de', try_fancy("lsp_declarations"), { desc = "LSP go to declaration of symbol" })
+	map('n', '<localleader>di', try_fancy("lsp_implementations"), { desc = "LSP list implementations" })
+	map('n', '<localleader>dr', vim.lsp.buf.rename, { desc = "LSP rename symbol" })
 
 	-- Formatting commands
 	vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(opts)

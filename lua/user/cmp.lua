@@ -181,13 +181,12 @@ lsp_installer.on_server_ready(function(server)
 end)
 
 local map_key = vim.api.nvim_set_keymap
-local opts = {silent=true, noremap=true}
+-- local opts = {silent=true, noremap=true}
+local opts = {expr=true}
 
 -- vsnip
 vim.g.vsnip_snippet_dir = os.getenv('HOME') .. "/.config/nvim/snippets"
 
-local map_key = vim.api.nvim_set_keymap
-local opts = {expr=true}
 map_key('i', '<Tab>', [[vsnip#available()  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>']], opts)
 map_key('s', '<Tab>', [[vsnip#available()  ? '<Plug>(vsnip-expand-or-jump)' : '<Tab>']], opts)
 

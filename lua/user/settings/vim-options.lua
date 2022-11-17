@@ -57,6 +57,7 @@ vim.g.netrw_banner = 0        -- no banner
 vim.g.netrw_usetab = 1        -- use netrw-<C-Tab> mapping
 vim.g.netrw_wiw = 32          -- window width (cols)
 vim.g.shada = "'0f0"          -- what to save in the ShaDa file
+vim.g.nofixendofline = true   -- Disable automatic line wrapping at the end of the file
 
 vim.cmd [[
 	" 插入模式下用绝对行号, 普通模式下用相对
