@@ -12,7 +12,7 @@ telescope.setup {
 		winblend = 10,
 		prompt_prefix = ' ',
 		selection_caret = ' ',
-		sorting_strategy = 'ascending',
+		-- sorting_strategy = 'ascending',
 
 		layout_strategy = 'flex',
 
@@ -34,6 +34,20 @@ telescope.setup {
 		mappings = {
 			n = keys.normal(actions),
 			i = keys.insert(actions),
+		},
+
+		file_ignore_patterns = {
+			'%.gif',
+			'%.jpg',
+			'%.jpeg',
+			'%.png',
+			'%.svg',
+			'%.otf',
+			'%.ttf',
+			'%.ico',
+			'%.woff',
+			'%.woff2',
+			'%.eot',
 		},
 	},
 

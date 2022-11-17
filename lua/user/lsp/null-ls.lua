@@ -35,5 +35,6 @@ nls.setup {
 		nls.builtins.formatting.jq,
 		nls.builtins.formatting.nginx_beautifier,
 		nls.builtins.formatting.tidy,  -- HTML/XML
+		nls.builtins.formatting.prettier,  -- markdown formatting 
 	},
 }

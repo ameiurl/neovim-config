@@ -6,7 +6,7 @@ end
 
 ts.setup {
 	ensure_installed = {
-		'javascript', 'css'  ,
+		'javascript', 'css'  		   , 'markdown',
 		'php'       , 'lua'            , 'html' ,
 	},
 	sync_installed = false, -- install languages synchronously (applies to above)

@@ -73,7 +73,7 @@ map('n', '<leader>to', function() lazyscope.live_grep { grep_open_files = true }
 	desc = "Telescope live-grep only open buffers",
 })
 map('n', '<leader>tw', lazyscope.grep_string,               { desc = "Telescope grep symbol under cursor" })
-map('n', '<leader>tf', lazyscope.find_files,                { desc = "Telescope fuzzy-search for files" })
+map('n', '<leader>f', lazyscope.find_files,                { desc = "Telescope fuzzy-search for files" })
 map('n', '<leader>ts', lazyscope.treesitter,                { desc = "Telescope list treesitter symbols in buffer" })
 map('n', '<leader>qh', lazyscope.quickfixhistory,           { desc = "Telescope list quickfix history" })
 map('n', '<leader>th', lazyscope.oldfiles,           		{ desc = "Telescope list history" })
