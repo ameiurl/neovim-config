@@ -50,10 +50,6 @@ local plugins = {
 			commit = nil },
 		{ 'hrsh7th/cmp-cmdline',                              -- Command line completion
 			commit = nil },
-		-- { 'hrsh7th/cmp-vsnip',                         
-			-- commit = nil },
-		-- { 'hrsh7th/vim-vsnip',                     
-			-- commit = nil },
 		{ 'L3MON4D3/LuaSnip',                                 -- Snippet engine
 			commit = nil },
 		{ 'saadparwaiz1/cmp_luasnip',                         -- Snippet completion
@@ -67,8 +63,6 @@ local plugins = {
 	lsp = {
 		{ 'neovim/nvim-lspconfig',                            -- Official community LSP configs
 			commit = nil },
-		-- { 'williamboman/nvim-lsp-installer',
-		-- 	commit = nil },
 		{ 'hrsh7th/cmp-nvim-lsp',                             -- LSP support for nvim-cmp
 			commit = nil },
 		{ 'Issafalcon/lsp-overloads.nvim',                    -- signature overload cycler
@@ -216,6 +210,8 @@ local plugins = {
 			commit = nil },
 		{ 'JoosepAlviste/nvim-ts-context-commentstring',
 			commit = nil },
+		-- { 'p00f/nvim-ts-rainbow',                             -- Color-code brackets and parens and shit
+		-- 	commit = nil },
 	},
 
 	workspace_tools = {
