@@ -8,10 +8,10 @@ M.on_attach = function(client, bufnr)
 	if client.server_capabilities.signatureHelpProvider then
 		require('lsp-overloads').setup(client, {
 			keymaps = {
-				previous_signature = '<A-K>',
-				next_signature     = '<A-J>',
-				previous_parameter = '<A-L>',
-				next_parameter     = '<A-H>',
+				previous_signature = '<C-K>',
+				next_signature     = '<C-J>',
+				previous_parameter = '<C-L>',
+				next_parameter     = '<C-H>',
 			},
 		})
 	end
