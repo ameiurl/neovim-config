@@ -104,7 +104,9 @@ local plugins = {
 				commit = nil },
 			{ 'LunarVim/colorschemes',                        -- a bunch of colorschemes
 				commit = nil },
-			{ 'folke/tokyonight.nvim',                        -- TokyoNight theme
+			-- { 'folke/tokyonight.nvim',                        -- TokyoNight theme
+			-- 	commit = nil },
+			{ 'ameiurl/zephyr-nvim',                          -- colorschemes 
 				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
 				commit = nil },
@@ -247,7 +249,6 @@ return packer.startup(function(use)
 
 	use 'lewis6991/impatient.nvim'  -- cache bytecode plugins for fast startup
 	use 'tjdevries/lazy.nvim'       -- Plugin lazy load/require
-	use 'ameiurl/zephyr-nvim'       -- colorschemes 
 
 	use(plugins.completion)
 	use(plugins.lsp)
