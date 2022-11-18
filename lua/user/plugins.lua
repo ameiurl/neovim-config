@@ -58,6 +58,12 @@ local plugins = {
 			commit = nil },
 		{ 'hrsh7th/cmp-nvim-lua',                             -- Lua support for nvim-cmp
 			commit = nil },
+		{ 'mattn/emmet-vim',
+			commit = nil,
+			config = function()
+				vim.g.user_emmet_expandabbr_key='<C-o>'
+			end,
+		},
 	},
 
 	lsp = {
@@ -132,6 +138,10 @@ local plugins = {
 				ft = 'markdown',
 				opt = true,
 			},
+			{ 'hrsh7th/vim-eft',
+				commit = nil },
+			{ 'kshenoy/vim-signature',
+				commit = nil },
 			{ 'terryma/vim-expand-region',
 				commit = nil },
 			{ 'junegunn/vim-easy-align',
@@ -151,8 +161,6 @@ local plugins = {
 					}
 				end,
 			},
-			{ 'hrsh7th/vim-eft',
-				commit = nil },
 			{ 'lambdalisue/suda.vim',
 				commit = nil,
 				config = function()
@@ -165,14 +173,6 @@ local plugins = {
 					vim.g.AutoPairsMapCh=0
 				end,
 			},
-			{ 'mattn/emmet-vim',
-				commit = nil,
-				config = function()
-					vim.g.user_emmet_expandabbr_key='<C-o>'
-				end,
-			},
-			{ 'kshenoy/vim-signature',                        -- Cursor-word highlighter + text objects
-				commit = nil },
 		},
 		layout = {
 			--{ 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
