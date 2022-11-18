@@ -115,6 +115,9 @@ end, { desc = "List open buffers in telescope, or with :ls if telescope can't be
 -- lazyGit
 map('n', '<leader>gg', [[<Cmd>LazyGit<CR>]])
 
+-- far  :Farr foo bar **/*.py   t s u
+map('n', '<localleader>f', [[:Far  **/*.php<left><left><left><left><left><left><left><left><left>]])
+
 -- DAP
 local lazydap = require('lazy').require_on_exported_call 'dap'
 map('n', '<F5>', lazydap.continue,                { desc = "DAP continue" })

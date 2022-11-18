@@ -115,7 +115,11 @@ local plugins = {
 			{ 'psliwka/vim-smoothie',                		  -- scrolling page effect
 				commit = nil },
 			{ 'machakann/vim-highlightedyank',                -- copy effect 
-				commit = nil },
+				commit = nil,
+				config = function()
+					vim.g.highlightedyank_highlight_duration = 500
+				end,
+			},
 		},
 		editing = {
 			{ 'numToStr/Comment.nvim',                        -- Auto-commenting
@@ -173,6 +177,8 @@ local plugins = {
 					vim.g.AutoPairsMapCh=0
 				end,
 			},
+			{ 'brooth/far.vim',
+				commit = nil },
 		},
 		layout = {
 			--{ 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
@@ -190,6 +196,8 @@ local plugins = {
 				branch = 'main',
 				requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 			},
+			{ 'tpope/vim-fugitive',
+				commit = nil },
 		},
 	},
 
