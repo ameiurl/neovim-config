@@ -252,7 +252,7 @@ M.nvim_tree = {
 
 local bl = require('lazy').require_on_exported_call('bufferline')
 M.bufferline = {
-	['<leader>bq'] = bl.close_with_pick,
+	-- ['<leader>bq'] = bl.close_with_pick,
 	-- ['<leader>bb'] = bl.pick_buffer,
 	['[b']         = function() bl.cycle(-1) end,
 	[']b']         = function() bl.cycle( 1) end,
