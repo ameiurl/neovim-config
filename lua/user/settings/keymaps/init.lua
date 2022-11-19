@@ -24,10 +24,10 @@ map('n', '<C-y>', [[5<C-y>]])
 map('n', 'K', [[<Esc>5<up>]])
 map('n', 'J', [[<Esc>5<down>]])
 
--- map('n', 'k', [[gk]])
--- map('n', 'gk', [[k]])
--- map('n', 'j', [[gj]])
--- map('n', 'gj', [[j]])
+map('n', 'k', [[gk]])
+map('n', 'gk', [[k]])
+map('n', 'j', [[gj]])
+map('n', 'gj', [[j]])
 
 -- Move lines
 -- map('n', '<S-j>', [[<Cmd>move .+1<CR>==]])

@@ -41,7 +41,7 @@ local options = {
 	timeoutlen     = 400,                             -- leader timeout in msec
 	undofile       = false,                           -- persistent undo file
 	updatetime     = 200,                             -- faster completion (400ms default)
-	wrap           = false,                           -- word-wrap long lines
+	wrap           = true,                           -- word-wrap long lines
 	writebackup    = false,                           -- when a file is open by other program
 }
 vim.opt.iskeyword:append "-"   -- add '-' to iskeyword chars
