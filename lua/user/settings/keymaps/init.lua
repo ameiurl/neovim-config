@@ -73,12 +73,13 @@ map('n', '<leader>to', function() lazyscope.live_grep { grep_open_files = true }
 	desc = "Telescope live-grep only open buffers",
 })
 map('n', '<leader>tw', lazyscope.grep_string,               { desc = "Telescope grep symbol under cursor" })
-map('n', '<leader>f', lazyscope.find_files,                { desc = "Telescope fuzzy-search for files" })
+map('n', '<leader>ff', lazyscope.find_files,                	{ desc = "Telescope fuzzy-search for files" })
 map('n', '<leader>ts', lazyscope.treesitter,                { desc = "Telescope list treesitter symbols in buffer" })
 map('n', '<leader>qh', lazyscope.quickfixhistory,           { desc = "Telescope list quickfix history" })
 map('n', '<leader>th', lazyscope.oldfiles,           		{ desc = "Telescope list history" })
 map('n', '<leader>rg', lazyscope.current_buffer_fuzzy_find, { desc = "Telescope grep inside current buffer" })
 map('n', '<leader>tt', lazyscope.resume,                    { desc = "Telescope resume last session" })
+map('n', '<leader>tm', lazyscope.marks,                    	{ desc = "Telescope list marks" })
 function _G.__telescope_buffers()
     require('telescope.builtin').buffers(
         require('telescope.themes').get_dropdown {
@@ -100,9 +101,15 @@ end
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap(
 	'n',
-	'<Leader>b',
+	'<Leader>bb',
 	'<cmd>lua __telescope_buffers()<CR>',
 	opts
+)
+vim.api.nvim_set_keymap(
+    "n", 
+    "<leader>tf", 
+    "<CMD>lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep For > ')})<CR>", 
+    opts
 )
 map('n', '<Leader>B', function()
 	if not pcall(function() lazyscope.buffers() end) then
