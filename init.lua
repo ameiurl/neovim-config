@@ -13,6 +13,7 @@ require 'user.symbols-outline'
 require 'user.telescope'
 require 'user.trouble'
 require 'user.bufferline'
+require 'user.nvim-autopairs'
 
 -- Buffer Enhancements
 require 'user.treesitter'

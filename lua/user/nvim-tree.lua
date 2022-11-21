@@ -24,6 +24,12 @@ function _G.dec_width_ind()
     return g.nvim_tree_width
 end
 
+local COLS = vim.o.columns
+local ROWS = vim.o.lines
+
+local float_window_width = math.floor(COLS / 2)
+local float_window_height = math.floor(ROWS / 1.5)
+
 tree.setup {
 	disable_netrw = true,
 	hijack_cursor = true,
@@ -99,7 +105,18 @@ tree.setup {
 				{ key = "q",                            cb = tree_cb("close") },
 				{ key = "g?",                           cb = tree_cb("toggle_help") },
 			}
-		}
+		},
+		float = {
+			enable = false,
+			open_win_config = {
+				relative = "editor",
+				border = "rounded",
+				width = float_window_width,
+				height = float_window_height,
+				row = math.floor(((ROWS - float_window_height) / 2) - 1),
+				col = math.floor((COLS - float_window_width) / 2),
+			},
+		},
 	},
 	renderer = {
 		add_trailing = true,

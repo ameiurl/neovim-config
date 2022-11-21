@@ -192,7 +192,7 @@ M.setup = function()
 	easy_close_window()
 	-- json_yaml_settings()
 	terminal_settings()
-	file_settings()
+	-- file_settings()
 end
 
 return M

@@ -31,6 +31,7 @@ nls.setup {
 		-- nls.builtins.diagnostics.tsc,
 		nls.builtins.diagnostics.xo,  -- Js/Ts
 		nls.builtins.diagnostics.php,  -- php 
+		nls.builtins.diagnostics.proselint,  -- markdown 
 
 		nls.builtins.formatting.gdformat,
 		nls.builtins.formatting.jq,

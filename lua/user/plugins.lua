@@ -174,11 +174,7 @@ local plugins = {
 				end,
 			},
 			{ 'windwp/nvim-autopairs',
-				commit = nil,
-				config = function()
-					vim.g.AutoPairsMapCh=0
-				end,
-			},
+				commit = nil },
 			{ 'brooth/far.vim',
 				commit = nil },
 		},
