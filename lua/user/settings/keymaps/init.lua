@@ -116,6 +116,12 @@ vim.api.nvim_set_keymap(
     "<CMD>lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep For > ')})<CR>", 
     opts
 )
+vim.api.nvim_set_keymap(
+    "n", 
+    "<leader>tg", 
+    "<CMD>lua require('telescope.builtin').grep_string { search = 'n '.. vim.fn.expand('<cword>')}<CR>", 
+    opts
+)
 map('n', '<Leader>B', function()
 	if not pcall(function() lazyscope.buffers() end) then
 		-- This is the kind of stupid shit I have to go through just to emulate keypresses

@@ -77,8 +77,8 @@ local plugins = {
 			commit = nil },
 		{ 'williamboman/mason-lspconfig.nvim',                -- Setup lspconfig for mason-installed LSPs
 			commit = nil },
-		{ 'Hoffs/omnisharp-extended-lsp.nvim',                -- Omnisharp specific bullshit
-			commit = nil },
+		-- { 'Hoffs/omnisharp-extended-lsp.nvim',                -- Omnisharp specific bullshit
+		-- 	commit = nil },
 		{ 'jose-elias-alvarez/null-ls.nvim',                  -- Null LS
 			commit = nil },
 		--  { 'ThePrimeagen/refactoring.nvim',                   -- Refactoring
