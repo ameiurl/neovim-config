@@ -43,7 +43,6 @@ map('n', 'g*', [[g*zz]])
 map('n', '<C-q>', [[<Cmd>Bdelete<CR>]])
 map('n', '<Leader>d', [[<Cmd>Bdelete<CR>]])
 map('n', '<C-o>', [[<Cmd>b#<CR>]])
-map('n', '<Leader>0', [[<Cmd>blast<CR>]])
 map('n', 'U', [[<C-r>]])
 map('n', 'gj', [[J]])
 map('n', 'gh', [[/<c-r>=expand("<cword>")<CR><CR>N]])
@@ -265,20 +264,20 @@ M.nvim_tree = {
 
 local bl = require('lazy').require_on_exported_call('bufferline')
 M.bufferline = {
-	-- ['<leader>bq'] = bl.close_with_pick,
-	-- ['<leader>bb'] = bl.pick_buffer,
+	['<localleader>bq'] = bl.close_with_pick,
+	['<localleader>bb'] = bl.pick_buffer,
 	['[b']         = function() bl.cycle(-1) end,
 	[']b']         = function() bl.cycle( 1) end,
-	['<Leader>1']      = function() bl.go_to(1, false) end,
-	['<Leader>2']      = function() bl.go_to(2, false) end,
-	['<Leader>3']      = function() bl.go_to(3, false) end,
-	['<Leader>4']      = function() bl.go_to(4, false) end,
-	['<Leader>5']      = function() bl.go_to(5, false) end,
-	['<Leader>6']      = function() bl.go_to(6, false) end,
-	['<Leader>7']      = function() bl.go_to(7, false) end,
-	['<Leader>8']      = function() bl.go_to(8, false) end,
-	['<Leader>9']      = function() bl.go_to(-1, true) end,
-	-- ['<Leader>0']      = function() bl.go_to( 1, true) end,
+	['<Leader>1']      = function() bl.go_to(1, true) end,
+	['<Leader>2']      = function() bl.go_to(2, true) end,
+	['<Leader>3']      = function() bl.go_to(3, true) end,
+	['<Leader>4']      = function() bl.go_to(4, true) end,
+	['<Leader>5']      = function() bl.go_to(5, true) end,
+	['<Leader>6']      = function() bl.go_to(6, true) end,
+	['<Leader>7']      = function() bl.go_to(7, true) end,
+	['<Leader>8']      = function() bl.go_to(8, true) end,
+	['<Leader>9']      = function() bl.go_to(9, true) end,
+	['<Leader>0']      = function() bl.go_to(-1, true) end,
 }
 
 M.gitsigns   = require('user.settings.keymaps.gitsigns')

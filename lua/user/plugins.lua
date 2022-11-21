@@ -100,8 +100,8 @@ local plugins = {
 
 	quality_of_life = {
 		themeing = {
-			{ 'jlcrochet/vim-razor',                          -- Attempt to edit razor with neovim
-				commit = nil },
+			-- { 'jlcrochet/vim-razor',                          -- Attempt to edit razor with neovim
+			-- 	commit = nil },
 			{ 'LunarVim/colorschemes',                        -- a bunch of colorschemes
 				commit = nil },
 			-- { 'folke/tokyonight.nvim',                        -- TokyoNight theme
