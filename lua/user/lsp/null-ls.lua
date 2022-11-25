@@ -30,14 +30,11 @@ nls.setup {
 		-- nls.builtins.diagnostics.shellcheck,  -- Mason
 		-- nls.builtins.diagnostics.tsc,
 		nls.builtins.diagnostics.xo,  -- Js/Ts
-		nls.builtins.diagnostics.php,  -- php 
-		nls.builtins.diagnostics.proselint,  -- markdown 
 
 		nls.builtins.formatting.gdformat,
 		nls.builtins.formatting.jq,
 		nls.builtins.formatting.nginx_beautifier,
 		nls.builtins.formatting.tidy,  -- HTML/XML
-		nls.builtins.formatting.prettier,  -- markdown formatting 
-		nls.builtins.formatting.pint,  -- php
+		nls.builtins.formatting.prettier,
 	},
 }
