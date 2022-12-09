@@ -57,8 +57,8 @@ map('n', '<C-Left>' , [[2<C-w><]])
 map('n', '<C-Right>', [[2<C-w>>]])
 
 -- Navigate buffers
-map('n', '<C-n>', [[<Cmd>bnext<CR>]])
-map('n', '<C-p>', [[<Cmd>bprev<CR>]])
+-- map('n', '<C-n>', [[<Cmd>bnext<CR>]])
+-- map('n', '<C-p>', [[<Cmd>bprev<CR>]])
 
 
 -- nvim-tree
@@ -272,8 +272,8 @@ local bl = require('lazy').require_on_exported_call('bufferline')
 M.bufferline = {
 	['<localleader>bq'] = bl.close_with_pick,
 	['<localleader>bb'] = bl.pick_buffer,
-	['[b']         = function() bl.cycle(-1) end,
-	[']b']         = function() bl.cycle( 1) end,
+	['<C-n>']         = function() bl.cycle(-1) end,
+	['<C-p>']         = function() bl.cycle( 1) end,
 	['<Leader>1']      = function() bl.go_to(1, true) end,
 	['<Leader>2']      = function() bl.go_to(2, true) end,
 	['<Leader>3']      = function() bl.go_to(3, true) end,
