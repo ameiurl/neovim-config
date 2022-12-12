@@ -26,7 +26,6 @@ bufferline.setup {
 		modified_icon            = 'ﰣ',
 		left_trunc_marker        = 'ﲑ',
 		right_trunc_marker       = 'ﲒ',
-		persist_buffer_sort 	 = false, -- whether or not custom sorted buffers should persist
 		indicator = {
 			style = 'icon',
 			icon = '▌',
