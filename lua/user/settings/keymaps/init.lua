@@ -286,9 +286,6 @@ M.bufferline = {
 	['<Leader>0']      = function() bl.go_to(-1, true) end,
 }
 
-map('n', '<C-]>',    '<Cmd>BufferLineMoveNext<CR>',     { desc = 'Move Buffer Right'  })
-map('n', '<C-[>',    '<Cmd>BufferLineMovePrev<CR>',     { desc = 'Move Buffer Left'   })
-
 M.gitsigns   = require('user.settings.keymaps.gitsigns')
 M.lsp_setup  = require('user.settings.keymaps.lsp')
 M.telescope  = require('user.settings.keymaps.telescope')
