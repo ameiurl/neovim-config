@@ -21,7 +21,7 @@ function M.insert(actions)
 		['<CR>'] = actions.select_default,
 		['<C-x>'] = actions.select_horizontal,
 		['<C-v>'] = actions.select_vertical,
-		['<C-t>'] = actions.select_tab,
+		-- ['<C-t>'] = actions.select_tab,
 
 		['<C-u>'] = actions.results_scrolling_up,
 		['<C-d>'] = actions.results_scrolling_down,
@@ -33,7 +33,7 @@ function M.insert(actions)
 		['<S-Tab>'] = actions.toggle_selection + actions.move_selection_better,
 		['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
 		['<A-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
-		['<C-T>'] = lazytrouble.open_with_trouble,
+		['<C-t>'] = lazytrouble.open_with_trouble,
 		['<C-l>'] = actions.complete_tag,
 		['<C-_>'] = actions.which_key,   -- keys from pressing <C-/> (what?)
 	}
@@ -45,13 +45,13 @@ function M.normal(actions)
 		['<C-e>'] = actions.close,  -- redundant, don't use.  Only here because I'm retarded
 		['<C-x>'] = actions.select_horizontal,
 		['<C-v>'] = actions.select_vertical,
-		['<C-t>'] = actions.select_tab,
+		-- ['<C-t>'] = actions.select_tab,
 
 		['<Tab>'] = actions.toggle_selection + actions.move_selection_worse,
 		['<S-Tab>'] = actions.toggle_selection + actions.move_selection_better,
 		['<C-q>'] = actions.send_to_qflist + actions.open_qflist,
 		['<A-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
-		['<C-T>'] = lazytrouble.open_with_trouble,
+		['<C-t>'] = lazytrouble.open_with_trouble,
 
 		['<Down>'] = actions.move_selection_next,
 		['<Up>']   = actions.move_selection_previous,
