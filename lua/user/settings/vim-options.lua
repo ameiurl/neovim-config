@@ -61,6 +61,13 @@ vim.g.shada = "'0f0"          -- what to save in the ShaDa file
 vim.cmd [[
 	set nofixendofline  "Disable automatic line wrapping at the end of the file
 
+	" 卡顿问题
+	set lazyredraw "should make scrolling faster"
+	set ttyfast "same as above"
+
+	" 显示整个单词
+	set linebreak
+
 	" 插入模式下用绝对行号, 普通模式下用相对
 	autocmd InsertEnter * :set norelativenumber number
 	autocmd InsertLeave * :set relativenumber
