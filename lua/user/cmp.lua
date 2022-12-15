@@ -35,15 +35,24 @@ local kind_icons = {
 }
 -- find more at https://www.nerdfonts.com/cheat-sheet
 
+local feedkey = function(key, mode)
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 cmp.setup {
+	-- snippet = {
+	-- 	expand = function(args)
+	-- 		luasnip.lsp_expand(args.body)
+	-- 	end,
+	-- },
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body)
+			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
 		end,
 	},
 
@@ -80,10 +89,12 @@ cmp.setup {
 					behavior = cmp.ConfirmBehavior.Replace,
 					select = true,
 				})()
-			elseif luasnip.expandable() then
-				luasnip.expand()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
+			-- elseif luasnip.expandable() then
+			-- 	luasnip.expand()
+			-- elseif luasnip.expand_or_jumpable() then
+			-- 	luasnip.expand_or_jump()
+			elseif vim.fn["vsnip#available"](1) == 1 then
+				feedkey("<Plug>(vsnip-expand-or-jump)", "")
 			elseif has_words_before() then
 				cmp.complete()
 			elseif check_backspace() then
@@ -125,7 +136,8 @@ cmp.setup {
 	sources = {
 		{ name = 'nvim_lsp' },
 		{ name = 'nvim_lua' },
-		{ name = 'luasnip' },
+		-- { name = 'luasnip' },
+		{ name = "vsnip" }, -- For vsnip users.
 		{ name = 'buffer' },
 		{ name = 'path' },
 	},
@@ -156,3 +168,6 @@ cmp.setup.cmdline(':', {
 		{ name = 'path' }
 	}),
 })
+
+-- vsnip
+vim.g.vsnip_snippet_dir = os.getenv('HOME') .. "/.config/snippets"

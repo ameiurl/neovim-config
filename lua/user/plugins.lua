@@ -64,6 +64,10 @@ local plugins = {
 				vim.g.user_emmet_expandabbr_key='<C-o>'
 			end,
 		},
+		{ 'hrsh7th/cmp-vsnip',
+			commit = nil },
+		{ 'hrsh7th/vim-vsnip',
+			commit = nil },
 	},
 
 	lsp = {
