@@ -172,4 +172,4 @@ cmp.setup.cmdline(':', {
 })
 
 -- vsnip
-vim.g.vsnip_snippet_dir = os.getenv('HOME') .. "/.config/snippets"
+vim.g.vsnip_snippet_dir = os.getenv('HOME') .. "/.config/nvim/snippets"
