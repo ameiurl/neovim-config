@@ -92,14 +92,14 @@ local plugins = {
 	},
 
 	dap = {
-		{ 'mfussenegger/nvim-dap',                            -- DAP
-			commit = nil },
-		{ 'rcarriga/nvim-dap-ui',                             -- DAP UI
-			commit = nil },
-		{ 'theHamsta/nvim-dap-virtual-text',                  -- DAP Virtual Text
-			commit = nil },
-		{ 'nvim-telescope/telescope-dap.nvim',
-			commit = nil },
+		-- { 'mfussenegger/nvim-dap',                            -- DAP
+		-- 	commit = nil },
+		-- { 'rcarriga/nvim-dap-ui',                             -- DAP UI
+		-- 	commit = nil },
+		-- { 'theHamsta/nvim-dap-virtual-text',                  -- DAP Virtual Text
+		-- 	commit = nil },
+		-- { 'nvim-telescope/telescope-dap.nvim',
+		-- 	commit = nil },
 	},
 
 	quality_of_life = {
@@ -116,8 +116,8 @@ local plugins = {
 				commit = nil },
 			{ 'Darazaki/indent-o-matic',                      -- Auto-detect buffer indentation
 				commit = nil },
-			{ 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
-				commit = nil },
+			-- { 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
+			-- 	commit = nil },
 			{ 'psliwka/vim-smoothie',                		  -- scrolling page effect
 				commit = nil },
 			{ 'machakann/vim-highlightedyank',                -- copy effect 
