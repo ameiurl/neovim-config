@@ -68,6 +68,10 @@ vim.cmd [[
 	" 显示整个单词
 	set linebreak
 
+	" 自动判断编码时，依次尝试以下编码：
+	set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+	set helplang=cn
+
 	" 插入模式下用绝对行号, 普通模式下用相对
 	autocmd InsertEnter * :set norelativenumber number
 	autocmd InsertLeave * :set relativenumber

@@ -50,14 +50,14 @@ local plugins = {
 			commit = nil },
 		{ 'hrsh7th/cmp-cmdline',                              -- Command line completion
 			commit = nil },
-		{ 'L3MON4D3/LuaSnip',                                 -- Snippet engine
-			commit = nil },
-		{ 'saadparwaiz1/cmp_luasnip',                         -- Snippet completion
-			commit = nil },
-		{ 'rafamadriz/friendly-snippets',                     -- A bunch of snippets
-			commit = nil },
-		{ 'hrsh7th/cmp-nvim-lua',                             -- Lua support for nvim-cmp
-			commit = nil },
+		-- { 'L3MON4D3/LuaSnip',                                 -- Snippet engine
+		-- 	commit = nil },
+		-- { 'saadparwaiz1/cmp_luasnip',                         -- Snippet completion
+		-- 	commit = nil },
+		-- { 'rafamadriz/friendly-snippets',                     -- A bunch of snippets
+			-- commit = nil },
+		-- { 'hrsh7th/cmp-nvim-lua',                             -- Lua support for nvim-cmp
+		-- 	commit = nil },
 		{ 'mattn/emmet-vim',
 			commit = nil,
 			config = function()
