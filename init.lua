@@ -2,10 +2,17 @@
 require 'user.plugins'
 require 'user.settings'
 
+-- Default configurations
+require 'impatient'
+require('fidget').setup()
+-- require('colorizer').setup()
+require('guess-indent').setup()
+
 -- Editing & Completion
 require 'user.cmp'
-require 'user.lsp'
 require 'user.comment'
+require 'user.autopairs'
+require 'user.lsp'
 
 -- Layout & Tools
 require 'user.nvim-tree'
@@ -13,17 +20,12 @@ require 'user.symbols-outline'
 require 'user.telescope'
 require 'user.trouble'
 require 'user.bufferline'
-require 'user.nvim-autopairs'
 
 -- Buffer Enhancements
 require 'user.treesitter'
+-- require 'user.scrollbar'
 require 'user.gitsigns'
 require 'user.illuminate'
 require 'user.indent-blankline'
 require 'user.galaxyline'
 
--- Default configurations
-require 'impatient'
-require 'indent-o-matic'
-require('fidget').setup()
--- require('colorizer').setup()

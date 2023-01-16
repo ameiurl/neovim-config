@@ -114,8 +114,12 @@ local plugins = {
 				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
 				commit = nil },
-			{ 'Darazaki/indent-o-matic',                      -- Auto-detect buffer indentation
-				commit = nil },
+			{ 'NMAC427/guess-indent.nvim',                    -- Auto-detect buffer indentation
+				commit = nil,
+				config = function()
+					require('guess-indent').setup {}
+				end,
+			},
 			-- { 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
 			-- 	commit = nil },
 			{ 'psliwka/vim-smoothie',                		  -- scrolling page effect
@@ -140,6 +144,8 @@ local plugins = {
 					vim.g.matchup_matchparen_offscreen = {}
 				end,
 			},
+			{ 'windwp/nvim-autopairs',                        -- Automagically match punctuation pairs
+				commit = nil },
 			{ 'iamcco/markdown-preview.nvim',                 -- Markdown previewer in web browser
 				commit = nil,
 				run = function() vim.fn['mkdp#util#install']() end,
@@ -177,8 +183,6 @@ local plugins = {
 					vim.g.suda_smart_edit=1
 				end,
 			},
-			{ 'windwp/nvim-autopairs',
-				commit = nil },
 			{ 'brooth/far.vim',
 				commit = nil },
 		},
@@ -187,6 +191,8 @@ local plugins = {
 			--	commit = nil },
 			{ 'lewis6991/gitsigns.nvim',                      -- Git Signs
 				commit = nil },
+			-- { 'petertriho/nvim-scrollbar',                    -- Buffer scroll bar
+			-- 	commit = nil, },
 			{ 'simrat39/symbols-outline.nvim',                -- Symbols outliner
 				commit = nil },
 			{ 'akinsho/bufferline.nvim',                      -- Bufferline - Tabs, but buffers!
@@ -198,6 +204,10 @@ local plugins = {
 				branch = 'main',
 				requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 			},
+			-- { 'SmiteshP/nvim-navic',                          -- Winbar plugin to show context
+			-- 	commit = nil,
+			-- 	requires = 'neovim/nvim-lspconfig',
+			-- },
 			{ 'tpope/vim-fugitive',
 				commit = nil },
 		},
@@ -205,7 +215,7 @@ local plugins = {
 
 	treesitter = {
 		{ 'nvim-treesitter/nvim-treesitter',
-			commit = '27cba73df9ddca00c066c7ebb514576a99bb8b2c',
+			commit = nil,
 			run = function()
 				require('nvim-treesitter.install').update({ with_sync = true })
 			end,

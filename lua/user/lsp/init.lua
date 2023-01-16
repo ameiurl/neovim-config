@@ -59,3 +59,5 @@ require('lspconfig').gdscript.setup {
 
 require 'user.lsp.mason'
 require 'user.lsp.null-ls'
+
+-- require('user.lsp.navic').setup()
