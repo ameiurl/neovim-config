@@ -4,7 +4,7 @@ if not cmp_status_ok then
 	return
 end
 
-local luasnip = require('lazy').require_on_exported_call('user.luasnip')
+local luasnip = require('lazy-require').require_on_exported_call('user.luasnip')
 
 local kind_icons = {
 	Class         = '',

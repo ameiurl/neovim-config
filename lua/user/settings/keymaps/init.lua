@@ -72,7 +72,7 @@ end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
 map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
 
 -- telescope
-local lazyscope = require('lazy').require_on_exported_call('telescope.builtin')
+local lazyscope = require('lazy-require').require_on_exported_call('telescope.builtin')
 map('n', '<leader>ta', lazyscope.live_grep, { desc = "Telescope live-grep all files" })
 map('n', '<leader>to', function() lazyscope.live_grep { grep_open_files = true } end, {
 	desc = "Telescope live-grep only open buffers",
@@ -137,7 +137,7 @@ map('n', '<leader>gg', [[<Cmd>LazyGit<CR>]])
 map('n', '<localleader>f', [[:Far  **/*.php<left><left><left><left><left><left><left><left><left>]])
 
 -- DAP
-local lazydap = require('lazy').require_on_exported_call 'dap'
+local lazydap = require('lazy-require').require_on_exported_call 'dap'
 map('n', '<F5>', lazydap.continue,                { desc = "DAP continue" })
 map('n', '<F10>', lazydap.step_over,              { desc = "DAP step over" })
 map('n', '<F11>', lazydap.step_into,              { desc = "DAP step into" })
@@ -268,7 +268,7 @@ M.nvim_tree = {
 	[']d'] = function() require('nvim-tree.api').node.navigate.diagnostics.next() end,
 }
 
-local bl = require('lazy').require_on_exported_call('bufferline')
+local bl = require('lazy-require').require_on_exported_call('bufferline')
 M.bufferline = {
 	['<localleader>bq'] = bl.close_with_pick,
 	['<localleader>bb'] = bl.pick_buffer,

@@ -26,7 +26,7 @@ ts.setup {
 	},
 	indent = {
 		enable = true,
-		disable = { "yaml" },
+		disable = { "html" },
 	},
 
 	-- third-party plugins

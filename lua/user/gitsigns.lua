@@ -25,8 +25,3 @@ gitsigns.setup {
 
 	on_attach = require('user.settings.keymaps').gitsigns
 }
-
--- if package.preload.scrollbar then
--- 	require('scrollbar.handlers.gitsigns').setup()
--- end
-
