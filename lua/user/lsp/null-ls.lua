@@ -26,7 +26,7 @@ nls.setup {
 		-- nls.builtins.diagnostics.gccdiag,  -- TODO: Can't build this fuckin thing because of a Conan error
 		-- nls.builtins.diagnostics.gdlint,  -- This thing bitches too much about my style choices
 		-- nls.builtins.diagnostics.haml_lint,
-		nls.builtins.diagnostics.tidy,  -- HTML/XML
+		-- nls.builtins.diagnostics.tidy,  -- HTML/XML
 		-- nls.builtins.diagnostics.shellcheck,  -- Mason
 		-- nls.builtins.diagnostics.tsc,
 		nls.builtins.diagnostics.xo,  -- Js/Ts
@@ -34,7 +34,7 @@ nls.setup {
 		nls.builtins.formatting.gdformat,
 		nls.builtins.formatting.jq,
 		nls.builtins.formatting.nginx_beautifier,
-		nls.builtins.formatting.tidy,  -- HTML/XML
+		-- nls.builtins.formatting.tidy,  -- HTML/XML
 		nls.builtins.formatting.prettier,
 	},
 }
