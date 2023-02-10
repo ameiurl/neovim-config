@@ -28,4 +28,3 @@ require 'user.gitsigns'
 require 'user.illuminate'
 require 'user.indent-blankline'
 require 'user.galaxyline'
-
