@@ -4,7 +4,7 @@ local options = {
 	backup         = false,                           -- creates a backup file
 	clipboard      = "unnamedplus",                   -- uses the system clipboard
 	cmdheight      = 1,                               -- space in cmdline for messages
-	colorcolumn    = "+1",                            -- marks desired rightmost document edge
+	-- colorcolumn    = "+1",                            -- marks desired rightmost document edge
 	completeopt    = { "menuone", "noselect" },       -- cmp stuff
 	conceallevel   = 0,                               -- makes `` visible in markdown
 	cursorline     = true,                            -- underline the whole line at cursor
@@ -16,14 +16,14 @@ local options = {
 	ignorecase     = true,                            -- case sensitivity in search
 	joinspaces     = true,                            -- Use two spaces when joining sentences
 	laststatus     = 2,                               -- global statusline at the bottom of nvim
-	list           = false,                            --
+	list           = false,                           -- 显示space,tabs,newlines,trailing space,wrapped lines等不可见字符
 	-- listchars      = "tab:ﬀ ,lead:·,trail:¶",         -- postemptive space example:       
 	mouse          = "a",                             -- allows sacrilege
 	number         = true,                            -- show the line number in the gutter
 	numberwidth    = 4,                               -- width of numberline gutter (default 4)
 	pumheight      = 15,                              -- pop up menu height
-	relativenumber = true,                            -- show line numbers as offset from cursor
-	scrolloff      = 4,                               -- top/bottom line margin from cursor
+	-- relativenumber = true,                            -- show line numbers as offset from cursor
+	scrolloff      = 7,                               -- top/bottom line margin from cursor
 	shiftwidth     = 4,                               -- charcount of "one indentation"
 	shortmess      = "a",                             -- how to display messages in the msg line
 	showmode       = true,                            -- shows current editing mode
@@ -40,9 +40,14 @@ local options = {
 	--textwidth      = 120,                             -- sets desired document width
 	timeoutlen     = 400,                             -- leader timeout in msec
 	undofile       = false,                           -- persistent undo file
-	updatetime     = 200,                             -- faster completion (400ms default)
-	wrap           = true,                           -- word-wrap long lines
+	-- updatetime     = 200,                             -- faster completion (400ms default)
+	wrap           = true,                            -- word-wrap long lines
 	writebackup    = false,                           -- when a file is open by other program
+	linebreak 	   = true, 							  -- 显示整个单词
+	lazyredraw 	   = true, 							  -- should make scrolling faster
+	ttyfast 	   = true, 							  -- same as above
+	fileencodings  = "ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1",
+	helplang       = "cn",
 }
 vim.opt.iskeyword:append "-"   -- add '-' to iskeyword chars
 
@@ -60,17 +65,6 @@ vim.g.shada = "'0f0"          -- what to save in the ShaDa file
 
 vim.cmd [[
 	set nofixendofline  "Disable automatic line wrapping at the end of the file
-
-	" 卡顿问题
-	set lazyredraw "should make scrolling faster"
-	set ttyfast "same as above"
-
-	" 显示整个单词
-	set linebreak
-
-	" 自动判断编码时，依次尝试以下编码：
-	set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-	set helplang=cn
 
 	" 插入模式下用绝对行号, 普通模式下用相对
 	autocmd InsertEnter * :set norelativenumber number
