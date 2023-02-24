@@ -171,3 +171,19 @@ vim.api.nvim_create_autocmd('BufEnter', {
 	pattern = 'NvimTree*',
 	callback = function() require('nvim-tree.api').tree.reload() end,
 })
+
+-- Recipe for opening on startup:
+vim.api.nvim_create_autocmd('VimEnter', {
+	group = vim.api.nvim_create_augroup('NvimTreeAutoOpen', { clear = true }),
+	desc = 'Open nvim-tree on startup',
+	callback = function(opts)
+		local directory = vim.fn.isdirectory(opts.file) == 1
+		if not directory then
+			return
+		end
+
+		vim.cmd.cd(opts.file)
+
+		require('nvim-tree.api').tree.open()
+	end,
+})

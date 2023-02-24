@@ -17,7 +17,12 @@ local base_opts = {
 
 mason.setup()
 
-mason_lsp.setup()
+mason_lsp.setup {
+	ensure_installed = {
+		"lua_ls",
+		"vimls",
+	},
+}
 mason_lsp.setup_handlers {
 	-- Automatically invoke lspconfig setup for every installed LSP server
 	function (server_name)
