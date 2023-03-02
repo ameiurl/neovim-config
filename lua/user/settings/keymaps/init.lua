@@ -62,14 +62,14 @@ map('n', '<C-p>', [[<Cmd>bprev<CR>]])
 
 
 -- nvim-tree
-map('n', '<leader>e', function()
-	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
-		vim.api.nvim_command [[Lex 30]]
-	end
-end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
+-- map('n', '<leader>e', function()
+-- 	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
+-- 		vim.api.nvim_command [[Lex 30]]
+-- 	end
+-- end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
 
 -- symbol
-map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
+map('n', '<leader>e', [[<Cmd>SymbolsOutline<CR>]])
 
 -- telescope
 local lazyscope = require('lazy-require').require_on_exported_call('telescope.builtin')
@@ -215,7 +215,7 @@ map('x', '<C-r>', replace_all, { desc = "Replace all selected text in buffer" })
 map('n', '<leader>`', [[<Cmd>botright split+terminal<CR>]])
 
 -- Window switch from terminal
-map('t', '<A-Esc>', [[<Cmd>stopinsert<CR>]])
+map('t', '<C-Esc>', [[<Cmd>stopinsert<CR>]])
 
 -- vim-expand-region
 map('v', 'v', [[<Plug>(expand_region_expand)]])
@@ -228,19 +228,15 @@ map('v', '<Leader>a', [[<Plug>(EasyAlign)]])
 -- vim-eft
 map('n', ';', [[<Plug>(eft-repeat)]])
 map('x', ';', [[<Plug>(eft-repeat)]])
-
 map('n', 'f', [[<Plug>(eft-f)]])
 map('x', 'f', [[<Plug>(eft-f)]])
 map('o', 'f', [[<Plug>(eft-f)]])
-
 map('n', 'F', [[<Plug>(eft-F)]])
 map('x', 'F', [[<Plug>(eft-F)]])
 map('o', 'F', [[<Plug>(eft-F)]])
-
 map('n', 't', [[<Plug>(eft-t)]])
 map('x', 't', [[<Plug>(eft-t)]])
 map('o', 't', [[<Plug>(eft-t)]])
-
 map('n', 'T', [[<Plug>(eft-T)]])
 map('x', 'T', [[<Plug>(eft-T)]])
 map('o', 'T', [[<Plug>(eft-T)]])
