@@ -166,14 +166,16 @@ local plugins = {
 				commit = nil,
 				config = function()
 					vim.g.VM_maps = {
-						["Find Under"]         = '<C-c>',
-						["Find Subword Under"] = '<C-c>',
+						["Find Under"]         = '<C-m>',
+						["Find Subword Under"] = '<C-m>',
 						["Find Next"]          = '',
 						['Find Prev']          = '',
 						['Remove Region']      = 'q',
 						['Skip Region']        = '<c-x>',
 						["Undo"]               = 'l',
 						["Redo"]               = '<C-r>',
+						["Add Cursor Down"]    = '<A-Down>',
+						["Add Cursor Up"]      = '<A-Up>',
 					}
 				end,
 			},
