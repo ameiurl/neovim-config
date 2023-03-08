@@ -4,7 +4,7 @@ require 'user.settings'
 
 -- Default configurations
 require 'impatient'
-require('fidget').setup()
+-- require('fidget').setup()
 -- require('colorizer').setup()
 require('guess-indent').setup()
 
@@ -26,5 +26,5 @@ require 'user.treesitter'
 -- require 'user.scrollbar'
 require 'user.gitsigns'
 require 'user.illuminate'
-require 'user.indent-blankline'
+-- require 'user.indent-blankline'
 require 'user.galaxyline'

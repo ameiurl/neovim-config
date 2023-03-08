@@ -83,12 +83,12 @@ local plugins = {
 			commit = nil },
 		-- { 'Hoffs/omnisharp-extended-lsp.nvim',                -- Omnisharp specific bullshit
 		-- 	commit = nil },
-		{ 'jose-elias-alvarez/null-ls.nvim',                  -- Null LS
-			commit = nil },
-		--  { 'ThePrimeagen/refactoring.nvim',                   -- Refactoring
+		-- { 'jose-elias-alvarez/null-ls.nvim',                  -- Null LS
 		-- 	commit = nil },
-		{ 'j-hui/fidget.nvim',                                -- LSP Progress fidget spinner
-			commit = nil },
+		-- { 'ThePrimeagen/refactoring.nvim',                   -- Refactoring
+		-- 	commit = nil },
+		-- { 'j-hui/fidget.nvim',                                -- LSP Progress fidget spinner
+			-- commit = nil },
 	},
 
 	dap = {
@@ -156,13 +156,13 @@ local plugins = {
 			},
 			{ 'hrsh7th/vim-eft',
 				commit = nil },
-			{ 'kshenoy/vim-signature',
+			{ 'kshenoy/vim-signature',   					  -- a plugin to place, toggle and display marks
 				commit = nil },
-			{ 'terryma/vim-expand-region',
+			{ 'terryma/vim-expand-region',  				  -- Select increasingly larger regions of text using the same key combination
 				commit = nil },
-			{ 'junegunn/vim-easy-align',
+			{ 'junegunn/vim-easy-align', 					  -- A simple, easy-to-use Vim alignment plugin	
 				commit = nil },
-			{ 'mg979/vim-visual-multi',
+			{ 'mg979/vim-visual-multi', 					  -- It's called vim-visual-multi in analogy with visual-block
 				commit = nil,
 				config = function()
 					vim.g.VM_maps = {
@@ -206,10 +206,6 @@ local plugins = {
 				branch = 'main',
 				requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 			},
-			-- { 'SmiteshP/nvim-navic',                          -- Winbar plugin to show context
-			-- 	commit = nil,
-			-- 	requires = 'neovim/nvim-lspconfig',
-			-- },
 			{ 'tpope/vim-fugitive',
 				commit = nil },
 		},
