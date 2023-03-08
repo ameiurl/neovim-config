@@ -40,6 +40,7 @@ map('n', 'g*', [[g*zz]])
 -- map('n', '<S-k>', [[<Cmd>move .-2<CR>==]])
 
 -- Bbye commands
+map('n', '<Leader>q', [[<Cmd>:q<CR>]])
 map('n', '<C-q>', [[<Cmd>Bdelete<CR>]])
 map('n', '<Leader>d', [[<Cmd>Bdelete<CR>]])
 map('n', '<C-o>', [[<Cmd>b#<CR>]])
