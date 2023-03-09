@@ -154,10 +154,6 @@ local plugins = {
 				ft = 'markdown',
 				opt = true,
 			},
-			{ 'hrsh7th/vim-eft',
-				commit = nil },
-			{ 'kshenoy/vim-signature',   					  -- a plugin to place, toggle and display marks
-				commit = nil },
 			{ 'terryma/vim-expand-region',  				  -- Select increasingly larger regions of text using the same key combination
 				commit = nil },
 			{ 'junegunn/vim-easy-align', 					  -- A simple, easy-to-use Vim alignment plugin	
@@ -179,12 +175,8 @@ local plugins = {
 					}
 				end,
 			},
-			{ 'lambdalisue/suda.vim',
-				commit = nil,
-				config = function()
-					vim.g.suda_smart_edit=1
-				end,
-			},
+			{ 'hrsh7th/vim-eft',
+				commit = nil },
 			{ 'brooth/far.vim',
 				commit = nil },
 		},
@@ -208,6 +200,14 @@ local plugins = {
 			},
 			{ 'tpope/vim-fugitive',
 				commit = nil },
+			{ 'kshenoy/vim-signature',   					  -- a plugin to place, toggle and display marks
+				commit = nil },
+			{ 'lambdalisue/suda.vim',
+				commit = nil,
+				config = function()
+					vim.g.suda_smart_edit=1
+				end,
+			},
 		},
 	},
 
