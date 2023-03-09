@@ -51,6 +51,8 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 	border = "rounded",
 })
 
+require('lspconfig.ui.windows').default_options.border = "rounded"
+
 local handlers = require('user.lsp.handlers')
 require('lspconfig').gdscript.setup {
 	on_attach    = handlers.on_attach,

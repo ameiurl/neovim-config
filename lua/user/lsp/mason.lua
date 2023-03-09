@@ -15,14 +15,19 @@ local base_opts = {
 	capabilities = require('user.lsp.handlers').capabilities,
 }
 
-mason.setup()
+mason.setup {
+	ui = {
+		border = "rounded",
+	},
+}
 
 mason_lsp.setup {
 	ensure_installed = {
-		"lua_ls",
-		"vimls",
+		-- "lua_ls",
+		-- "vimls",
 	},
 }
+
 mason_lsp.setup_handlers {
 	-- Automatically invoke lspconfig setup for every installed LSP server
 	function (server_name)
