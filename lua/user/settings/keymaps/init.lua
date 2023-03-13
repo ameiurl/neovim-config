@@ -63,14 +63,31 @@ map('n', '<C-p>', [[<Cmd>bprev<CR>]])
 
 
 -- nvim-tree
--- map('n', '<leader>e', function()
--- 	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
--- 		vim.api.nvim_command [[Lex 30]]
--- 	end
--- end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
+map('n', '<Tab>', [[<Cmd>NvimTreeToggle<CR>]])
+map('n', '<leader>e', function()
+	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
+		vim.api.nvim_command [[Lex 30]]
+	end
+end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
+
+vim.g.nvim_tree_width = 45
+local g = vim.g
+
+function _G.inc_width_ind()
+    g.nvim_tree_width = g.nvim_tree_width + 5
+    return g.nvim_tree_width
+end
+
+function _G.dec_width_ind()
+    g.nvim_tree_width = g.nvim_tree_width - 5
+    return g.nvim_tree_width
+end
+
+map('n', '<C-Left>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.dec_width_ind()<CR>]])
+map('n', '<C-Right>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.inc_width_ind()<CR>]])
 
 -- symbol
-map('n', '<leader>e', [[<Cmd>SymbolsOutline<CR>]])
+map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
 
 -- telescope
 local lazyscope = require('lazy-require').require_on_exported_call('telescope.builtin')
@@ -283,6 +300,7 @@ M.bufferline = {
 	['<Leader>0']      = function() bl.go_to(-1, true) end,
 }
 
+M.nvim_tree  = require('user.settings.keymaps.nvim_tree')
 M.gitsigns   = require('user.settings.keymaps.gitsigns')
 M.lsp_setup  = require('user.settings.keymaps.lsp')
 M.telescope  = require('user.settings.keymaps.telescope')
