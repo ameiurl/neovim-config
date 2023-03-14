@@ -198,7 +198,7 @@ local plugins = {
 				branch = 'main',
 				requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 			},
-			{ 'tpope/vim-fugitive',
+			{ 'tpope/vim-fugitive', 						  -- it's the premier Git plugin for Vim
 				commit = nil },
 			{ 'kshenoy/vim-signature',   					  -- a plugin to place, toggle and display marks
 				commit = nil },
