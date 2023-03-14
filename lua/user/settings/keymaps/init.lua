@@ -277,11 +277,6 @@ M.symbols_outline = {
 	fold_reset     = 'R',
 }
 
-M.nvim_tree = {
-	['[d'] = function() require('nvim-tree.api').node.navigate.diagnostics.prev() end,
-	[']d'] = function() require('nvim-tree.api').node.navigate.diagnostics.next() end,
-}
-
 local bl = require('lazy-require').require_on_exported_call('bufferline')
 M.bufferline = {
 	['<localleader>bq'] = bl.close_with_pick,
