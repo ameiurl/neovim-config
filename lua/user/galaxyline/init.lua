@@ -191,7 +191,15 @@ U.section('right', {
 		condition = function()
 			return U.buffer_not_empty() and vim.bo.buftype ~= 'terminal'
 		end,
-		provider = function() return ' ' .. vim.bo.filetype .. ' ' end,
+		provider = function()
+			local ft = vim.bo.filetype
+			if ft == 'typescriptreact' then
+				ft = 'tsx'
+			elseif ft == 'javascriptreact' then
+				ft = 'jsx'
+			end
+			return ' ' .. ft .. ' '
+		end,
 		highlight = {
 			function() return mode.primary end,
 			function() return mode.dark end,
@@ -218,18 +226,6 @@ U.section('right', {
 			function() return mode.primary end,
 			function() return mode.dark end,
 			function() return 'bold' end,
-		},
-	}
-})
-U.section('right', {
-	LinePercentage = {
-		condition = function() return vim.bo.buftype ~= 'terminal' end,
-		provider = function()
-			return string.format("%.0f", vim.fn.line('.')*100 / vim.fn.line('$')) .. '%'
-		end,
-		highlight = {
-			function() return mode.primary end,
-			function() return mode.dark end,
 		},
 	}
 })
