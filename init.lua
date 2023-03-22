@@ -23,7 +23,6 @@ require 'user.bufferline'
 
 -- Buffer Enhancements
 require 'user.treesitter'
--- require 'user.scrollbar'
 require 'user.gitsigns'
 require 'user.illuminate'
 -- require 'user.indent-blankline'
