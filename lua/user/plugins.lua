@@ -62,12 +62,6 @@ local plugins = {
 			commit = nil },
 		{ 'hrsh7th/vim-vsnip',
 			commit = nil },
-		{ 'mattn/emmet-vim',
-			commit = nil,
-			config = function()
-				vim.g.user_emmet_expandabbr_key='<C-o>'
-			end,
-		},
 	},
 
 	lsp = {
