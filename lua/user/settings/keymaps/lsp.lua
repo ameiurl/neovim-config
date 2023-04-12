@@ -41,20 +41,21 @@ return function(client, bufnr)
 		vim.keymap.set(mode, lhs, rhs, opts)
 	end
 
-	map('n', 'gH',      vim.lsp.buf.hover,            { desc = "LSP show information about symbol under cursor" })
-	map('n', 'gl', try_fancy("lsp_references"),  { desc = "LSP list references" })
-	map('n', '<F4>',  vim.lsp.buf.code_action,      { desc = "LSP code actions" })
-	map('n', '<localleader>e',  vim.diagnostic.open_float,    { desc = "Show line diagnostics" })
-	map('n', '<localleader>q',  vim.diagnostic.setloclist,    { desc = "Show line diagnostics" })
-	map('n', 'go', (function()
-		if client.name == 'omnisharp' then
-			-- Override general <C-]> mapping for default vim one,
-			-- since omnisharp_extended doesn't work with Telescope or Trouble
-			return vim.lsp.buf.definition
-		else
-			return try_fancy("lsp_definitions")
-		end
-	end)(), { desc = "LSP go to definition" })
+	--- Custom actions from Hoffs/omnisharp-extended-lsp.nvim should be used when the client is Omnisharp
+	---@param method_name string
+	---@param opts? table
+	---@return function
+	local function maybe_omnisharp(method_name, opts)
+		return client.name == 'omnisharp'
+			and require('omnisharp_extended')[((opts or {}).telescope and 'telescope_' or '') .. method_name]
+			or try_fancy(method_name)
+	end
+
+	map('n', 'gH',      vim.lsp.buf.hover,         { desc = "LSP show information about symbol under cursor" })
+	map('n', '<F4>',  vim.lsp.buf.code_action,   { desc = "LSP code actions" })
+	map('n', '<localleader>e',  vim.diagnostic.open_float, { desc = "Show line diagnostics" })
+	map('n', 'gl', maybe_omnisharp('lsp_references',  { telescope = true }), { desc = "LSP list references" })
+	map('n', 'go',  maybe_omnisharp('lsp_definitions', { telescope = true }), { desc = "LSP go to definition" })
 
 	map({ 'n', 'i' }, '<C-k>', vim.lsp.buf.signature_help, { desc = "LSP signature help" })
 

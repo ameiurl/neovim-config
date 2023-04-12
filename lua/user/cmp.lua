@@ -50,16 +50,12 @@ cmp.setup {
 	-- 		luasnip.lsp_expand(args.body)
 	-- 	end,
 	-- },
+
 	snippet = {
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
 		end,
 	},
-
-	-- window = {
-	-- 	completion = cmp.config.window.bordered(),
-	-- 	documentation = cmp.config.window.bordered(),
-	-- },
 
 	mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
