@@ -6,7 +6,7 @@ require 'user.settings'
 require 'impatient'
 -- require('fidget').setup()
 -- require('colorizer').setup()
-require('guess-indent').setup()
+-- require('guess-indent').setup()
 
 -- Editing & Completion
 require 'user.cmp'

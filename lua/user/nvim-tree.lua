@@ -39,7 +39,7 @@ tree.setup {
 		width = "20%",
 		adaptive_size = false,
 		preserve_window_proportions = true,
-		hide_root_folder = true,
+		hide_root_folder = false,
 	},
 	renderer = {
 		add_trailing = true,
