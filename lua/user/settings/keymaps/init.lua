@@ -40,7 +40,7 @@ map('n', 'g*', [[g*zz]])
 -- map('n', '<S-k>', [[<Cmd>move .-2<CR>==]])
 
 -- Bbye commands
--- map('n', '<Leader>q', [[<Cmd>:q<CR>]])
+map('n', '<Leader>q', [[<Cmd>:q<CR>]])
 map('n', '<Leader>d', [[<Cmd>Bdelete<CR>]])
 map('n', '<C-o>', [[<Cmd>b#<CR>]])
 -- map('n', 'U', [[<C-r>]])
@@ -51,10 +51,10 @@ map('n', '<leader>w', [[:w<CR>]])
 map('n', '<leader>sa', [[ggVG]])
 
 -- Window resizing with CTRL-Arrowkey
-map('n', '<C-Up>'   , [[2<C-w>-]])
-map('n', '<C-Down>' , [[2<C-w>+]])
-map('n', '<C-Left>' , [[2<C-w><]])
-map('n', '<C-Right>', [[2<C-w>>]])
+map('n', '<C-S-Up>'   , [[2<C-w>-]])
+map('n', '<C-S-Down>' , [[2<C-w>+]])
+map('n', '<C-S-Left>' , [[2<C-w><]])
+map('n', '<C-S-Right>', [[2<C-w>>]])
 
 -- Navigate buffers
 map('n', '<C-n>', [[<Cmd>bnext<CR>]])
@@ -83,23 +83,23 @@ map('i', '<C-l>', [[<Right>]])
 map('x', 'p', [["_dP]])
 
 -- Collimate
-local function collimate()
-	vim.fn.inputsave()
-	local delimiter = vim.fn.input("Collimate on: ", '=')
-	vim.fn.inputrestore()
-	if #delimiter < 1 then
-		return
-	end
-	local cr = vim.api.nvim_replace_termcodes('<cr>', true, false, true)
-	delimiter:gsub('[^%d%s]%d*', function(d)
-		local l = #d > 1 and (' -l' .. d:sub(2)) or ''
-		local ch = d:sub(1,1):gsub('[\'\\"<>&|();#]', function(s) return '\\' .. s end)
-		local cmd = 'gv:!column -t ' .. l .. ' -s' .. ch .. ' -o' .. ch .. cr
-		vim.api.nvim_feedkeys(cmd, 'n', false)
-	end)
-end
-vim.api.nvim_create_user_command("Collimate", collimate, { range = '%' })
-map('x', '<leader>c', [[:Collimate<CR>]])
+-- local function collimate()
+-- 	vim.fn.inputsave()
+-- 	local delimiter = vim.fn.input("Collimate on: ", '=')
+-- 	vim.fn.inputrestore()
+-- 	if #delimiter < 1 then
+-- 		return
+-- 	end
+-- 	local cr = vim.api.nvim_replace_termcodes('<cr>', true, false, true)
+-- 	delimiter:gsub('[^%d%s]%d*', function(d)
+-- 		local l = #d > 1 and (' -l' .. d:sub(2)) or ''
+-- 		local ch = d:sub(1,1):gsub('[\'\\"<>&|();#]', function(s) return '\\' .. s end)
+-- 		local cmd = 'gv:!column -t ' .. l .. ' -s' .. ch .. ' -o' .. ch .. cr
+-- 		vim.api.nvim_feedkeys(cmd, 'n', false)
+-- 	end)
+-- end
+-- vim.api.nvim_create_user_command("Collimate", collimate, { range = '%' })
+-- map('x', '<leader>c', [[:Collimate<CR>]])
 
 -- Replace text command
 local function replace_all()
@@ -156,11 +156,11 @@ map('o', 'T', [[<Plug>(eft-T)]])
 
 -- nvim-tree
 map('n', '<Tab>', [[<Cmd>NvimTreeToggle<CR>]])
-map('n', '<leader>e', function()
-	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
-		vim.api.nvim_command [[Lex 30]]
-	end
-end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
+-- map('n', '<leader>e', function()
+-- 	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
+-- 		vim.api.nvim_command [[Lex 30]]
+-- 	end
+-- end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
 
 vim.g.nvim_tree_width = 45
 local g = vim.g
@@ -179,7 +179,7 @@ map('n', '<C-Left>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.dec_width_ind()<CR>]
 map('n', '<C-Right>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.inc_width_ind()<CR>]])
 
 -- symbol
-map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
+map('n', '<leader>e', [[<Cmd>SymbolsOutline<CR>]])
 
 -- telescope
 local lazyscope = require('lazy-require').require_on_exported_call('telescope.builtin')
