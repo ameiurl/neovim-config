@@ -40,11 +40,10 @@ map('n', 'g*', [[g*zz]])
 -- map('n', '<S-k>', [[<Cmd>move .-2<CR>==]])
 
 -- Bbye commands
-map('n', '<Leader>q', [[<Cmd>:q<CR>]])
--- map('n', '<C-q>', [[<Cmd>Bdelete<CR>]])
+-- map('n', '<Leader>q', [[<Cmd>:q<CR>]])
 map('n', '<Leader>d', [[<Cmd>Bdelete<CR>]])
 map('n', '<C-o>', [[<Cmd>b#<CR>]])
-map('n', 'U', [[<C-r>]])
+-- map('n', 'U', [[<C-r>]])
 map('n', 'gj', [[J]])
 map('n', 'gh', [[/<c-r>=expand("<cword>")<CR><CR>N]])
 map('n', '<leader>/', [[:nohls<CR>]])
@@ -62,113 +61,7 @@ map('n', '<C-n>', [[<Cmd>bnext<CR>]])
 map('n', '<C-p>', [[<Cmd>bprev<CR>]])
 
 
--- nvim-tree
-map('n', '<Tab>', [[<Cmd>NvimTreeToggle<CR>]])
-map('n', '<leader>e', function()
-	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
-		vim.api.nvim_command [[Lex 30]]
-	end
-end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
-
-vim.g.nvim_tree_width = 45
-local g = vim.g
-
-function _G.inc_width_ind()
-    g.nvim_tree_width = g.nvim_tree_width + 5
-    return g.nvim_tree_width
-end
-
-function _G.dec_width_ind()
-    g.nvim_tree_width = g.nvim_tree_width - 5
-    return g.nvim_tree_width
-end
-
-map('n', '<C-Left>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.dec_width_ind()<CR>]])
-map('n', '<C-Right>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.inc_width_ind()<CR>]])
-
--- symbol
-map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
-
--- telescope
-local lazyscope = require('lazy-require').require_on_exported_call('telescope.builtin')
-map('n', '<leader>ta', lazyscope.live_grep, { desc = "Telescope live-grep all files" })
-map('n', '<leader>to', function() lazyscope.live_grep { grep_open_files = true } end, {
-	desc = "Telescope live-grep only open buffers",
-})
-map('n', '<leader>tw', lazyscope.grep_string,               { desc = "Telescope grep symbol under cursor" })
-map('n', '<leader>f', lazyscope.find_files,                	{ desc = "Telescope fuzzy-search for files" })
-map('n', '<leader>ts', lazyscope.treesitter,                { desc = "Telescope list treesitter symbols in buffer" })
--- map('n', '<leader>qh', lazyscope.quickfixhistory,           { desc = "Telescope list quickfix history" })
-map('n', '<leader>th', lazyscope.oldfiles,           		{ desc = "Telescope list history" })
-map('n', '<leader>rg', lazyscope.current_buffer_fuzzy_find, { desc = "Telescope grep inside current buffer" })
-map('n', '<leader>tt', lazyscope.resume,                    { desc = "Telescope resume last session" })
-map('n', '<leader>tm', lazyscope.marks,                    	{ desc = "Telescope list marks" })
-function _G.__telescope_buffers()
-    require('telescope.builtin').buffers(
-        require('telescope.themes').get_dropdown {
-            previewer = false,
-            only_cwd = vim.fn.haslocaldir() == 1,
-            show_all_buffers = false,
-            sort_mru = true,
-            ignore_current_buffer = true,
-            sorter = require('telescope.sorters').get_substr_matcher(),
-            selection_strategy = 'closest',
-            path_display = { 'shorten' },
-            layout_strategy = 'center',
-            winblend = 0,
-            layout_config = { width = 70,height = 25 },
-            color_devicons = true,
-        }
-    )
-end
-local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap(
-	'n',
-	'<Leader>b',
-	'<cmd>lua __telescope_buffers()<CR>',
-	opts
-)
-vim.api.nvim_set_keymap(
-    "n", 
-    "<leader>tf", 
-    "<CMD>lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep For > ')})<CR>", 
-    opts
-)
-vim.api.nvim_set_keymap(
-    "n", 
-    "<leader>tg", 
-    "<CMD>lua require('telescope.builtin').grep_string { search = 'n '.. vim.fn.expand('<cword>')}<CR>", 
-    opts
-)
-map('n', '<Leader>B', function()
-	if not pcall(function() lazyscope.buffers() end) then
-		-- This is the kind of stupid shit I have to go through just to emulate keypresses
-		local cmdstr = vim.api.nvim_replace_termcodes(':ls<CR>:b', true, false, true)
-		vim.api.nvim_feedkeys(cmdstr, 'n', false)
-	end
-end, { desc = "List open buffers in telescope, or with :ls if telescope can't be loaded" })
-
--- lazyGit
-map('n', '<leader>gg', [[<Cmd>LazyGit<CR>]])
-
--- far  :Farr foo bar **/*.py   t s u
-map('n', '<localleader>f', [[:Far  **/*.php<left><left><left><left><left><left><left><left><left>]])
-
--- DAP
-local lazydap = require('lazy-require').require_on_exported_call 'dap'
-map('n', '<F5>', lazydap.continue,                { desc = "DAP continue" })
-map('n', '<F10>', lazydap.step_over,              { desc = "DAP step over" })
-map('n', '<F11>', lazydap.step_into,              { desc = "DAP step into" })
-map('n', '<F12>', lazydap.step_out,               { desc = "DAP step out" })
-map('n', '<localleader>db', lazydap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
-map('n', '<localleader>dB', function() lazydap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
-	{ desc = "DAP set a breakpoint condition" })
-map('n', '<localleader>dL', function() lazydap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
-	{ desc = "DAP set log point message" })
-map('n', '<localleader>dR', function() require('dap').repl.open() end, { desc = "DAP open repl" })
-
 -- Visual -----------------------------------------------------------------------------
-
 
 -- Stay in indent mode
 map('v', '<', [[<gv]])
@@ -230,10 +123,12 @@ end
 map('x', '<C-r>', replace_all, { desc = "Replace all selected text in buffer" })
 
 -- Terminal ---------------------------------------------------------------------------
-map('n', '<leader>`', [[<Cmd>botright split+terminal<CR>]])
+-- map('n', '<leader>`', [[<Cmd>botright split+terminal<CR>]])
 
 -- Window switch from terminal
-map('t', '<C-Esc>', [[<Cmd>stopinsert<CR>]])
+-- map('t', '<C-Esc>', [[<Cmd>stopinsert<CR>]])
+
+-- Plugin keybinds --------------------------------------------------------------------
 
 -- vim-expand-region
 map('v', 'v', [[<Plug>(expand_region_expand)]])
@@ -259,7 +154,92 @@ map('n', 'T', [[<Plug>(eft-T)]])
 map('x', 'T', [[<Plug>(eft-T)]])
 map('o', 'T', [[<Plug>(eft-T)]])
 
--- Plugin keybinds --------------------------------------------------------------------
+-- nvim-tree
+map('n', '<Tab>', [[<Cmd>NvimTreeToggle<CR>]])
+map('n', '<leader>e', function()
+	if not pcall(function() require('nvim-tree.api').tree.toggle() end) then
+		vim.api.nvim_command [[Lex 30]]
+	end
+end, { desc = "Open nvim-tree or :Lexplore if it isn't found" })
+
+vim.g.nvim_tree_width = 45
+local g = vim.g
+
+function _G.inc_width_ind()
+    g.nvim_tree_width = g.nvim_tree_width + 5
+    return g.nvim_tree_width
+end
+
+function _G.dec_width_ind()
+    g.nvim_tree_width = g.nvim_tree_width - 5
+    return g.nvim_tree_width
+end
+
+map('n', '<C-Left>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.dec_width_ind()<CR>]])
+map('n', '<C-Right>', [[<Cmd>exec ':NvimTreeResize ' . v:lua.inc_width_ind()<CR>]])
+
+-- symbol
+map('n', '<leader>E', [[<Cmd>SymbolsOutline<CR>]])
+
+-- telescope
+local lazyscope = require('lazy-require').require_on_exported_call('telescope.builtin')
+map('n', '<leader>ta', lazyscope.live_grep, { desc = "Telescope live-grep all files" })
+map('n', '<leader>tw', lazyscope.grep_string,               { desc = "Telescope grep symbol under cursor" })
+map('n', '<leader>f', lazyscope.find_files,                	{ desc = "Telescope fuzzy-search for files" })
+map('n', '<leader>ts', lazyscope.treesitter,                { desc = "Telescope list treesitter symbols in buffer" })
+-- map('n', '<leader>qh', lazyscope.quickfixhistory,           { desc = "Telescope list quickfix history" })
+map('n', '<leader>th', lazyscope.oldfiles,           		{ desc = "Telescope list history" })
+-- map('n', '<leader>rg', lazyscope.current_buffer_fuzzy_find, { desc = "Telescope grep inside current buffer" })
+map('n', '<leader>tt', lazyscope.resume,                    { desc = "Telescope resume last session" })
+map('n', '<leader>tm', lazyscope.marks,                    	{ desc = "Telescope list marks" })
+map('n', '<leader>tg', "<CMD>lua require('telescope.builtin').grep_string { search = 'n '.. vim.fn.expand('<cword>')}<CR>", { desc = "Telescope grep n+ under cursor word" })
+map('n', '<leader>tf', "<CMD>lua require('telescope.builtin').grep_string({ search = vim.fn.input('Grep For > ')})<CR>",   { desc = "Telescope list buffer" })
+map('n', '<Leader>tb', function()
+	if not pcall(function() lazyscope.buffers() end) then
+		-- This is the kind of stupid shit I have to go through just to emulate keypresses
+		local cmdstr = vim.api.nvim_replace_termcodes(':ls<CR>:b', true, false, true)
+		vim.api.nvim_feedkeys(cmdstr, 'n', false)
+	end
+end, { desc = "List open buffers in telescope, or with :ls if telescope can't be loaded" })
+function _G.__telescope_buffers()
+    require('telescope.builtin').buffers(
+        require('telescope.themes').get_dropdown {
+            previewer = false,
+            only_cwd = vim.fn.haslocaldir() == 1,
+            show_all_buffers = false,
+            sort_mru = true,
+            ignore_current_buffer = true,
+            sorter = require('telescope.sorters').get_substr_matcher(),
+            selection_strategy = 'closest',
+            path_display = { 'shorten' },
+            layout_strategy = 'center',
+            winblend = 0,
+            layout_config = { width = 70,height = 25 },
+            color_devicons = true,
+        }
+    )
+end
+map('n', '<leader>b', '<CMD>lua __telescope_buffers()<CR>',                    	{ desc = "Telescope list buffer" })
+
+-- lazyGit
+map('n', '<leader>gg', [[<Cmd>LazyGit<CR>]])
+
+-- far  :Farr foo bar **/*.py   t s u
+map('n', '<localleader>f', [[:Far  **/*.php<left><left><left><left><left><left><left><left><left>]])
+
+-- DAP
+-- local lazydap = require('lazy-require').require_on_exported_call 'dap'
+-- map('n', '<F5>', lazydap.continue,                { desc = "DAP continue" })
+-- map('n', '<F10>', lazydap.step_over,              { desc = "DAP step over" })
+-- map('n', '<F11>', lazydap.step_into,              { desc = "DAP step into" })
+-- map('n', '<F12>', lazydap.step_out,               { desc = "DAP step out" })
+-- map('n', '<localleader>db', lazydap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
+-- map('n', '<localleader>dB', function() lazydap.set_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+-- 	{ desc = "DAP set a breakpoint condition" })
+-- map('n', '<localleader>dL', function() lazydap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+-- 	{ desc = "DAP set log point message" })
+-- map('n', '<localleader>dR', function() require('dap').repl.open() end, { desc = "DAP open repl" })
+
 local M = {}
 
 M.symbols_outline = {
