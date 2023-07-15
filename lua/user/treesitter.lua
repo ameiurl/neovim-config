@@ -6,8 +6,11 @@ end
 
 ts.setup {
 	ensure_installed = {
-		'javascript', 'css'  		   , 'markdown',
-		'php'       , 'lua'            , 'html' ,
+		'javascript',
+		'css',
+		'html',
+		'markdown',
+		'php'
 	},
 	sync_installed = false, -- install languages synchronously (applies to above)
 	ignore_installed = { "" }, -- list of parsers to ignore installing
