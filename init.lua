@@ -5,7 +5,7 @@ require 'user.settings'
 -- Default configurations
 require 'impatient'
 -- require('fidget').setup()
--- require('colorizer').setup()
+require('colorizer').setup()
 -- require('guess-indent').setup()
 
 -- Editing & Completion

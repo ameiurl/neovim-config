@@ -102,14 +102,14 @@ local plugins = {
 		themeing = {
 			-- { 'LunarVim/colorschemes',                        -- a bunch of colorschemes
 			-- 	commit = nil },
-			-- { 'folke/tokyonight.nvim',                        -- TokyoNight theme
-			-- 	commit = nil },
+			{ 'ameiurl/molokai',                        -- TokyoNight theme
+			 	commit = nil },
 			{ 'ameiurl/zephyr-nvim',                          -- colorschemes 
 				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
 				commit = nil },
-			-- { 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
-			-- 	commit = nil },
+			{ 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
+			 	commit = nil },
 			{ 'psliwka/vim-smoothie',                		  -- scrolling page effect
 				commit = nil },
 			{ 'machakann/vim-highlightedyank',                -- copy effect 

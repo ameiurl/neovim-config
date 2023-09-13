@@ -25,6 +25,7 @@ local function make_theme_augroup()
     augroup end
   ]]
 end
+	  --\|  hi phpVarSelector    guifg=palegreen              gui=none
 
 ---@class colorschemeOptions
 ---@field public scheme string?
