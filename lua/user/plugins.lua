@@ -102,8 +102,22 @@ local plugins = {
 		themeing = {
 			-- { 'LunarVim/colorschemes',                        -- a bunch of colorschemes
 			-- 	commit = nil },
-			{ 'ameiurl/molokai',                        -- TokyoNight theme
-			 	commit = nil },
+			{ 'Th3Whit3Wolf/one-nvim',                        -- one theme
+			 	commit = nil,
+				config = function()
+  					vim.cmd [[
+	  					hi phpVarSelector    guifg=#e06c75              gui=none
+  					]]
+				end,
+			},
+			{ 'joshdick/onedark.vim',                         -- one theme
+			 	commit = nil,
+				config = function()
+  					vim.cmd [[
+	  					hi phpVarSelector    guifg=#e06c75              gui=none
+  					]]
+				end,
+ 			},
 			{ 'ameiurl/zephyr-nvim',                          -- colorschemes 
 				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
