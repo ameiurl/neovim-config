@@ -100,17 +100,25 @@ local plugins = {
 
 	quality_of_life = {
 		themeing = {
-			-- { 'LunarVim/colorschemes',                        -- a bunch of colorschemes
-			-- 	commit = nil },
-			{ 'joshdick/onedark.vim',                         -- one theme
-			 	commit = nil,
+			{
+				"navarasu/onedark.nvim",
+				lazy = true,
+				priority = 1000,
 				config = function()
   					vim.cmd [[
     					colorscheme onedark
-	  					hi phpVarSelector    guifg=#e06c75              gui=none
+	  					hi phpVarSelector    guifg=#c9c9c9              gui=none
+	  					hi phpIdentifier    guifg=#c9c9c9              gui=none
+	  					hi phpNumber    guifg=#e55561              gui=none
+	  					hi phpFloat    guifg=#e55561              gui=none
+	  					hi phpSpecialFunction    guifg=#e2c792              gui=none
+	  					hi phpFunctions    guifg=#e2c792              gui=none
+	  					hi phpMethods    guifg=#e2c792              gui=none
+	  					hi phpBoolean    guifg=#e2c792              gui=none
+	  					hi phpConstant    guifg=#FFFFFF              gui=none
   					]]
 				end,
- 			},
+			},
 			{ 'ameiurl/zephyr-nvim',                          -- colorschemes 
 				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
