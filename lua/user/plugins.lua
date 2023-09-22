@@ -110,6 +110,8 @@ local plugins = {
 	  					hi phpIdentifier    guifg=#c9c9c9              gui=none
 	  					hi phpFunctions    guifg=#e2c792              gui=none
 	  					hi phpMethods    guifg=#e2c792              gui=none
+	  					hi phpSpecialFunction    guifg=#e2c792              gui=none
+	  					hi phpBaselib    guifg=#e2c792              gui=none
 	  					hi phpNumber    guifg=#e55561              gui=none
 	  					hi phpFloat    guifg=#e55561              gui=none
   					]]
