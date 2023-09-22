@@ -106,7 +106,6 @@ local plugins = {
 				priority = 1000,
 				config = function()
   					vim.cmd [[
-    					colorscheme onedark
 	  					hi phpVarSelector    guifg=#c9c9c9              gui=none
 	  					hi phpIdentifier    guifg=#c9c9c9              gui=none
 	  					hi phpNumber    guifg=#e55561              gui=none
