@@ -108,13 +108,10 @@ local plugins = {
   					vim.cmd [[
 	  					hi phpVarSelector    guifg=#c9c9c9              gui=none
 	  					hi phpIdentifier    guifg=#c9c9c9              gui=none
-	  					hi phpNumber    guifg=#e55561              gui=none
-	  					hi phpFloat    guifg=#e55561              gui=none
-	  					hi phpSpecialFunction    guifg=#e2c792              gui=none
 	  					hi phpFunctions    guifg=#e2c792              gui=none
 	  					hi phpMethods    guifg=#e2c792              gui=none
-	  					hi phpBoolean    guifg=#e2c792              gui=none
-	  					hi phpConstant    guifg=#FFFFFF              gui=none
+	  					hi phpNumber    guifg=#e55561              gui=none
+	  					hi phpFloat    guifg=#e55561              gui=none
   					]]
 				end,
 			},
