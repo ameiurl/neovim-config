@@ -114,6 +114,8 @@ local plugins = {
 	  					hi phpBaselib    guifg=#e2c792              gui=none
 	  					hi phpNumber    guifg=#e55561              gui=none
 	  					hi phpFloat    guifg=#e55561              gui=none
+                        hi htmlTag    guifg=#c678dd              gui=none
+                        hi htmlEndTag    guifg=#c678dd              gui=none
   					]]
 				end,
 			},
