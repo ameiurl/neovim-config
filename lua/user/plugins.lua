@@ -116,6 +116,7 @@ local plugins = {
 	  					hi phpFloat    guifg=#e55561              gui=none
                         hi htmlTag    guifg=#c678dd              gui=none
                         hi htmlEndTag    guifg=#c678dd              gui=none
+                        hi javaScript    guifg=#c9c9c9              gui=none
   					]]
 				end,
 			},
