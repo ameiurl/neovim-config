@@ -280,17 +280,17 @@ M.gitsigns   = require('user.settings.keymaps.gitsigns')
 M.lsp_setup  = require('user.settings.keymaps.lsp')
 M.telescope  = require('user.settings.keymaps.telescope')
 
--- M.indent_blankline = function()
--- 	local zmaps = {
--- 		'zA', 'zC', 'zD', 'zE', 'zM', 'zN', 'zO', 'zR',
--- 		'za', 'zc', 'zd', 'zi', 'zm', 'zn', 'zo', 'zr', 'zv', 'zx',
--- 	}
--- 	for _, lhs in ipairs(zmaps) do
--- 		vim.keymap.set('n', lhs, function()
--- 			vim.api.nvim_feedkeys(lhs, 'n', false)
--- 			vim.schedule(vim.F.nil_wrap(function() require('indent_blankline').refresh() end))
--- 		end, { desc = "Refresh IndentBlankline after fold operation", remap = false, silent = true })
--- 	end
--- end
+M.indent_blankline = function()
+	local zmaps = {
+		'zA', 'zC', 'zD', 'zE', 'zM', 'zN', 'zO', 'zR',
+		'za', 'zc', 'zd', 'zi', 'zm', 'zn', 'zo', 'zr', 'zv', 'zx',
+	}
+	for _, lhs in ipairs(zmaps) do
+		vim.keymap.set('n', lhs, function()
+			vim.api.nvim_feedkeys(lhs, 'n', false)
+			vim.schedule(vim.F.nil_wrap(function() require('indent_blankline').refresh() end))
+		end, { desc = "Refresh IndentBlankline after fold operation", remap = false, silent = true })
+	end
+end
 
 return M

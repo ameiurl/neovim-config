@@ -187,8 +187,9 @@ local plugins = {
 				commit = nil },
 		},
 		layout = {
-			--{ 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
-			--	commit = nil },
+            { 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
+				tag = 'v2.20.8',
+                commit = nil },
 			{ 'lewis6991/gitsigns.nvim',                      -- Git Signs
 				commit = nil },
 			-- { 'petertriho/nvim-scrollbar',                    -- Buffer scroll bar
