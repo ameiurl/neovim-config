@@ -123,7 +123,7 @@ local plugins = {
 			{ 'junegunn/seoul256.vim',                          -- colorschemes 
                 config = function()
   					vim.cmd [[
-                        let g:seoul256_background = 237
+                        let g:seoul256_background = 236
     					colorscheme seoul256 
 	  					hi phpVarSelector    guifg=#E1E1E1              gui=none
 	  					hi phpIdentifier    guifg=#E1E1E1              gui=none
