@@ -106,17 +106,38 @@ local plugins = {
 				priority = 1000,
 				config = function()
   					vim.cmd [[
-	  					hi phpVarSelector    guifg=#c9c9c9              gui=none
-	  					hi phpIdentifier    guifg=#c9c9c9              gui=none
+	  					 "hi phpVarSelector    guifg=#c9c9c9              gui=none
+	  					 "hi phpIdentifier    guifg=#c9c9c9              gui=none
+	  					 "hi phpFunctions    guifg=#e2c792              gui=none
+	  					 "hi phpMethods    guifg=#e2c792              gui=none
+	  					 "hi phpSpecialFunction    guifg=#e2c792              gui=none
+	  					 "hi phpBaselib    guifg=#e2c792              gui=none
+	  					 "hi phpNumber    guifg=#e55561              gui=none
+	  					 "hi phpFloat    guifg=#e55561              gui=none
+                         "hi htmlTag    guifg=#c678dd              gui=none
+                         "hi htmlEndTag    guifg=#c678dd              gui=none
+                         "hi javaScript    guifg=#c9c9c9              gui=none
+  					]]
+				end,
+			},
+			{ 'junegunn/seoul256.vim',                          -- colorschemes 
+                config = function()
+  					vim.cmd [[
+                        let g:seoul256_background = 237
+    					colorscheme seoul256 
+	  					hi phpVarSelector    guifg=#E1E1E1              gui=none
+	  					hi phpIdentifier    guifg=#E1E1E1              gui=none
+                        hi phpStringSingle    guifg=#BCDDBD              gui=none
+                        hi phpStringDouble    guifg=#BCDDBD              gui=none
 	  					hi phpFunctions    guifg=#e2c792              gui=none
 	  					hi phpMethods    guifg=#e2c792              gui=none
 	  					hi phpSpecialFunction    guifg=#e2c792              gui=none
 	  					hi phpBaselib    guifg=#e2c792              gui=none
 	  					hi phpNumber    guifg=#e55561              gui=none
 	  					hi phpFloat    guifg=#e55561              gui=none
-                        hi htmlTag    guifg=#c678dd              gui=none
-                        hi htmlEndTag    guifg=#c678dd              gui=none
-                        hi javaScript    guifg=#c9c9c9              gui=none
+                        hi htmlTag    guifg=#98BC99              gui=none
+                        hi htmlEndTag    guifg=#98BC99              gui=none
+                        hi javaScript    guifg=#E1E1E1              gui=none
   					]]
 				end,
 			},
@@ -187,9 +208,9 @@ local plugins = {
 				commit = nil },
 		},
 		layout = {
-            { 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
-				tag = 'v2.20.8',
-                commit = nil },
+    --         { 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness
+				-- tag = 'v2.20.8',
+    --             commit = nil },
 			{ 'lewis6991/gitsigns.nvim',                      -- Git Signs
 				commit = nil },
 			-- { 'petertriho/nvim-scrollbar',                    -- Buffer scroll bar

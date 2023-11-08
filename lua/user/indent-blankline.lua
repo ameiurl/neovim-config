@@ -12,4 +12,4 @@ blankline.setup {
 	use_treesitter = true,
 }
 
-require('user.settings.keymaps').indent_blankline()
+--require('user.settings.keymaps').indent_blankline()
