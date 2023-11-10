@@ -106,41 +106,77 @@ local plugins = {
 				priority = 1000,
 				config = function()
   					vim.cmd [[
-	  					 "hi phpVarSelector    guifg=#c9c9c9              gui=none
-	  					 "hi phpIdentifier    guifg=#c9c9c9              gui=none
-	  					 "hi phpFunctions    guifg=#e2c792              gui=none
-	  					 "hi phpMethods    guifg=#e2c792              gui=none
-	  					 "hi phpSpecialFunction    guifg=#e2c792              gui=none
-	  					 "hi phpBaselib    guifg=#e2c792              gui=none
-	  					 "hi phpNumber    guifg=#e55561              gui=none
-	  					 "hi phpFloat    guifg=#e55561              gui=none
-                         "hi htmlTag    guifg=#c678dd              gui=none
-                         "hi htmlEndTag    guifg=#c678dd              gui=none
-                         "hi javaScript    guifg=#c9c9c9              gui=none
+	  					 hi phpVarSelector    guifg=#c9c9c9              gui=none
+	  					 hi phpIdentifier    guifg=#c9c9c9              gui=none
+	  					 hi phpFunctions    guifg=#e2c792              gui=none
+	  					 hi phpMethods    guifg=#e2c792              gui=none
+	  					 hi phpSpecialFunction    guifg=#e2c792              gui=none
+	  					 hi phpBaselib    guifg=#e2c792              gui=none
+	  					 hi phpNumber    guifg=#e55561              gui=none
+	  					 hi phpFloat    guifg=#e55561              gui=none
+                         hi htmlTag    guifg=#c678dd              gui=none
+                         hi htmlEndTag    guifg=#c678dd              gui=none
+                         hi javaScript    guifg=#c9c9c9              gui=none
   					]]
 				end,
 			},
 			{ 'junegunn/seoul256.vim',                          -- colorschemes 
                 config = function()
   					vim.cmd [[
-                        let g:seoul256_background = 236
-    					colorscheme seoul256 
-	  					hi phpVarSelector    guifg=#D9D9D9              gui=none
-	  					hi phpIdentifier    guifg=#D9D9D9              gui=none
-                        hi phpStringSingle    guifg=#BCDDBD              gui=none
-                        hi phpStringDouble    guifg=#BCDDBD              gui=none
-	  					hi phpFunctions    guifg=#e2c792              gui=none
-	  					hi phpMethods    guifg=#e2c792              gui=none
-	  					hi phpSpecialFunction    guifg=#e2c792              gui=none
-	  					hi phpBaselib    guifg=#e2c792              gui=none
-	  					hi phpNumber    guifg=#e55561              gui=none
-	  					hi phpFloat    guifg=#e55561              gui=none
-                        hi htmlTag    guifg=#98BC99              gui=none
-                        hi htmlEndTag    guifg=#98BC99              gui=none
-                        hi javaScript    guifg=#D9D9D9              gui=none
+                        "let g:seoul256_background = 236
+    					"colorscheme seoul256 
+	  					"hi phpVarSelector    guifg=#D9D9D9              gui=none
+	  					"hi phpIdentifier    guifg=#D9D9D9              gui=none
+                        "hi phpStringSingle    guifg=#BCDDBD              gui=none
+                        "hi phpStringDouble    guifg=#BCDDBD              gui=none
+	  					"hi phpFunctions    guifg=#e2c792              gui=none
+	  					"hi phpMethods    guifg=#e2c792              gui=none
+	  					"hi phpSpecialFunction    guifg=#e2c792              gui=none
+	  					"hi phpBaselib    guifg=#e2c792              gui=none
+	  					"hi phpNumber    guifg=#e55561              gui=none
+	  					"hi phpFloat    guifg=#e55561              gui=none
+                        "hi htmlTag    guifg=#98BC99              gui=none
+                        "hi htmlEndTag    guifg=#98BC99              gui=none
+                        "hi javaScript    guifg=#D9D9D9              gui=none
   					]]
 				end,
 			},
+			{ 'sainnhe/everforest',                          -- colorschemes 
+                config = function()
+  					vim.cmd [[
+                        "if (has("termguicolors"))
+                        "    set termguicolors
+                        "endif
+                        "let g:everforest_background = 'hard'
+                        "let g:everforest_better_performance = 1
+    					"colorscheme everforest 
+  					]]
+				end,
+				commit = nil },
+			{ 'sainnhe/gruvbox-material',                          -- colorschemes 
+                config = function()
+  					vim.cmd [[
+                        "if (has("termguicolors"))
+                        "    set termguicolors
+                        "endif
+                        "let g:everforest_background = 'hard'
+                        "let g:everforest_better_performance = 1
+    					"colorscheme gruvbox-material 
+  					]]
+				end,
+				commit = nil },
+			{ 'sainnhe/sonokai',                          -- colorschemes 
+                config = function()
+  					vim.cmd [[
+                        "if (has("termguicolors"))
+                        "    set termguicolors
+                        "endif
+                        "let g:everforest_background = 'hard'
+                        "let g:everforest_better_performance = 1
+    					"colorscheme sonokai 
+  					]]
+				end,
+				commit = nil },
 			{ 'ameiurl/zephyr-nvim',                          -- colorschemes 
 				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
