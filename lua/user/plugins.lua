@@ -140,7 +140,7 @@ local plugins = {
                         hi javaScript    guifg=#D9D9D9              gui=none
                         hi Delimiter    guifg=#D9D9D9              gui=none
                         hi Comment    guifg=#626262              gui=none
-                        hi CursorLine  guifg=#D9D9D9            guibg=#4B4B4B
+                        hi CursorLine  guibg=#4B4B4B
   					]]
 				end,
 			},
@@ -148,13 +148,6 @@ local plugins = {
                 config = function()
   					vim.cmd [[
     					"colorscheme gruvbox-material 
-  					]]
-				end,
-            },
-			{ 'sainnhe/edge',                          -- colorschemes 
-                config = function()
-  					vim.cmd [[
-    					"colorscheme edge 
   					]]
 				end,
             },
