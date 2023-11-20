@@ -101,7 +101,7 @@ local plugins = {
 	quality_of_life = {
 		themeing = {
 			{
-				"navarasu/onedark.nvim",
+				"ameiurl/onedark.nvim",
 				lazy = true,
 				priority = 1000,
 				config = function()
@@ -120,13 +120,13 @@ local plugins = {
   					]]
 				end,
 			},
-			{ 'junegunn/seoul256.vim',                          -- colorschemes 
+			{ 'ameiurl/seoul256.vim',                          -- colorschemes 
                 config = function()
   					vim.cmd [[
                         let g:seoul256_background = 236
     					colorscheme seoul256 
-	  					hi phpVarSelector    guifg=#D9D9D9              gui=none
-	  					hi phpIdentifier    guifg=#D9D9D9              gui=none
+	  					hi phpVarSelector    guifg=#C8C8C8              gui=none
+	  					hi phpIdentifier    guifg=#C8C8C8              gui=none
                         hi phpStringSingle    guifg=#BCDDBD              gui=none
                         hi phpStringDouble    guifg=#BCDDBD              gui=none
 	  					hi phpFunctions    guifg=#e2c792              gui=none
@@ -137,14 +137,11 @@ local plugins = {
 	  					hi phpFloat    guifg=#e55561              gui=none
                         hi htmlTag    guifg=#98BC99              gui=none
                         hi htmlEndTag    guifg=#98BC99              gui=none
-                        hi javaScript    guifg=#D9D9D9              gui=none
-                        hi Delimiter    guifg=#D9D9D9              gui=none
-                        hi Comment    guifg=#626262              gui=none
-                        hi CursorLine  guibg=#4B4B4B
+                        hi javaScript    guifg=#C8C8C8              gui=none
   					]]
 				end,
 			},
-			{ 'sainnhe/gruvbox-material',                          -- colorschemes 
+			{ 'ameiurl/gruvbox-material',                          -- colorschemes 
                 config = function()
   					vim.cmd [[
     					"colorscheme gruvbox-material 
