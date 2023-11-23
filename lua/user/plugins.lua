@@ -100,13 +100,11 @@ local plugins = {
 
 	quality_of_life = {
 		themeing = {
-			{ 'ameiurl/seoul256.vim',                          -- colorschemes 
+			{ 'shaunsingh/seoul256.nvim',                          -- colorschemes 
                 config = function()
   					vim.cmd [[
-                        let g:seoul256_background = 236
     					colorscheme seoul256 
-	  					hi phpVarSelector    guifg=#C8C8C8              gui=none
-	  					hi phpIdentifier    guifg=#C8C8C8              gui=none
+	  					hi phpVarSelector    guifg=#FFBFBD              gui=none
                         hi phpStringSingle    guifg=#BCDDBD              gui=none
                         hi phpStringDouble    guifg=#BCDDBD              gui=none
 	  					hi phpFunctions    guifg=#e2c792              gui=none
@@ -118,15 +116,6 @@ local plugins = {
                         hi htmlTag    guifg=#98BC99              gui=none
                         hi htmlEndTag    guifg=#98BC99              gui=none
                         hi javaScript    guifg=#C8C8C8              gui=none
-  					]]
-				end,
-			},
-			{ 'ameiurl/gruvbox-material',                          -- colorschemes 
-                config = function()
-  					vim.cmd [[
-    					"colorscheme gruvbox-material 
-                        "hi htmlTag    guifg=Orange              gui=none
-                        "hi htmlEndTag    guifg=Orange              gui=none
   					]]
 				end,
             },
