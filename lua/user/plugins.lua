@@ -100,26 +100,6 @@ local plugins = {
 
 	quality_of_life = {
 		themeing = {
-			{
-				"ameiurl/onedark.nvim",
-				lazy = true,
-				priority = 1000,
-				config = function()
-  					vim.cmd [[
-	  					 "hi phpVarSelector    guifg=#c9c9c9              gui=none
-	  					 "hi phpIdentifier    guifg=#c9c9c9              gui=none
-	  					 "hi phpFunctions    guifg=#e2c792              gui=none
-	  					 "hi phpMethods    guifg=#e2c792              gui=none
-	  					 "hi phpSpecialFunction    guifg=#e2c792              gui=none
-	  					 "hi phpBaselib    guifg=#e2c792              gui=none
-	  					 "hi phpNumber    guifg=#e55561              gui=none
-	  					 "hi phpFloat    guifg=#e55561              gui=none
-                         "hi htmlTag    guifg=#c678dd              gui=none
-                         "hi htmlEndTag    guifg=#c678dd              gui=none
-                         "hi javaScript    guifg=#c9c9c9              gui=none
-  					]]
-				end,
-			},
 			{ 'ameiurl/seoul256.vim',                          -- colorschemes 
                 config = function()
   					vim.cmd [[
@@ -145,11 +125,11 @@ local plugins = {
                 config = function()
   					vim.cmd [[
     					"colorscheme gruvbox-material 
+                        "hi htmlTag    guifg=Orange              gui=none
+                        "hi htmlEndTag    guifg=Orange              gui=none
   					]]
 				end,
             },
-			{ 'ameiurl/zephyr-nvim',                          -- colorschemes 
-				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
 				commit = nil },
 			{ 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
