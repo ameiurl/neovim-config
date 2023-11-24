@@ -104,7 +104,9 @@ local plugins = {
                 config = function()
   					vim.cmd [[
     					colorscheme seoul256 
-	  					hi phpVarSelector       guifg=#FFBFBD              gui=none
+	  					"hi phpVarSelector       guifg=#FFBFBD              gui=none
+                        hi phpVarSelector       guifg=#C8C8C8              gui=none
+	  					hi phpIdentifier        guifg=#C8C8C8              gui=none
                         hi phpStringSingle      guifg=#BCDDBD              gui=none
                         hi phpStringDouble      guifg=#BCDDBD              gui=none
 	  					hi phpFunctions         guifg=#e2c792              gui=none
