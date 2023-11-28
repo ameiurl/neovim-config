@@ -105,8 +105,8 @@ local plugins = {
   					vim.cmd [[
     					colorscheme seoul256 
 	  					"hi phpVarSelector       guifg=#FFBFBD              gui=none
-                        hi phpVarSelector       guifg=#C8C8C8              gui=none
 	  					hi phpIdentifier        guifg=#C8C8C8              gui=none
+                        hi phpVarSelector       guifg=#C8C8C8              gui=none
                         hi phpStringSingle      guifg=#BCDDBD              gui=none
                         hi phpStringDouble      guifg=#BCDDBD              gui=none
 	  					hi phpFunctions         guifg=#e2c792              gui=none
@@ -125,13 +125,10 @@ local plugins = {
 				commit = nil },
 			{ 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
 			 	commit = nil },
-			{ 'psliwka/vim-smoothie',                		  -- scrolling page effect
-				commit = nil },
-			{ 'machakann/vim-highlightedyank',                -- copy effect 
-				commit = nil,
-				config = function()
-					vim.g.highlightedyank_highlight_duration = 500
-				end,
+			{ 'karb94/neoscroll.nvim',                		  -- scrolling page effect
+                config = function ()
+                    require('neoscroll').setup {}
+                end,
 			},
 		},
 		editing = {
@@ -151,14 +148,6 @@ local plugins = {
 			},
 			{ 'windwp/nvim-autopairs',                        -- Automagically match punctuation pairs
 				commit = nil },
-			{ 'iamcco/markdown-preview.nvim',                 -- Markdown previewer in web browser
-				commit = nil,
-				run = function() vim.fn['mkdp#util#install']() end,
-				cmd = 'MarkdownPreview',
-				setup = function() vim.g.mkdp_filetypes = {'markdown'} end,
-				ft = 'markdown',
-				opt = true,
-			},
 			{ 'terryma/vim-expand-region',  				  -- Select increasingly larger regions of text using the same key combination
 				commit = nil },
 			{ 'junegunn/vim-easy-align', 					  -- A simple, easy-to-use Vim alignment plugin	
@@ -251,7 +240,12 @@ local plugins = {
 			commit = nil,
 			requires = { 'kyazdani42/nvim-web-devicons' },
 		},
-	},
+        { "iamcco/markdown-preview.nvim",
+            run = "cd app && npm install",
+            setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+            ft = { "markdown" },
+        },
+    },
 }
 
 -- Install plugins here
