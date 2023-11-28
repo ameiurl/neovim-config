@@ -171,8 +171,6 @@ local plugins = {
 			},
 			{ 'hrsh7th/vim-eft',
 				commit = nil },
-			{ 'brooth/far.vim',
-				commit = nil },
 		},
 		layout = {
     --         { 'lukas-reineke/indent-blankline.nvim',          -- Indentation fanciness

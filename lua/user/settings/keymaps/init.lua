@@ -183,9 +183,9 @@ map('n', '<leader>e', [[<Cmd>SymbolsOutline<CR>]])
 
 -- telescope
 local lazyscope = require('lazy-require').require_on_exported_call('telescope.builtin')
-map('n', '<leader>ta', lazyscope.live_grep, { desc = "Telescope live-grep all files" })
+map('n', '<leader>ta', lazyscope.live_grep,                 { desc = "Telescope live-grep all files" })
 map('n', '<leader>tw', lazyscope.grep_string,               { desc = "Telescope grep symbol under cursor" })
-map('n', '<leader>f', lazyscope.find_files,                	{ desc = "Telescope fuzzy-search for files" })
+map('n', '<leader>f',  lazyscope.find_files,                { desc = "Telescope fuzzy-search for files" })
 map('n', '<leader>ts', lazyscope.treesitter,                { desc = "Telescope list treesitter symbols in buffer" })
 -- map('n', '<leader>qh', lazyscope.quickfixhistory,           { desc = "Telescope list quickfix history" })
 map('n', '<leader>th', lazyscope.oldfiles,           		{ desc = "Telescope list history" })
@@ -223,9 +223,6 @@ map('n', '<leader>b', '<CMD>lua __telescope_buffers()<CR>',                    	
 
 -- lazyGit
 map('n', '<leader>gg', [[<Cmd>LazyGit<CR>]])
-
--- far  :Farr foo bar **/*.py   t s u
-map('n', '<localleader>f', [[:Far  **/*.php<left><left><left><left><left><left><left><left><left>]])
 
 -- DAP
 -- local lazydap = require('lazy-require').require_on_exported_call 'dap'
