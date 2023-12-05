@@ -80,10 +80,6 @@ vim.cmd [[
 	  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 	endif
 
-    if (has("termguicolors"))
-        set termguicolors
-    endif
-	
 	" 回车即选中当前项
 	autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 	autocmd FileType qf nnoremap <buffer> <ESC> :cclose<CR>
