@@ -49,7 +49,8 @@ local options = {
 	fileencodings  = "ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1",
 	helplang       = "cn",
 }
-vim.opt.iskeyword:append "-"   -- add '-' to iskeyword chars
+-- vim.opt.iskeyword:append "-"   -- add '-' to iskeyword chars
+vim.opt.iskeyword:append "$"   -- add '$' to iskeyword chars
 
 for k, v in pairs(options) do
 	vim.opt[k] = v
