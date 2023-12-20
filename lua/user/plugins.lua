@@ -209,6 +209,8 @@ local plugins = {
 	workspace_tools = {
 		{ 'kdheepak/lazygit.nvim',                            -- LazyGit
 			commit = nil },
+		{ 'theniceboy/joshuto.nvim',                            -- LazyGit
+			commit = nil },
 		{ 'nvim-telescope/telescope.nvim',                    -- Telescope
 			commit = nil },
 		{ 'nvim-telescope/telescope-ui-select.nvim',          -- Use telescope for more UI things
