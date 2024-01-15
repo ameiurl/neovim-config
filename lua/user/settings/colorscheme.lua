@@ -30,9 +30,9 @@ local function colorscheme_seoul256()
   vim.cmd [[
     let g:seoul256_background = 236
     colorscheme seoul256 
-    "hi phpVarSelector       guifg=#FFBFBD              gui=none
-    hi phpIdentifier        guifg=#C8C8C8              gui=none
-    hi phpVarSelector       guifg=#C8C8C8              gui=none
+    hi phpVarSelector       guifg=#FFBFBD              gui=none
+    "hi phpIdentifier        guifg=#C8C8C8              gui=none
+    "hi phpVarSelector       guifg=#C8C8C8              gui=none
     hi phpStringSingle      guifg=#BCDDBD              gui=none
     hi phpStringDouble      guifg=#BCDDBD              gui=none
     hi phpFunctions         guifg=#e2c792              gui=none
@@ -47,6 +47,13 @@ local function colorscheme_seoul256()
   ]]
 end
 
+local function colorscheme_tmp()
+  vim.cmd [[
+    "let g:gruvbox_material_background = 'soft'
+    "colorscheme gruvbox-material
+  ]]
+end
+
 ---@class colorschemeOptions
 ---@field public scheme string?
 
@@ -57,6 +64,7 @@ M.setup = function(opts)
   make_theme_augroup()
   -- vim.api.nvim_command('colorscheme ' .. opts.scheme)
   colorscheme_seoul256()
+  colorscheme_tmp()
 end
 
 vim.api.nvim_create_user_command("Seoul256", function ()
