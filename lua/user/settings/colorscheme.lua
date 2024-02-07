@@ -67,10 +67,10 @@ M.setup = function(opts)
   colorscheme_tmp()
 end
 
-vim.api.nvim_create_user_command("Seoul256", function ()
+vim.api.nvim_create_user_command("Gruvbox", function ()
   vim.cmd [[
-    let g:seoul256_background = 235
-    colorscheme seoul256 
+    let g:gruvbox_material_background = 'soft'
+    colorscheme gruvbox-material 
   ]]
 end, {})
 
