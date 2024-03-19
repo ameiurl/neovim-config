@@ -1,8 +1,8 @@
 local signs = {
-	{ name = "DiagnosticSignError", text = "" },
+	{ name = "DiagnosticSignError", text = "" },
 	{ name = "DiagnosticSignWarn",  text = "" },
 	{ name = "DiagnosticSignInfo",  text = "" },
-	{ name = "DiagnosticSignHint",  text = "ﯧ" },
+	{ name = "DiagnosticSignHint",  text = "" },
 }
 
 for _, sign in ipairs(signs) do

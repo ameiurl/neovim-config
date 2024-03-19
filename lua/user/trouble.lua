@@ -24,7 +24,7 @@ trouble.setup {
 		toggle_fold = { 'h', 'l' },
 	},
 	signs = {
-		error       = "",
+		error       = "",
 		warning     = "",
 		hint        = "ﯧ",
 		information = "",
