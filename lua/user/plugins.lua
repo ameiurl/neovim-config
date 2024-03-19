@@ -102,6 +102,8 @@ local plugins = {
 		themeing = {
 			{ 'ameiurl/seoul256.vim',                          -- colorschemes 
 				commit = nil },
+			{ 'ameiurl/gruvbox-material',                          -- colorschemes 
+				commit = nil },
 			{ 'kyazdani42/nvim-web-devicons',                 -- more icons and shit
 				commit = nil },
 			{ 'norcalli/nvim-colorizer.lua',                  -- Colorize hex color codes
@@ -224,6 +226,8 @@ local plugins = {
             setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
             ft = { "markdown" },
         },
+		{ 'theniceboy/joshuto.nvim',                            -- Joshutu
+			commit = nil },
     },
 }
 

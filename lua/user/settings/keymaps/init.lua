@@ -82,6 +82,9 @@ map('i', '<C-l>', [[<Right>]])
 -- map('v', 'P', [["vdP]])
 map('x', 'p', [["_dP]])
 
+-- Select Last Copy
+map('n', 'gV', [[`[v`] ]])
+
 -- Collimate
 -- local function collimate()
 -- 	vim.fn.inputsave()
