@@ -63,15 +63,24 @@ tree.setup {
 			},
 			git_placement = "before",
 			glyphs = {
-				git = {
-                  unstaged = "✗",
-                  staged = "✓",
+				--git = {
+                --  unstaged = "✗",
+                --  staged = "✓",
+                --  unmerged = "",
+                --  renamed = "➜",
+                --  untracked = "★",
+                --  deleted = "",
+                --  ignored = "◌",
+				--},
+                git = {
+                  unstaged = " ", -- 
+                  staged = "",
                   unmerged = "",
                   renamed = "➜",
-                  untracked = "★",
-                  deleted = "",
+                  untracked = " ",
+                  deleted = " ",
                   ignored = "◌",
-				},
+                },
 			},
 		},
 	},
