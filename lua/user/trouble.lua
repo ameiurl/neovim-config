@@ -26,7 +26,7 @@ trouble.setup {
 	signs = {
 		error       = "",
 		warning     = "",
-		hint        = "ﯧ",
+		hint        = "󰌵",
 		information = "",
 		other       = '◊',
 	},

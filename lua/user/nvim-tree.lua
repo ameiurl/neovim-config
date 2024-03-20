@@ -24,10 +24,10 @@ tree.setup {
 		show_on_dirs = false,
 		show_on_open_dirs = false,
 		icons = {
-          hint = "",
-          info = "",
-          warning = "",
           error = "",
+          warning = "",
+          info = "",
+          hint = "󰌵",
 		},
 	},
 	git = {
