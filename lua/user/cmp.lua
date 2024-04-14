@@ -4,7 +4,7 @@ if not cmp_status_ok then
 	return
 end
 
-local luasnip = require('lazy-require').require_on_exported_call('user.luasnip')
+local luasnip = require('user.luasnip')
 
 local kind_icons = require('user.settings.icons')
 
@@ -18,17 +18,17 @@ local has_words_before = function()
 end
 
 cmp.setup {
-	-- snippet = {
-	-- 	expand = function(args)
-	-- 		luasnip.lsp_expand(args.body)
-	-- 	end,
-	-- },
-
 	snippet = {
 		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+			luasnip.lsp_expand(args.body)
 		end,
 	},
+
+	--snippet = {
+	--	expand = function(args)
+	--		vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+	--	end,
+	--},
 
 	mapping = cmp.mapping.preset.insert({
 		["<C-k>"] = cmp.mapping.select_prev_item(),
@@ -58,12 +58,12 @@ cmp.setup {
 					behavior = cmp.ConfirmBehavior.Replace,
 					select = true,
 				})()
-			-- elseif luasnip.expandable() then
-			-- 	luasnip.expand()
-			-- elseif luasnip.expand_or_jumpable() then
-			-- 	luasnip.expand_or_jump()
-			elseif vim.fn["vsnip#available"](1) == 1 then
-				feedkey("<Plug>(vsnip-expand-or-jump)", "")
+			elseif luasnip.expandable() then
+				luasnip.expand()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			-- elseif vim.fn["vsnip#available"](1) == 1 then
+			-- 	feedkey("<Plug>(vsnip-expand-or-jump)", "")
 			elseif has_words_before() then
 				cmp.complete()
 			elseif check_backspace() then
@@ -76,10 +76,10 @@ cmp.setup {
 		['<S-Tab>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
-			-- elseif luasnip.jumpable(-1) then
-			-- 	luasnip.jump(-1)
-			elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        		feedkey("<Plug>(vsnip-jump-prev)", "")
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			-- elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+   --      		feedkey("<Plug>(vsnip-jump-prev)", "")
 			else
 				fallback()
 			end
@@ -108,8 +108,8 @@ cmp.setup {
 		{ name = 'nvim_lsp' },
 		{ name = 'nvim_lsp_signature_help' },
 		{ name = 'nvim_lua' },
-		-- { name = 'luasnip' },
-		{ name = "vsnip" }, -- For vsnip users.
+		{ name = 'luasnip', options = { show_autosnippets = true } },
+		-- { name = "vsnip" }, -- For vsnip users.
 		{ name = 'buffer' },
 		{ name = 'path' },
 	},
@@ -142,4 +142,4 @@ cmp.setup.cmdline(':', {
 })
 
 -- vsnip
-vim.g.vsnip_snippet_dir = os.getenv('HOME') .. "/.config/nvim/snippets"
+-- vim.g.vsnip_snippet_dir = os.getenv('HOME') .. "/.config/nvim/snippets"
