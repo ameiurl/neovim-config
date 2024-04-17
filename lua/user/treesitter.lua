@@ -10,7 +10,8 @@ ts.setup {
 		'css',
 		'html',
 		'markdown',
-		'php'
+		'php',
+        'lua'
 	},
 	sync_installed = false, -- install languages synchronously (applies to above)
 	ignore_installed = { "" }, -- list of parsers to ignore installing

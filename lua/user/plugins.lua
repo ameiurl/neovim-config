@@ -58,10 +58,6 @@ local plugins = {
 			commit = nil },
 		{ 'hrsh7th/cmp-nvim-lua',                             -- Lua support for nvim-cmp
 			commit = nil },
-		-- { 'hrsh7th/cmp-vsnip',
-		-- 	commit = nil },
-		-- { 'hrsh7th/vim-vsnip',
-		-- 	commit = nil },
 	},
 
 	lsp = {
