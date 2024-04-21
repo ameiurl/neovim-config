@@ -4,14 +4,14 @@ local lazytrouble = require('lazy-require').require_on_exported_call('trouble.pr
 
 function M.insert(actions)
 	return {
-		['<C-R>'] = actions.cycle_history_next,
+		['<C-e>'] = actions.cycle_history_next,
 		['<C-r>'] = actions.cycle_history_prev,
 
 		['<C-j>'] = actions.move_selection_next,
 		['<C-k>'] = actions.move_selection_previous,
 		['<C-S-d>'] = actions.delete_buffer,
 
-		['<C-e>'] = actions.close,  -- deprecated
+		-- ['<C-e>'] = actions.close,  -- deprecated
 		['<esc>'] = actions.close,
 		['<C-esc>'] = function() vim.api.nvim_command [[stopinsert]] end,
 
