@@ -200,8 +200,6 @@ local plugins = {
 			commit = nil },
 		{ 'JoosepAlviste/nvim-ts-context-commentstring',
 			commit = nil },
-		-- { 'p00f/nvim-ts-rainbow',                             -- Color-code brackets and parens and shit
-		-- 	commit = nil },
 	},
 
 	workspace_tools = {

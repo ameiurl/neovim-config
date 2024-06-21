@@ -38,7 +38,5 @@ comment.setup {
 	},
 
 	-- post_hook = nil,
-    pre_hook = function(ctx)
-        return require('ts_context_commentstring.internal').calculate_commentstring()
-    end
+    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 }
