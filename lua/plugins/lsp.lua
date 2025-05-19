@@ -136,7 +136,7 @@ return {
             nmap("gr", require("telescope.builtin").lsp_references, "查看引用")
             nmap("gI", require("telescope.builtin").lsp_implementations, "查看实现")
             nmap("gt", require("telescope.builtin").lsp_type_definitions, "类型定义")
-            nmap("K", vim.lsp.buf.hover, "显示文档")
+            nmap("gH", vim.lsp.buf.hover, "显示文档")
             nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
             nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
             nmap("<leader>fs", vim.lsp.buf.document_symbol, "文档符号")
