@@ -24,12 +24,11 @@ return {
             opts = {
                 automatic_installation = true,
                 ensure_installed = {
-                    -- "lua_ls",
-                    -- "pyright",
-                    -- "rust_analyzer",
-                    -- "tsserver",
-                    -- "gopls",
-                    -- "gleam"
+                    "lua_ls",
+                    "pyright",
+                    "rust_analyzer",
+                    "gopls",
+                    "ts_ls",
                 }
             }
         },
@@ -75,7 +74,7 @@ return {
                     [vim.diagnostic.severity.HINT]  = diagnostic_icons[vim.diagnostic.severity.HINT].icon,
                 }
             },
-            update_in_insert = false,  -- 推荐设置为false以获得更好性能
+            update_in_insert = false, -- 推荐设置为false以获得更好性能
             severity_sort = true,
             underline = { severity = { min = vim.diagnostic.severity.HINT } },
             float = {
@@ -119,14 +118,14 @@ return {
 
         -- 通用on_attach配置
         local on_attach = function(client, bufnr)
-            if client.supports_method("textDocument/formatting") then
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    buffer = bufnr,
-                    callback = function()
-                        vim.lsp.buf.format({ async = false, timeout_ms = 3000 })
-                    end
-                })
-            end
+            -- if client.supports_method("textDocument/formatting") then
+            --     vim.api.nvim_create_autocmd("BufWritePre", {
+            --         buffer = bufnr,
+            --         callback = function()
+            --             vim.lsp.buf.format({ async = false, timeout_ms = 3000 })
+            --         end
+            --     })
+            -- end
 
             local nmap = function(keys, func, desc)
                 vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
@@ -210,30 +209,30 @@ return {
 
         -- 服务器特定配置
         local servers = {
-            lua_ls = {
-                settings = {
-                    Lua = {
-                        runtime = { version = "LuaJIT" },
-                        diagnostics = { globals = { "vim" } },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file("", true),
-                            checkThirdParty = false
-                        },
-                        telemetry = { enable = false }
-                    }
-                }
-            },
-            pyright = {
-                settings = {
-                    python = {
-                        analysis = {
-                            typeCheckingMode = "basic",
-                            autoSearchPaths = true,
-                            useLibraryCodeForTypes = true
-                        }
-                    }
-                }
-            }
+            -- lua_ls = {
+            --     settings = {
+            --         Lua = {
+            --             runtime = { version = "LuaJIT" },
+            --             diagnostics = { globals = { "vim" } },
+            --             workspace = {
+            --                 library = vim.api.nvim_get_runtime_file("", true),
+            --                 checkThirdParty = false
+            --             },
+            --             telemetry = { enable = false }
+            --         }
+            --     }
+            -- },
+            -- pyright = {
+            --     settings = {
+            --         python = {
+            --             analysis = {
+            --                 typeCheckingMode = "basic",
+            --                 autoSearchPaths = true,
+            --                 useLibraryCodeForTypes = true
+            --             }
+            --         }
+            --     }
+            -- }
         }
 
         -- 自动配置服务器 (新版兼容写法)

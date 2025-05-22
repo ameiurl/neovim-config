@@ -18,7 +18,8 @@ return {
                 'css',
                 'html',
                 'markdown',
-                'php'
+                'php',
+                'vue'
             },
             sync_installed = false, -- install languages synchronously (applies to above)
             ignore_installed = { "" }, -- list of parsers to ignore installing
