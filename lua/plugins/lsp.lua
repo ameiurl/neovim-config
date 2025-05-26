@@ -28,7 +28,7 @@ return {
                     "pyright",
                     "rust_analyzer",
                     "gopls",
-                    "ts_ls",
+                    "volar"
                 }
             }
         },
@@ -100,8 +100,6 @@ return {
             vim.lsp.handlers[event] = handler
         end
 
-        require("lspconfig.ui.windows").default_options.border = "rounded"
-
         -- 能力配置
         local capabilities = vim.tbl_deep_extend(
             "force",
@@ -109,24 +107,8 @@ return {
             require("cmp_nvim_lsp").default_capabilities() or {}
         )
 
-        -- 增强能力配置
-        capabilities.textDocument = capabilities.textDocument or {}
-        capabilities.textDocument.foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true
-        }
-
         -- 通用on_attach配置
         local on_attach = function(client, bufnr)
-            -- if client.supports_method("textDocument/formatting") then
-            --     vim.api.nvim_create_autocmd("BufWritePre", {
-            --         buffer = bufnr,
-            --         callback = function()
-            --             vim.lsp.buf.format({ async = false, timeout_ms = 3000 })
-            --         end
-            --     })
-            -- end
-
             local nmap = function(keys, func, desc)
                 vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
             end
@@ -181,19 +163,6 @@ return {
                 vim.lsp.buf.format(format_opts)
             end, { range = true })
             map({ 'n', 'v' }, '<leader>F', [[<Cmd>Format<CR>]])
-
-            -- 高级功能
-            -- if client.supports_method("textDocument/documentHighlight") then
-            --     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-            --         buffer = bufnr,
-            --         callback = vim.lsp.buf.document_highlight,
-            --     })
-            --
-            --     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-            --         buffer = bufnr,
-            --         callback = vim.lsp.buf.clear_references,
-            --     })
-            -- end
         end
 
         -- Mason配置 (更新后的正确配置方式)
@@ -207,33 +176,45 @@ return {
             on_attach = on_attach,
         }
 
-        -- 服务器特定配置
-        local servers = {
-            -- lua_ls = {
-            --     settings = {
-            --         Lua = {
-            --             runtime = { version = "LuaJIT" },
-            --             diagnostics = { globals = { "vim" } },
-            --             workspace = {
-            --                 library = vim.api.nvim_get_runtime_file("", true),
-            --                 checkThirdParty = false
-            --             },
-            --             telemetry = { enable = false }
-            --         }
-            --     }
-            -- },
-            -- pyright = {
-            --     settings = {
-            --         python = {
-            --             analysis = {
-            --                 typeCheckingMode = "basic",
-            --                 autoSearchPaths = true,
-            --                 useLibraryCodeForTypes = true
-            --             }
-            --         }
-            --     }
-            -- }
-        }
+        -- 配置 Volar
+        -- npm install -g @volar/vue-language-server
+        --npm install typescript --save-dev
+        local util = require('lspconfig.util')
+        lsp_config.volar.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            filetypes = { "vue", "typescript", "javascript" },
+            root_dir = util.root_pattern("package.json", "tsconfig.json", "vite.config.ts"),
+            settings = {
+                typescript = {
+                    -- 动态检测 TypeScript 路径
+                    tsdk = function()
+                        local project_root = util.find_package_json_ancestor(vim.fn.expand("%:p"))
+                        if project_root then
+                            local local_ts = project_root .. "/node_modules/typescript/lib"
+                            if vim.fn.isdirectory(local_ts) == 1 then
+                                return local_ts
+                            end
+                        end
+                        -- 全局回退（需确保全局安装）
+                        return "/usr/lib/node_modules/typescript/lib"
+                    end,
+                },
+                vue = {
+                    -- 启用所有 Vue 语言功能
+                    hybridMode = true,
+                    experimentalCompatMode = 3,
+                },
+            },
+            init_options = {
+                vue = {
+                    codeLens = {
+                        references = true,
+                        pugTools = true,
+                    },
+                },
+            },
+        })
 
         -- 自动配置服务器 (新版兼容写法)
         require("mason-lspconfig").setup_handlers({
