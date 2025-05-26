@@ -24,6 +24,7 @@ return {
             opts = {
                 automatic_installation = true,
                 ensure_installed = {
+                    "intelephense",
                     "lua_ls",
                     "pyright",
                     "rust_analyzer",
