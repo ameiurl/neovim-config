@@ -28,7 +28,7 @@ return {
                     "pyright",
                     "rust_analyzer",
                     "gopls",
-                    "volar"
+                    -- "volar"
                 }
             }
         },
@@ -175,46 +175,6 @@ return {
             capabilities = capabilities,
             on_attach = on_attach,
         }
-
-        -- 配置 Volar
-        -- npm install -g @volar/vue-language-server
-        --npm install typescript --save-dev
-        local util = require('lspconfig.util')
-        lsp_config.volar.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            filetypes = { "vue", "typescript", "javascript" },
-            root_dir = util.root_pattern("package.json", "tsconfig.json", "vite.config.ts"),
-            settings = {
-                typescript = {
-                    -- 动态检测 TypeScript 路径
-                    tsdk = function()
-                        local project_root = util.find_package_json_ancestor(vim.fn.expand("%:p"))
-                        if project_root then
-                            local local_ts = project_root .. "/node_modules/typescript/lib"
-                            if vim.fn.isdirectory(local_ts) == 1 then
-                                return local_ts
-                            end
-                        end
-                        -- 全局回退（需确保全局安装）
-                        return "/usr/lib/node_modules/typescript/lib"
-                    end,
-                },
-                vue = {
-                    -- 启用所有 Vue 语言功能
-                    hybridMode = true,
-                    experimentalCompatMode = 3,
-                },
-            },
-            init_options = {
-                vue = {
-                    codeLens = {
-                        references = true,
-                        pugTools = true,
-                    },
-                },
-            },
-        })
 
         -- 自动配置服务器 (新版兼容写法)
         require("mason-lspconfig").setup_handlers({
