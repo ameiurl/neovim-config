@@ -219,8 +219,7 @@ return {
         -- 自动配置服务器 (新版兼容写法)
         require("mason-lspconfig").setup_handlers({
             function(server_name)
-                local config = servers[server_name] or {}
-                config = vim.tbl_deep_extend("force", {}, default_config, config)
+                config = vim.tbl_deep_extend("force", {}, default_config, {})
                 lsp_config[server_name].setup(config)
             end
         })
