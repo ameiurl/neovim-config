@@ -2,4 +2,5 @@
 .netrwhist
 .lsp
 .luarc.json
+lazy-lock.json
 plugin
