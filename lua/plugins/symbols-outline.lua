@@ -1,6 +1,6 @@
 vim.keymap.set({ "n", "v", "x" },  "<leader>om", ":SymbolsOutline<CR>")
 return {
-    "simrat39/symbols-outline.nvim",
+    "ameiurl/symbols-outline.nvim",
     config = function()
         require("symbols-outline").setup({
             -- 设置符号黑名单，过滤掉不需要显示的类型

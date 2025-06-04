@@ -20,7 +20,7 @@ return {
         },
         {
             "williamboman/mason-lspconfig.nvim",
-            version = "^1.20.0", -- 明确指定最低版本要求
+            -- version = "^1.20.0", -- You can keep this if you strictly need it
             opts = {
                 automatic_installation = true,
                 ensure_installed = {
@@ -29,7 +29,7 @@ return {
                     "pyright",
                     "rust_analyzer",
                     "gopls",
-                    -- "volar"
+                    -- "volar",
                 }
             }
         },
@@ -37,18 +37,21 @@ return {
             "j-hui/fidget.nvim",
             opts = {
                 text = {
-                    spinner = "dots"
+                    spinner = "dots" -- or "moon", "pipe", "line", etc.
+                },
+                window = {
+                    blend = 0, -- Transparency of the Fidget window
                 }
             }
         },
     },
     config = function()
-        -- 定义诊断图标（新方法）
+        -- 定义诊断图标
         local diagnostic_icons = {
-            [vim.diagnostic.severity.ERROR] = { icon = " ", color = "DiagnosticError" },
-            [vim.diagnostic.severity.WARN]  = { icon = " ", color = "DiagnosticWarn" },
-            [vim.diagnostic.severity.INFO]  = { icon = " ", color = "DiagnosticInfo" },
-            [vim.diagnostic.severity.HINT]  = { icon = " ", color = "DiagnosticHint" },
+            [vim.diagnostic.severity.ERROR] = { icon = " ", hl = "DiagnosticError" },
+            [vim.diagnostic.severity.WARN]  = { icon = " ", hl = "DiagnosticWarn" },
+            [vim.diagnostic.severity.INFO]  = { icon = " ", hl = "DiagnosticInfo" },
+            [vim.diagnostic.severity.HINT]  = { icon = " ", hl = "DiagnosticHint" },
         }
 
         -- 诊断全局配置
@@ -56,36 +59,46 @@ return {
             virtual_text = {
                 severity = { min = vim.diagnostic.severity.WARN },
                 spacing = 2,
-                prefix = "⋮",
+                prefix = "⋮", -- You can also use '●' or other symbols
                 format = function(diagnostic)
-                    return string.format(
-                        "%s %s: %s",
-                        diagnostic_icons[vim.diagnostic.severity[diagnostic.severity]],
-                        diagnostic.source,
-                        diagnostic.message:gsub("\n", " ")
-                    )
+                    local icon_entry = diagnostic_icons[diagnostic.severity]
+                    if icon_entry then
+                        return string.format(
+                            "%s%s: %s",
+                            icon_entry.icon,
+                            diagnostic.source,
+                            diagnostic.message:gsub("\n", " ")
+                        )
+                    else
+                        return string.format(
+                            "%s: %s",
+                            diagnostic.source,
+                            diagnostic.message:gsub("\n", " ")
+                        )
+                    end
                 end,
             },
             signs = {
-                active = true,
+                active = true, -- This is the default, can be omitted
                 text = {
                     [vim.diagnostic.severity.ERROR] = diagnostic_icons[vim.diagnostic.severity.ERROR].icon,
                     [vim.diagnostic.severity.WARN]  = diagnostic_icons[vim.diagnostic.severity.WARN].icon,
                     [vim.diagnostic.severity.INFO]  = diagnostic_icons[vim.diagnostic.severity.INFO].icon,
                     [vim.diagnostic.severity.HINT]  = diagnostic_icons[vim.diagnostic.severity.HINT].icon,
-                }
+                },
             },
-            update_in_insert = false, -- 推荐设置为false以获得更好性能
+            update_in_insert = false,
             severity_sort = true,
-            underline = { severity = { min = vim.diagnostic.severity.HINT } },
+            underline = { severity = { min = vim.diagnostic.severity.WARN } }, -- Underline only warnings and errors
             float = {
                 border = "rounded",
+                source = "always", -- Or "if_many"
                 format = function(diagnostic)
                     return string.format(
                         "%s (%s) [%s]",
                         diagnostic.message,
                         diagnostic.source,
-                        diagnostic.code or diagnostic.user_data.lsp.code
+                        diagnostic.code or (diagnostic.user_data and diagnostic.user_data.lsp and diagnostic.user_data.lsp.code) or ""
                     )
                 end
             }
@@ -111,26 +124,32 @@ return {
         -- 通用on_attach配置
         local on_attach = function(client, bufnr)
             local nmap = function(keys, func, desc)
-                vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+                if desc then
+                    desc = "LSP: " .. desc
+                end
+                vim.keymap.set("n", keys, func, { buffer = bufnr, noremap = true, silent = true, desc = desc })
             end
 
-            nmap("go", require("telescope.builtin").lsp_definitions, "跳转到定义")
+            nmap("gD", vim.lsp.buf.definition, "跳转到定义 (gD)") -- Alternative to Telescope
+            nmap("go", require("telescope.builtin").lsp_definitions, "跳转到定义 (Telescope)")
             nmap("gr", require("telescope.builtin").lsp_references, "查看引用")
             nmap("gI", require("telescope.builtin").lsp_implementations, "查看实现")
             nmap("gt", require("telescope.builtin").lsp_type_definitions, "类型定义")
-            nmap("gH", vim.lsp.buf.hover, "显示文档")
+            nmap("K", vim.lsp.buf.hover, "显示文档 (K)") -- Standard Neovim keymap for hover
+            nmap("gH", vim.lsp.buf.hover, "显示文档 (gH)")
             nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
             nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
-            nmap("<leader>fs", vim.lsp.buf.document_symbol, "文档符号")
-            nmap("<leader>ws", vim.lsp.buf.workspace_symbol, "工作区符号")
+            nmap("<leader>fs", vim.lsp.buf.document_symbol, "文档符号") -- Consider telescope.builtin.lsp_document_symbols
+            nmap("<leader>ws", vim.lsp.buf.workspace_symbol, "工作区符号") -- Consider telescope.builtin.lsp_dynamic_workspace_symbols
 
             -- 诊断导航
-            local diagnostic_goto = function(next, severity)
+            local diagnostic_goto = function(next, severity_str)
                 return function()
+                    local severity_val = severity_str and vim.diagnostic.severity[severity_str] or nil
                     local opts = {
-                        severity = severity and vim.diagnostic.severity[severity] or nil,
-                        wrap = false,
-                        float = false,
+                        severity = severity_val,
+                        wrap = false, -- Don't wrap around the buffer
+                        float = false, -- You can set this to true for a floating window
                     }
                     if next then
                         vim.diagnostic.goto_next(opts)
@@ -146,47 +165,81 @@ return {
             nmap("[e", diagnostic_goto(false, "ERROR"), "上一个错误")
             nmap("]w", diagnostic_goto(true, "WARN"), "下一个警告")
             nmap("[w", diagnostic_goto(false, "WARN"), "上一个警告")
+            nmap("<leader>do", vim.diagnostic.open_float, "打开诊断浮窗") -- Open diagnostics float
 
-            local function map(mode, lhs, rhs, opts)
-                opts = vim.tbl_extend("force", opts or {}, { remap = false, silent = true, buffer = bufnr })
-                vim.keymap.set(mode, lhs, rhs, opts)
-            end
-
-            -- Formatting commands
+            -- Formatting command (remains the same, good)
             vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(opts)
-                local format_opts = { async = true }
+                local format_opts = { async = true, timeout_ms = 5000 } -- Added timeout
                 if opts.range > 0 then
                     format_opts.range = {
-                        { opts.line1, 0 },
-                        { opts.line2, 0 },
+                        start = { line = opts.line1 - 1, character = 0 }, -- LSP uses 0-based indexing
+                        ["end"] = { line = opts.line2, character = 0 },
                     }
                 end
                 vim.lsp.buf.format(format_opts)
-            end, { range = true })
-            map({ 'n', 'v' }, '<leader>F', [[<Cmd>Format<CR>]])
+            end, { range = true, desc = "Format current buffer (or selection)" })
+
+            vim.keymap.set({ 'n', 'v' }, '<leader>F', "<Cmd>Format<CR>", { buffer = bufnr, noremap = true, silent = true, desc = "LSP: Format" })
+
+            -- Client specific on_attach logic
+            if client.name == "volar" then
+                local tsdk_path = vim.fn.expand("~/.nvm/versions/node/v20.19.2/lib/node_modules/typescript/lib")
+                if vim.fn.isdirectory(tsdk_path) == 0 then
+                    vim.notify_once(
+                        "Volar: TypeScript SDK not found at: " .. tsdk_path,
+                        vim.log.levels.WARN
+                    )
+                end
+            end
         end
 
-        -- Mason配置 (更新后的正确配置方式)
+        -- Initialize Mason and Mason-LSPConfig
         require("mason").setup()
-        require("mason-lspconfig").setup() -- 确保先调用基础setup
+        require("mason-lspconfig").setup({
+            handlers = {
+                function(server_name)
+                    require("lspconfig")[server_name].setup({
+                        capabilities = capabilities,
+                        on_attach = on_attach,
+                    })
+                end,
 
-        -- LSP服务器通用配置
-        local lsp_config = require("lspconfig")
-        local default_config = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-        }
+                -- Custom handler for Volar
+                ["volar"] = function()
+                    local tsdk_path = vim.fn.expand("~") .. "/.nvm/versions/node/v20.19.2/lib/node_modules/typescript/lib"
+                    require("lspconfig").volar.setup({
+                        capabilities = capabilities,
+                        on_attach = on_attach,
+                        filetypes = {"typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json"},
+                        init_options = {
+                            typescript = {
+                                tsdk = tsdk_path
+                            },
+                            vue = {
+                                hybridMode = false -- Set to true if you use <script setup lang="ts"> alongside <script lang="ts"> in the same SFC
+                            }
+                        }
+                    })
+                end,
 
-        -- 自动配置服务器 (新版兼容写法)
-        require("mason-lspconfig").setup_handlers({
-            function(server_name)
-                config = vim.tbl_deep_extend("force", {}, default_config, {})
-                lsp_config[server_name].setup(config)
-            end
+                -- Example for another server if it needed special setup
+                ["lua_ls"] = function ()
+                  require("lspconfig").lua_ls.setup({
+                    capabilities = capabilities,
+                    on_attach = on_attach,
+                    settings = {
+                      Lua = {
+                        diagnostics = { globals = {'vim'} },
+                        workspace = { checkThirdParty = false }
+                      }
+                    }
+                  })
+                end,
+            }
         })
 
-        -- 高级功能配置
-        require("lsp-overloads").setup()
-        require('fidget').setup()
+        -- Advanced features
+        require("lsp-overloads").setup() -- Make sure this is loaded after lspconfig setups
+        require('fidget').setup() -- Fidget setup can usually go here
     end
 }
