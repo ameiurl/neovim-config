@@ -20,7 +20,7 @@ return {
         },
         {
             "williamboman/mason-lspconfig.nvim",
-            -- version = "^1.20.0", -- You can keep this if you strictly need it
+            version = "^1.20.0", -- You can keep this if you strictly need it
             opts = {
                 automatic_installation = true,
                 ensure_installed = {
@@ -135,7 +135,7 @@ return {
             nmap("gr", require("telescope.builtin").lsp_references, "查看引用")
             nmap("gI", require("telescope.builtin").lsp_implementations, "查看实现")
             nmap("gt", require("telescope.builtin").lsp_type_definitions, "类型定义")
-            nmap("K", vim.lsp.buf.hover, "显示文档 (K)") -- Standard Neovim keymap for hover
+            nmap("gk", vim.lsp.buf.hover, "显示文档 (K)") -- Standard Neovim keymap for hover
             nmap("gH", vim.lsp.buf.hover, "显示文档 (gH)")
             nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
             nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
