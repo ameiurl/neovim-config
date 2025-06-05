@@ -20,6 +20,9 @@ return {
             show_numbers = false,
             show_relative_numbers = false,
 
+            -- 关键设置：跳转后自动关闭窗口
+            auto_close = true,  -- 添加这一行
+
             -- 自定义符号图标（可选）
             symbols = {
                 Class = { icon = "𝓒", hl = "Type" },
