@@ -5,6 +5,7 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "Issafalcon/lsp-overloads.nvim",
+        -- Mason 保持不变
         {
             "williamboman/mason.nvim",
             opts = {
@@ -18,30 +19,18 @@ return {
                 }
             }
         },
+        -- [[ 修正 ]] --
+        -- 移除这里的 opts，只声明依赖关系。
+        -- 确保 mason-lspconfig 在 mason 加载后再加载。
         {
             "williamboman/mason-lspconfig.nvim",
-            version = "^1.20.0", -- You can keep this if you strictly need it
-            opts = {
-                automatic_installation = true,
-                ensure_installed = {
-                    "intelephense",
-                    "lua_ls",
-                    "pyright",
-                    "rust_analyzer",
-                    "gopls",
-                    "volar",
-                }
-            }
+            dependencies = { "williamboman/mason.nvim" },
         },
         {
             "j-hui/fidget.nvim",
             opts = {
-                text = {
-                    spinner = "dots" -- or "moon", "pipe", "line", etc.
-                },
-                window = {
-                    blend = 0, -- Transparency of the Fidget window
-                }
+                text = { spinner = "dots" },
+                window = { blend = 0 }
             }
         },
     },
@@ -114,15 +103,14 @@ return {
             vim.lsp.handlers[event] = handler
         end
 
-        -- 能力配置
         local capabilities = vim.tbl_deep_extend(
             "force",
             vim.lsp.protocol.make_client_capabilities(),
             require("cmp_nvim_lsp").default_capabilities() or {}
         )
 
-        -- 通用on_attach配置
-        local on_attach = function(client, bufnr)
+        local function on_attach(client, bufnr)
+            -- 你的 on_attach 函数内容
             local nmap = function(keys, func, desc)
                 if desc then
                     desc = "LSP: " .. desc
@@ -182,11 +170,27 @@ return {
             vim.keymap.set({ 'n', 'v' }, '<leader>F', "<Cmd>Format<CR>", { buffer = bufnr, noremap = true, silent = true, desc = "LSP: Format" })
         end
 
-        -- Initialize Mason and Mason-LSPConfig
-        require("mason").setup()
+
+        -- [[ 修正 ]] --
+        -- 在这里统一配置 Mason 和 Mason-LSPConfig
+        require("mason").setup() -- mason.setup() 仍然需要
+
+        -- 将所有 mason-lspconfig 的配置集中到这一次调用中
         require("mason-lspconfig").setup({
+            -- 从原来的 opts 中移动到这里
+            ensure_installed = {
+                "intelephense",
+                "lua_ls",
+                "pyright",
+                "rust_analyzer",
+                "gopls",
+                "volar",
+            },
+            -- 从原来的 opts 中移动到这里
+            automatic_installation = true,
+
+            -- 你的 handlers 保持不变
             handlers = {
-                -- 默认处理器，用于所有未被特殊处理的LSP
                 function(server_name)
                     require("lspconfig")[server_name].setup({
                         capabilities = capabilities,
@@ -194,27 +198,49 @@ return {
                     })
                 end,
 
+                -- 在你的 mason-lspconfig handlers 中
                 ["volar"] = function()
-                    -- 构建指向你全局 TypeScript 库的完整路径
-                    local tsdk_path = vim.fn.expand("~/.nvm/versions/node/v20.19.2/lib/node_modules/typescript/lib")
 
                     require("lspconfig").volar.setup({
+                        cmd = {
+                            "systemd-run",
+                            "--user",                       -- 在用户 session 中运行
+                            "--scope",                      -- 创建一个临时的 scope unit
+                            "-p", "CPUQuota=100%",          -- **关键：限制此进程最多只能使用 1 个 CPU 核心**
+                            "-p", "MemoryMax=6G",           -- **关键：限制此进程最多只能使用 4GB 物理内存**
+                            "vue-language-server",          -- 要运行的命令
+                            "--stdio"                       -- 命令的参数
+                        },
+
+                        cmd_env = {
+                            NODE_OPTIONS = "--max-old-space-size=6000" -- 设置 4GB 内存
+                        },
+
+                        -- 其他配置保持不变
                         capabilities = capabilities,
                         on_attach = on_attach,
                         filetypes = {"typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json"},
                         init_options = {
-                            -- 明确告诉 Volar 在哪里可以找到 TypeScript
-                            typescript = {
-                                tsdk = tsdk_path
-                            },
+                            -- typescript = {
+                                -- tsdk = tsdk_path
+                            -- },
                             vue = {
-                                hybridMode = false
+                                hybridMode = false,
+                                -- [[ 新增 ]] --
+                                -- 尝试禁用一些耗资源的功能来测试性能
+                                features = {
+                                    -- 组织导入功能，通常可以禁用
+                                    organizeImports = false,
+                                    -- Go to File... 功能，可以禁用
+                                    gotoFile = false,
+                                    -- 语义高亮，这是一个非常大的性能消耗点！
+                                    semanticTokens = false,
+                                }
                             }
                         }
                     })
                 end,
 
-                -- Example for another server if it needed special setup
                 ["lua_ls"] = function ()
                   require("lspconfig").lua_ls.setup({
                     capabilities = capabilities,
@@ -230,8 +256,8 @@ return {
             }
         })
 
-        -- Advanced features
-        require("lsp-overloads").setup() -- Make sure this is loaded after lspconfig setups
-        require('fidget').setup() -- Fidget setup can usually go here
+        -- Advanced features 保持不变
+        require("lsp-overloads").setup()
+        require('fidget').setup()
     end
 }
