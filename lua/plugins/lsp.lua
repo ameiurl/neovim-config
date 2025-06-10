@@ -29,7 +29,7 @@ return {
                     "pyright",
                     "rust_analyzer",
                     "gopls",
-                    -- "volar",
+                    "volar",
                 }
             }
         },
@@ -180,23 +180,13 @@ return {
             end, { range = true, desc = "Format current buffer (or selection)" })
 
             vim.keymap.set({ 'n', 'v' }, '<leader>F', "<Cmd>Format<CR>", { buffer = bufnr, noremap = true, silent = true, desc = "LSP: Format" })
-
-            -- Client specific on_attach logic
-            if client.name == "volar" then
-                local tsdk_path = vim.fn.expand("~/.nvm/versions/node/v20.19.2/lib/node_modules/typescript/lib")
-                if vim.fn.isdirectory(tsdk_path) == 0 then
-                    vim.notify_once(
-                        "Volar: TypeScript SDK not found at: " .. tsdk_path,
-                        vim.log.levels.WARN
-                    )
-                end
-            end
         end
 
         -- Initialize Mason and Mason-LSPConfig
         require("mason").setup()
         require("mason-lspconfig").setup({
             handlers = {
+                -- 默认处理器，用于所有未被特殊处理的LSP
                 function(server_name)
                     require("lspconfig")[server_name].setup({
                         capabilities = capabilities,
@@ -204,19 +194,21 @@ return {
                     })
                 end,
 
-                -- Custom handler for Volar
                 ["volar"] = function()
-                    local tsdk_path = vim.fn.expand("~") .. "/.nvm/versions/node/v20.19.2/lib/node_modules/typescript/lib"
+                    -- 构建指向你全局 TypeScript 库的完整路径
+                    local tsdk_path = vim.fn.expand("~/.nvm/versions/node/v20.19.2/lib/node_modules/typescript/lib")
+
                     require("lspconfig").volar.setup({
                         capabilities = capabilities,
                         on_attach = on_attach,
                         filetypes = {"typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json"},
                         init_options = {
+                            -- 明确告诉 Volar 在哪里可以找到 TypeScript
                             typescript = {
                                 tsdk = tsdk_path
                             },
                             vue = {
-                                hybridMode = false -- Set to true if you use <script setup lang="ts"> alongside <script lang="ts"> in the same SFC
+                                hybridMode = false
                             }
                         }
                     })
