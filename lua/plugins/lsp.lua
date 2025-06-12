@@ -198,22 +198,25 @@ return {
                     })
                 end,
 
+
                 -- 在你的 mason-lspconfig handlers 中
                 ["volar"] = function()
 
+                    local vls_path = vim.fn.expand("~/.local/share/nvim/mason/bin/vue-language-server")
                     require("lspconfig").volar.setup({
                         cmd = {
                             "systemd-run",
-                            "--user",                       -- 在用户 session 中运行
-                            "--scope",                      -- 创建一个临时的 scope unit
-                            "-p", "CPUQuota=100%",          -- **关键：限制此进程最多只能使用 1 个 CPU 核心**
-                            "-p", "MemoryMax=6G",           -- **关键：限制此进程最多只能使用 4GB 物理内存**
-                            "vue-language-server",          -- 要运行的命令
-                            "--stdio"                       -- 命令的参数
+                            "--user",
+                            "--scope",
+                            "--quiet",
+                            "-p", "CPUQuota=100%", -- CPU 限制可以保留
+                            "-p", "MemoryMax=6G",  -- 内核硬限制为 6GB
+                            vls_path,
+                            "--stdio"
                         },
-
                         cmd_env = {
-                            NODE_OPTIONS = "--max-old-space-size=6000" -- 设置 4GB 内存
+                            -- Node.js 堆内存限制为 4GB，为其他开销留出 2GB 空间
+                            NODE_OPTIONS = "--max-old-space-size=4096"
                         },
 
                         -- 其他配置保持不变
