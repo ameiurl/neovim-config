@@ -37,10 +37,10 @@ return {
     config = function()
         -- 定义诊断图标
         local diagnostic_icons = {
-            [vim.diagnostic.severity.ERROR] = { icon = " ", hl = "DiagnosticError" },
+            [vim.diagnostic.severity.ERROR] = { icon = " ", hl = "DiagnosticError" },
             [vim.diagnostic.severity.WARN]  = { icon = " ", hl = "DiagnosticWarn" },
-            [vim.diagnostic.severity.INFO]  = { icon = " ", hl = "DiagnosticInfo" },
-            [vim.diagnostic.severity.HINT]  = { icon = " ", hl = "DiagnosticHint" },
+            [vim.diagnostic.severity.INFO]  = { icon = " ", hl = "DiagnosticInfo" },
+            [vim.diagnostic.severity.HINT]  = { icon = "", hl = "DiagnosticHint" },
         }
 
         -- 诊断全局配置
@@ -78,7 +78,7 @@ return {
             },
             update_in_insert = false,
             severity_sort = true,
-            underline = { severity = { min = vim.diagnostic.severity.WARN } }, -- Underline only warnings and errors
+            underline = { severity = { min = vim.diagnostic.severity.HINT } }, -- Underline only warnings and errors
             float = {
                 border = "rounded",
                 source = "always", -- Or "if_many"
