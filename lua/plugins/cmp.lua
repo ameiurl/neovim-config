@@ -9,6 +9,8 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "ameiurl/friendly-snippets",
+        "zbirenbaum/copilot.lua",
+        "zbirenbaum/copilot-cmp",
     },
     config = function()
 
@@ -73,6 +75,7 @@ return {
             Unit          = ' ',
             Value         = ' ',
             Variable      = ' ',
+            Copilot       = '',
         }
 
         cmp.setup {
@@ -170,6 +173,7 @@ return {
                     vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 
                     vim_item.menu = ({
+                        copilot  = '[Copilot]',
                         nvim_lsp = '[LSP]',
                         nvim_lua = '[NvimLua]',
                         luasnip  = '[LuaSnip]',
@@ -182,6 +186,7 @@ return {
             },
 
             sources = {
+                { name = 'copilot' },
                 { name = 'luasnip', options = { show_autosnippets = true } },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
