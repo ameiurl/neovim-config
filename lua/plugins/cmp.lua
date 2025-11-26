@@ -9,8 +9,6 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "ameiurl/friendly-snippets",
-        "zbirenbaum/copilot.lua",
-        "zbirenbaum/copilot-cmp",
     },
     config = function()
 
