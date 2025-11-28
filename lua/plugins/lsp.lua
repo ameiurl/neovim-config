@@ -5,7 +5,6 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-nvim-lsp-signature-help",
         "Issafalcon/lsp-overloads.nvim",
-        -- Mason 保持不变
         {
             "williamboman/mason.nvim",
             opts = {
@@ -19,9 +18,6 @@ return {
                 }
             }
         },
-        -- [[ 修正 ]] --
-        -- 移除这里的 opts，只声明依赖关系。
-        -- 确保 mason-lspconfig 在 mason 加载后再加载。
         {
             "williamboman/mason-lspconfig.nvim",
             dependencies = { "williamboman/mason.nvim" },
@@ -170,92 +166,60 @@ return {
             vim.keymap.set({ 'n', 'v' }, '<leader>F', "<Cmd>Format<CR>", { buffer = bufnr, noremap = true, silent = true, desc = "LSP: Format" })
         end
 
+        -- 1. 启动 Mason
+        require("mason").setup()
 
-        -- [[ 修正 ]] --
-        -- 在这里统一配置 Mason 和 Mason-LSPConfig
-        require("mason").setup() -- mason.setup() 仍然需要
-
-        -- 将所有 mason-lspconfig 的配置集中到这一次调用中
+        -- 2. 启动 Mason-LSPConfig
         require("mason-lspconfig").setup({
-            -- 从原来的 opts 中移动到这里
             ensure_installed = {
                 "intelephense",
-                "lua_ls",
                 "pyright",
                 "rust_analyzer",
                 "gopls",
-                "volar",
+                "ts_ls",
             },
-            -- 从原来的 opts 中移动到这里
             automatic_installation = true,
 
-            -- 你的 handlers 保持不变
             handlers = {
                 function(server_name)
-                    require("lspconfig")[server_name].setup({
+                    require("lspconfig")[server_name].setup({ capabilities = capabilities, on_attach = on_attach })
+                end,
+
+                ["ts_ls"] = function()
+                    require("lspconfig").ts_ls.setup({
                         capabilities = capabilities,
                         on_attach = on_attach,
+                        -- 移除 vue 文件类型，移除插件配置
+                        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
                     })
                 end,
 
-
-                -- 在你的 mason-lspconfig handlers 中
                 ["volar"] = function()
-
-                    local vls_path = vim.fn.expand("~/.local/share/nvim/mason/bin/vue-language-server")
                     require("lspconfig").volar.setup({
-                        cmd = {
-                            "systemd-run",
-                            "--user",
-                            "--scope",
-                            "--quiet",
-                            "-p", "CPUQuota=100%", -- CPU 限制可以保留
-                            "-p", "MemoryMax=6G",  -- 内核硬限制为 6GB
-                            vls_path,
-                            "--stdio"
-                        },
-                        cmd_env = {
-                            -- Node.js 堆内存限制为 4GB，为其他开销留出 2GB 空间
-                            NODE_OPTIONS = "--max-old-space-size=4096"
-                        },
-
-                        -- 其他配置保持不变
                         capabilities = capabilities,
                         on_attach = on_attach,
-                        filetypes = {"typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json"},
+                        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
                         init_options = {
-                            -- typescript = {
-                                -- tsdk = tsdk_path
-                            -- },
                             vue = {
+                                -- [[ 核心修改 ]] 关闭混合模式，不再依赖 ts_ls
                                 hybridMode = false,
-                                -- [[ 新增 ]] --
-                                -- 尝试禁用一些耗资源的功能来测试性能
-                                features = {
-                                    -- 组织导入功能，通常可以禁用
-                                    organizeImports = false,
-                                    -- Go to File... 功能，可以禁用
-                                    gotoFile = false,
-                                    -- 语义高亮，这是一个非常大的性能消耗点！
-                                    semanticTokens = false,
-                                }
+                            },
+                            typescript = {
+                                -- 依然需要 TSDK 路径来解析 TS 语法
+                                tsdk = (function()
+                                    local found_ts = vim.fs.find('node_modules/typescript/lib', {
+                                        path = vim.fn.getcwd(),
+                                        upward = true,
+                                        type = 'directory'
+                                    })[1]
+                                    if found_ts then return found_ts end
+                                    return "/home/amei/.nvm/versions/node/v22.21.1/lib/node_modules/typescript/lib"
+                                end)()
                             }
                         }
                     })
                 end,
 
-                ["lua_ls"] = function ()
-                  require("lspconfig").lua_ls.setup({
-                    capabilities = capabilities,
-                    on_attach = on_attach,
-                    settings = {
-                      Lua = {
-                        diagnostics = { globals = {'vim'} },
-                        workspace = { checkThirdParty = false }
-                      }
-                    }
-                  })
-                end,
             }
         })
 
