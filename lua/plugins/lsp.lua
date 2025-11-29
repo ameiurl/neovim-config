@@ -44,27 +44,18 @@ return {
             virtual_text = {
                 severity = { min = vim.diagnostic.severity.WARN },
                 spacing = 2,
-                prefix = "⋮", -- You can also use '●' or other symbols
+                prefix = "⋮",
                 format = function(diagnostic)
                     local icon_entry = diagnostic_icons[diagnostic.severity]
                     if icon_entry then
-                        return string.format(
-                            "%s%s: %s",
-                            icon_entry.icon,
-                            diagnostic.source,
-                            diagnostic.message:gsub("\n", " ")
-                        )
+                        return string.format("%s%s: %s", icon_entry.icon, diagnostic.source, diagnostic.message:gsub("\n", " "))
                     else
-                        return string.format(
-                            "%s: %s",
-                            diagnostic.source,
-                            diagnostic.message:gsub("\n", " ")
-                        )
+                        return string.format("%s: %s", diagnostic.source, diagnostic.message:gsub("\n", " "))
                     end
                 end,
             },
             signs = {
-                active = true, -- This is the default, can be omitted
+                active = true,
                 text = {
                     [vim.diagnostic.severity.ERROR] = diagnostic_icons[vim.diagnostic.severity.ERROR].icon,
                     [vim.diagnostic.severity.WARN]  = diagnostic_icons[vim.diagnostic.severity.WARN].icon,
@@ -74,30 +65,19 @@ return {
             },
             update_in_insert = false,
             severity_sort = true,
-            underline = { severity = { min = vim.diagnostic.severity.HINT } }, -- Underline only warnings and errors
+            underline = { severity = { min = vim.diagnostic.severity.HINT } },
             float = {
                 border = "rounded",
-                source = "always", -- Or "if_many"
+                source = "always",
                 format = function(diagnostic)
-                    return string.format(
-                        "%s (%s) [%s]",
-                        diagnostic.message,
-                        diagnostic.source,
-                        diagnostic.code or (diagnostic.user_data and diagnostic.user_data.lsp and diagnostic.user_data.lsp.code) or ""
-                    )
+                    return string.format("%s (%s) [%s]", diagnostic.message, diagnostic.source, diagnostic.code or "")
                 end
             }
         })
 
         -- LSP全局处理程序
-        local lsp_handlers = {
-            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-        }
-
-        for event, handler in pairs(lsp_handlers) do
-            vim.lsp.handlers[event] = handler
-        end
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
         local capabilities = vim.tbl_deep_extend(
             "force",
@@ -105,125 +85,113 @@ return {
             require("cmp_nvim_lsp").default_capabilities() or {}
         )
 
-        local function on_attach(client, bufnr)
-            -- 你的 on_attach 函数内容
-            local nmap = function(keys, func, desc)
-                if desc then
-                    desc = "LSP: " .. desc
-                end
-                vim.keymap.set("n", keys, func, { buffer = bufnr, noremap = true, silent = true, desc = desc })
+        -- [关键修复 1] 获取 TSDK 路径 (完全不依赖 API，强制使用 Mason 的 TS 5.x)
+        local function get_typescript_server_path()
+            local data_path = vim.fn.stdpath("data")
+            
+            -- 路径 A: Mason 安装的 typescript-language-server 自带的 typescript (通常是最新版)
+            local mason_ts = data_path .. "/mason/packages/typescript-language-server/node_modules/typescript/lib"
+            
+            if vim.fn.isdirectory(mason_ts) == 1 then
+                return mason_ts
+            end
+            
+            -- 路径 B: 某些情况下 Mason 会单独安装 typescript 包
+            local mason_ts_standalone = data_path .. "/mason/packages/typescript/node_modules/typescript/lib"
+            if vim.fn.isdirectory(mason_ts_standalone) == 1 then
+                return mason_ts_standalone
             end
 
-            nmap("gD", vim.lsp.buf.definition, "跳转到定义 (gD)") -- Alternative to Telescope
-            nmap("go", require("telescope.builtin").lsp_definitions, "跳转到定义 (Telescope)")
-            nmap("gr", require("telescope.builtin").lsp_references, "查看引用")
-            nmap("gI", require("telescope.builtin").lsp_implementations, "查看实现")
-            nmap("gt", require("telescope.builtin").lsp_type_definitions, "类型定义")
-            nmap("gk", vim.lsp.buf.hover, "显示文档 (K)") -- Standard Neovim keymap for hover
-            nmap("gH", vim.lsp.buf.hover, "显示文档 (gH)")
-            nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
-            nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
-            nmap("<leader>fs", vim.lsp.buf.document_symbol, "文档符号") -- Consider telescope.builtin.lsp_document_symbols
-            nmap("<leader>ws", vim.lsp.buf.workspace_symbol, "工作区符号") -- Consider telescope.builtin.lsp_dynamic_workspace_symbols
+            -- 调试：如果没有找到 Mason 的 TS，打印警告
+            -- 只有当 Mason 的 TS 不存在时，才回退到本地 node_modules (这会导致 Vue2 项目跳转失败)
+            local local_ts = vim.fs.find('node_modules/typescript/lib', { path = vim.fn.getcwd(), upward = true, type = 'directory' })[1]
+            if local_ts then return local_ts end
 
-            -- 诊断导航
-            local diagnostic_goto = function(next, severity_str)
-                return function()
-                    local severity_val = severity_str and vim.diagnostic.severity[severity_str] or nil
-                    local opts = {
-                        severity = severity_val,
-                        wrap = false, -- Don't wrap around the buffer
-                        float = false, -- You can set this to true for a floating window
-                    }
-                    if next then
-                        vim.diagnostic.goto_next(opts)
-                    else
-                        vim.diagnostic.goto_prev(opts)
-                    end
-                end
-            end
-
-            nmap("]d", diagnostic_goto(true), "下一个诊断")
-            nmap("[d", diagnostic_goto(false), "上一个诊断")
-            nmap("]e", diagnostic_goto(true, "ERROR"), "下一个错误")
-            nmap("[e", diagnostic_goto(false, "ERROR"), "上一个错误")
-            nmap("]w", diagnostic_goto(true, "WARN"), "下一个警告")
-            nmap("[w", diagnostic_goto(false, "WARN"), "上一个警告")
-            nmap("<leader>do", vim.diagnostic.open_float, "打开诊断浮窗") -- Open diagnostics float
-
-            -- Formatting command (remains the same, good)
-            vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(opts)
-                local format_opts = { async = true, timeout_ms = 5000 } -- Added timeout
-                if opts.range > 0 then
-                    format_opts.range = {
-                        start = { line = opts.line1 - 1, character = 0 }, -- LSP uses 0-based indexing
-                        ["end"] = { line = opts.line2, character = 0 },
-                    }
-                end
-                vim.lsp.buf.format(format_opts)
-            end, { range = true, desc = "Format current buffer (or selection)" })
-
-            vim.keymap.set({ 'n', 'v' }, '<leader>F', "<Cmd>Format<CR>", { buffer = bufnr, noremap = true, silent = true, desc = "LSP: Format" })
+            return nil
         end
 
-        -- 1. 启动 Mason
+        -- 1. Mason Setup
         require("mason").setup()
 
-        -- 2. 启动 Mason-LSPConfig
+        -- 2. Mason-LSPConfig Setup
         require("mason-lspconfig").setup({
-            ensure_installed = {
-                "intelephense",
-                "pyright",
-                "rust_analyzer",
-                "gopls",
-                "ts_ls",
-            },
+            ensure_installed = { "intelephense", "pyright", "rust_analyzer", "gopls", "ts_ls", "vue_ls" },
             automatic_installation = true,
-
-            handlers = {
-                function(server_name)
-                    require("lspconfig")[server_name].setup({ capabilities = capabilities, on_attach = on_attach })
-                end,
-
-                ["ts_ls"] = function()
-                    require("lspconfig").ts_ls.setup({
-                        capabilities = capabilities,
-                        on_attach = on_attach,
-                        -- 移除 vue 文件类型，移除插件配置
-                        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
-                    })
-                end,
-
-                ["volar"] = function()
-                    require("lspconfig").volar.setup({
-                        capabilities = capabilities,
-                        on_attach = on_attach,
-                        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-                        init_options = {
-                            vue = {
-                                -- [[ 核心修改 ]] 关闭混合模式，不再依赖 ts_ls
-                                hybridMode = false,
-                            },
-                            typescript = {
-                                -- 依然需要 TSDK 路径来解析 TS 语法
-                                tsdk = (function()
-                                    local found_ts = vim.fs.find('node_modules/typescript/lib', {
-                                        path = vim.fn.getcwd(),
-                                        upward = true,
-                                        type = 'directory'
-                                    })[1]
-                                    if found_ts then return found_ts end
-                                    return "/home/amei/.nvm/versions/node/v22.21.1/lib/node_modules/typescript/lib"
-                                end)()
-                            }
-                        }
-                    })
-                end,
-
-            }
         })
 
-        -- Advanced features 保持不变
+        -- [关键修复 2] 获取 Vue 插件路径 (完全不依赖 API)
+        local data_path = vim.fn.stdpath("data")
+        local vue_plugin_path = data_path .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+
+        -- 兼容旧版路径
+        if vim.fn.isdirectory(vue_plugin_path) ~= 1 then
+            vue_plugin_path = data_path .. "/mason/packages/vue-language-server/node_modules/@vue/typescript-plugin"
+        end
+
+        -- 3. LSP Config Setup
+        local simple_servers = { "intelephense", "pyright", "rust_analyzer", "gopls" }
+        for _, server in ipairs(simple_servers) do
+            vim.lsp.config(server, { capabilities = capabilities })
+        end
+
+        -- ts_ls 配置
+        vim.lsp.config("ts_ls", {
+            capabilities = capabilities,
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+            init_options = {
+                plugins = {
+                    {
+                        name = "@vue/typescript-plugin",
+                        location = vue_plugin_path,
+                        languages = { "vue" },
+                    },
+                },
+            },
+        })
+
+        -- vue_ls 配置
+        vim.lsp.config("vue_ls", {
+            capabilities = capabilities,
+            filetypes = { "vue" },
+            init_options = {
+                vue = {
+                    hybridMode = true,
+                },
+                typescript = {
+                    -- 这里会强制让 Vue 使用 Mason 的新版 TS
+                    tsdk = get_typescript_server_path(),
+                },
+            },
+        })
+
+        -- 4. Enable Servers
+        vim.lsp.enable({ "intelephense", "pyright", "rust_analyzer", "gopls", "ts_ls", "vue_ls" })
+
+        -- 5. Keymaps
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+            callback = function(ev)
+                local bufnr = ev.buf
+                local nmap = function(keys, func, desc)
+                    vim.keymap.set("n", keys, func, { buffer = bufnr, noremap = true, silent = true, desc = "LSP: " .. (desc or "") })
+                end
+
+                nmap("gD", vim.lsp.buf.definition, "跳转到定义 (gD)")
+                nmap("go", require("telescope.builtin").lsp_definitions, "跳转到定义 (Telescope)")
+                nmap("gr", require("telescope.builtin").lsp_references, "查看引用")
+                nmap("gk", vim.lsp.buf.hover, "显示文档")
+                nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
+                nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
+                nmap("<leader>do", vim.diagnostic.open_float, "打开诊断")
+                
+                -- Format command
+                vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(opts)
+                    vim.lsp.buf.format({ async = true })
+                end, { desc = "Format current buffer" })
+                vim.keymap.set({ 'n', 'v' }, '<leader>F', "<Cmd>Format<CR>", { buffer = bufnr, noremap = true, silent = true, desc = "LSP: Format" })
+            end,
+        })
+
         require("lsp-overloads").setup()
         require('fidget').setup()
     end
