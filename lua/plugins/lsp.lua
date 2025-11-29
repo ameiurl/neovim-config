@@ -88,14 +88,14 @@ return {
         -- [关键修复 1] 获取 TSDK 路径 (完全不依赖 API，强制使用 Mason 的 TS 5.x)
         local function get_typescript_server_path()
             local data_path = vim.fn.stdpath("data")
-            
+
             -- 路径 A: Mason 安装的 typescript-language-server 自带的 typescript (通常是最新版)
             local mason_ts = data_path .. "/mason/packages/typescript-language-server/node_modules/typescript/lib"
-            
+
             if vim.fn.isdirectory(mason_ts) == 1 then
                 return mason_ts
             end
-            
+
             -- 路径 B: 某些情况下 Mason 会单独安装 typescript 包
             local mason_ts_standalone = data_path .. "/mason/packages/typescript/node_modules/typescript/lib"
             if vim.fn.isdirectory(mason_ts_standalone) == 1 then
@@ -129,25 +129,45 @@ return {
         end
 
         -- 3. LSP Config Setup
-        local simple_servers = { "intelephense", "pyright", "rust_analyzer", "gopls" }
+        local simple_servers = { "intelephense", "pyright", "rust_analyzer", "gopls", "vtsls", "vue_ls" }
         for _, server in ipairs(simple_servers) do
             vim.lsp.config(server, { capabilities = capabilities })
         end
 
         -- ts_ls 配置
-        vim.lsp.config("ts_ls", {
+        -- vim.lsp.config("ts_ls", {
+        --     capabilities = capabilities,
+        --     filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+        --     init_options = {
+        --         plugins = {
+        --             {
+        --                 name = "@vue/typescript-plugin",
+        --                 location = vue_plugin_path,
+        --                 languages = { "vue" },
+        --             },
+        --         },
+        --     },
+        -- })
+
+        vim.lsp.config("vtsls", {
             capabilities = capabilities,
-            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-            init_options = {
-                plugins = {
-                    {
-                        name = "@vue/typescript-plugin",
-                        location = vue_plugin_path,
-                        languages = { "vue" },
+            settings = {
+                vtsls = {
+                    tsserver = {
+                        globalPlugins = {
+                            {
+                                name = "@vue/typescript-plugin",
+                                location = vue_plugin_path,
+                                languages = { "vue" },
+                                configNamespace = "typescript",
+                            },
+                        },
                     },
                 },
             },
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
         })
+        -- vim.lsp.config("vue_ls", {})
 
         -- vue_ls 配置
         vim.lsp.config("vue_ls", {
@@ -165,7 +185,7 @@ return {
         })
 
         -- 4. Enable Servers
-        vim.lsp.enable({ "intelephense", "pyright", "rust_analyzer", "gopls", "ts_ls", "vue_ls" })
+        vim.lsp.enable({ "intelephense", "pyright", "rust_analyzer", "gopls", "vtsls", "vue_ls" })
 
         -- 5. Keymaps
         vim.api.nvim_create_autocmd("LspAttach", {
@@ -183,7 +203,7 @@ return {
                 nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
                 nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
                 nmap("<leader>do", vim.diagnostic.open_float, "打开诊断")
-                
+
                 -- Format command
                 vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(opts)
                     vim.lsp.buf.format({ async = true })
