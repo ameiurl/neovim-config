@@ -83,18 +83,8 @@ return {
                 end,
             },
             window = {
-                -- completion = {
-                --   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-                --   scrollbar = "║",
-                --   winhighlight = 'Normal:CmpMenu,FloatBorder:CmpMenuBorder,CursorLine:CmpSelection,Search:None',
-                --   autocomplete = {
-                --     require("cmp.types").cmp.TriggerEvent.InsertEnter,
-                --     require("cmp.types").cmp.TriggerEvent.TextChanged,
-                --   },
-                -- },
                 documentation = {
                     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-                    -- winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
                     scrollbar = "║",
                 },
             },
@@ -106,8 +96,6 @@ return {
                 ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
                 ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
                 ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-                -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping({
                     i = cmp.mapping.abort(),
