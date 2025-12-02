@@ -199,3 +199,28 @@ vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "",
     command = "set fo-=c fo-=r fo-=o",
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function()
+    local opts = { buffer = true, remap = false, silent = true }
+    
+    -- 按 <CR> (回车)：在该位置打开文件（默认行为通常就是这个，但显式指定更安全）
+    -- 注意：<CR> 默认其实就是跳到该文件，如果你想回车后自动关闭 qf 窗口，可以用下面的 map
+    vim.keymap.set("n", "<CR>", "<CR>", opts)
+    -- 如果你想回车跳转后自动关闭 Quickfix，用这行代替上面那行：
+    -- vim.keymap.set("n", "<CR>", "<CR>:cclose<CR>", opts)
+
+    -- 按 o：在预览窗口打开，光标留在 Quickfix 列表 (Preview)
+    vim.keymap.set("n", "o", "<CR><C-w>p", opts)
+
+    -- 按 t：在新标签页打开 (Tab)
+    vim.keymap.set("n", "t", "<C-w><Enter><C-w>T", opts)
+
+    -- 按 v：垂直分屏打开 (Vertical split)
+    vim.keymap.set("n", "v", "<C-w><Enter><C-w>L", opts)
+    
+    -- 按 q：关闭 Quickfix 窗口
+    vim.keymap.set("n", "q", ":close<CR>", opts)
+  end,
+})

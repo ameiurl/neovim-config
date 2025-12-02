@@ -17,5 +17,6 @@ return {
             let g:VM_maps["Redo"]               = '<C-r>'
             " noremap <leader>sa <Plug>(VM-Select-All)
         ]])
+        vim.g.VM_filetypes_disabled = { 'qf' }
 	end
 }

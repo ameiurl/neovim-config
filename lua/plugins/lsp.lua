@@ -160,9 +160,9 @@ return {
                     vim.keymap.set("n", keys, func, { buffer = bufnr, noremap = true, silent = true, desc = "LSP: " .. (desc or "") })
                 end
 
-                nmap("gD", vim.lsp.buf.definition, "跳转到定义 (gD)")
-                nmap("go", require("telescope.builtin").lsp_definitions, "跳转到定义 (Telescope)")
-                nmap("gr", require("telescope.builtin").lsp_references, "查看引用")
+                nmap("gD", vim.lsp.buf.declaration, "跳转到定义 (gD)")
+                nmap("go", vim.lsp.buf.definition, "跳转到定义")
+                nmap("gr", vim.lsp.buf.references, "查看引用")
                 nmap("gk", vim.lsp.buf.hover, "显示文档")
                 nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
                 nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
