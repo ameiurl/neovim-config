@@ -158,13 +158,13 @@ return {
                         state.commands.toggle_node(state)
                     end
                 end,
-                find_in_dir = function(state)
-                    local node = state.tree:get_node()
-                    local path = node:get_id()
-                    require("telescope.builtin").find_files({
-                        cwd = node.type == "directory" and path or vim.fn.fnamemodify(path, ":h"),
-                    })
-                end,
+                -- find_in_dir = function(state)
+                --     local node = state.tree:get_node()
+                --     local path = node:get_id()
+                --     require("telescope.builtin").find_files({
+                --         cwd = node.type == "directory" and path or vim.fn.fnamemodify(path, ":h"),
+                --     })
+                -- end,
                 copy_path = function(state)
                     local node = state.tree:get_node()
                     local filepath = node:get_id()

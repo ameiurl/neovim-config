@@ -161,8 +161,10 @@ return {
                 end
 
                 nmap("gD", vim.lsp.buf.declaration, "跳转到定义 (gD)")
-                nmap("go", vim.lsp.buf.definition, "跳转到定义")
-                nmap("gr", vim.lsp.buf.references, "查看引用")
+                -- nmap("go", vim.lsp.buf.definition, "跳转到定义")
+                nmap("go", "<cmd>FzfLua lsp_definitions<CR>", "跳转到定义")
+                -- nmap("gr", vim.lsp.buf.references, "查看引用")
+                nmap("gr", "<cmd>FzfLua lsp_references<CR>", "查看引用")
                 nmap("gk", vim.lsp.buf.hover, "显示文档")
                 nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
                 nmap("<leader>rn", vim.lsp.buf.rename, "重命名")

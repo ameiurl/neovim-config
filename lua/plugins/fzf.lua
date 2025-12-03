@@ -42,7 +42,7 @@ return {
 
         -- === 按键映射 (保持之前的配置) ===
         vim.keymap.set("n", "<leader>sb", fzf.buffers, { desc = "[S]earch [B]uffers" })
-        vim.keymap.set("n", "<leader>sf", fzf.files, { desc = "[S]earch [F]iles" })
+        vim.keymap.set("n", "<leader>f", fzf.files, { desc = "[S]earch [F]iles" })
         vim.keymap.set("n", "<leader>so", fzf.oldfiles, { desc = "[S]earch [O]ldfiles" })
         vim.keymap.set("n", "<leader>sg", fzf.live_grep, { desc = "[S]earch [G]rep" })
         vim.keymap.set("n", "<leader>sc", fzf.lgrep_curbuf, { desc = "[S]earch [C]urrent buffer" })
