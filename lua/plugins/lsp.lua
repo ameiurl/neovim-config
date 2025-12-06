@@ -3,6 +3,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         "Issafalcon/lsp-overloads.nvim",
+        "saghen/blink.cmp",  -- 添加 blink.cmp 依赖
         {
             "williamboman/mason.nvim",
             opts = {
@@ -30,10 +31,10 @@ return {
     },
     config = function()
         local diagnostic_icons = {
-            [vim.diagnostic.severity.ERROR] = { icon = " ", hl = "DiagnosticError" },
-            [vim.diagnostic.severity.WARN]  = { icon = " ", hl = "DiagnosticWarn" },
-            [vim.diagnostic.severity.INFO]  = { icon = " ", hl = "DiagnosticInfo" },
-            [vim.diagnostic.severity.HINT]  = { icon = "", hl = "DiagnosticHint" },
+            [vim.diagnostic.severity.ERROR] = { icon = " ", hl = "DiagnosticError" },
+            [vim.diagnostic.severity.WARN]  = { icon = " ", hl = "DiagnosticWarn" },
+            [vim.diagnostic.severity.INFO]  = { icon = " ", hl = "DiagnosticInfo" },
+            [vim.diagnostic.severity.HINT]  = { icon = "", hl = "DiagnosticHint" },
         }
 
         vim.diagnostic.config({
@@ -71,11 +72,8 @@ return {
             }
         })
 
-        local capabilities = vim.tbl_deep_extend(
-            "force",
-            vim.lsp.protocol.make_client_capabilities(),
-            require("cmp_nvim_lsp").default_capabilities() or {}
-        )
+        -- 使用 blink.cmp 的 capabilities
+        local capabilities = require("blink.cmp").get_lsp_capabilities()
 
         -- 1. Mason Setup
         require("mason").setup()
@@ -108,30 +106,9 @@ return {
             },
         })
 
-        -- vim.lsp.config("vtsls", {
-        --     capabilities = capabilities,
-        --     settings = {
-        --         vtsls = {
-        --             tsserver = {
-        --                 globalPlugins = {
-        --                     {
-        --                         name = "@vue/typescript-plugin",
-        --                         location = vim.fn.stdpath("data")
-        --                             .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-        --                         languages = { "vue" },
-        --                         configNamespace = "typescript",
-        --                     },
-        --                 },
-        --             },
-        --         },
-        --     },
-        --     filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-        -- })
-
         -- vue_ls 配置
         vim.lsp.config("vue_ls", {
             capabilities = capabilities,
-            -- filetypes = { "vue" },
             init_options = {
                 vue = {
                     hybridMode = true,
@@ -143,13 +120,12 @@ return {
             },
         })
 
-        -- vue_ls 配置
+        -- lua_ls 配置
         vim.lsp.config("lua_ls", {
+            capabilities = capabilities,
             settings = {
                 Lua = {
                     diagnostics = {
-                        -- enable = false, -- 禁用所有 Lua 诊断（不推荐）
-                        -- 或只禁用全局变量检查
                         disable = { 'undefined-global' },
                     },
                 },
@@ -165,12 +141,9 @@ return {
                 local b = ev.buf
                 local o = { buffer = b, silent = true }
 
-                -- vim.keymap.set("n", "<leader>e", vim.diagnostic.goto_next, o)
                 vim.keymap.set("n", "gk", vim.lsp.buf.hover, o)
                 vim.keymap.set("n", "go", "<cmd>FzfLua lsp_definitions<CR>", o)
-                -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, o)
                 vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<CR>", o)
-                -- vim.keymap.set("n", "gr", vim.lsp.buf.references, o)
                 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, o)
                 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, o)
                 vim.keymap.set({ "n", "v" }, "<A-enter>", vim.lsp.buf.code_action, o)
