@@ -102,11 +102,8 @@ return {
                     c = cmp.mapping.close(),
                 }),
 
-                -- Accept currently selected item.
-                -- Set `select` to `false` to only confirm explicitly selected items.
                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
-                -- Supertab
                 ['<Tab>'] = cmp.mapping(function(fallback)
 
                     local has_words_before = function()
@@ -155,7 +152,6 @@ return {
             formatting = {
                 fields = { 'kind', 'abbr', 'menu' },
                 format = function(entry, vim_item)
-                    -- Kind icons
                     vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 
                     vim_item.menu = ({
