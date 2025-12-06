@@ -6,6 +6,8 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "ameiurl/friendly-snippets",
@@ -25,23 +27,6 @@ return {
         end
 
         require('luasnip.loaders.from_vscode').lazy_load()
-
-        local extensions = {
-            ruby = {
-                "jekyll",
-                "rails",
-            },
-            javascript = {
-                "jsdoc",
-            },
-            cpp = {
-                "unreal",
-            },
-        }
-
-        for lang, tbl in pairs(extensions) do
-            luasnip.filetype_extend(lang, tbl)
-        end
 
         local kind_icons = {
             Class         = ' ',
@@ -200,8 +185,8 @@ return {
             sources = cmp.config.sources({
                 { name = 'cmdline' }
             }, {
-                    { name = 'path' }
-                }),
+                { name = 'path' }
+            }),
         })
     end,
 }

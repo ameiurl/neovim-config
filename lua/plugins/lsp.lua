@@ -2,8 +2,6 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-nvim-lsp-signature-help",
         "Issafalcon/lsp-overloads.nvim",
         {
             "williamboman/mason.nvim",
@@ -145,33 +143,41 @@ return {
             },
         })
 
+        -- vue_ls 配置
+        vim.lsp.config("lua_ls", {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        -- enable = false, -- 禁用所有 Lua 诊断（不推荐）
+                        -- 或只禁用全局变量检查
+                        disable = { 'undefined-global' },
+                    },
+                },
+            },
+        })
+
         -- 4. Enable Servers
         vim.lsp.enable({ "intelephense", "pyright", "gopls", "ts_ls", "vue_ls" })
 
         -- 5. Keymaps
         vim.api.nvim_create_autocmd("LspAttach", {
-            group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
             callback = function(ev)
-                local bufnr = ev.buf
-                local nmap = function(keys, func, desc)
-                    vim.keymap.set("n", keys, func, { buffer = bufnr, noremap = true, silent = true, desc = "LSP: " .. (desc or "") })
-                end
+                local b = ev.buf
+                local o = { buffer = b, silent = true }
 
-                nmap("gD", vim.lsp.buf.declaration, "跳转到定义 (gD)")
-                -- nmap("go", vim.lsp.buf.definition, "跳转到定义")
-                nmap("go", "<cmd>FzfLua lsp_definitions<CR>", "跳转到定义")
-                -- nmap("gr", vim.lsp.buf.references, "查看引用")
-                nmap("gr", "<cmd>FzfLua lsp_references<CR>", "查看引用")
-                nmap("gk", vim.lsp.buf.hover, "显示文档")
-                nmap("<leader>ca", vim.lsp.buf.code_action, "代码操作")
-                nmap("<leader>rn", vim.lsp.buf.rename, "重命名")
-                nmap("<leader>do", vim.diagnostic.open_float, "打开诊断")
-
-                -- Format command
-                vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(opts)
-                    vim.lsp.buf.format({ async = true })
-                end, { desc = "Format current buffer" })
-                vim.keymap.set({ 'n', 'v' }, '<leader>F', "<Cmd>Format<CR>", { buffer = bufnr, noremap = true, silent = true, desc = "LSP: Format" })
+                -- vim.keymap.set("n", "<leader>e", vim.diagnostic.goto_next, o)
+                vim.keymap.set("n", "gk", vim.lsp.buf.hover, o)
+                vim.keymap.set("n", "go", "<cmd>FzfLua lsp_definitions<CR>", o)
+                -- vim.keymap.set("n", "gd", vim.lsp.buf.definition, o)
+                vim.keymap.set("n", "gr", "<cmd>FzfLua lsp_references<CR>", o)
+                -- vim.keymap.set("n", "gr", vim.lsp.buf.references, o)
+                vim.keymap.set("n", "gD", vim.lsp.buf.declaration, o)
+                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, o)
+                vim.keymap.set({ "n", "v" }, "<A-enter>", vim.lsp.buf.code_action, o)
+                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, o)
+                vim.keymap.set({ "n", "v" }, "<leader>F", function()
+                    vim.lsp.buf.format({ async = false })
+                end, o)
             end,
         })
 
