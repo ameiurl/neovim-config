@@ -49,8 +49,9 @@ return {
             fzf_opts = {
                 -- "default" = 输入框在底部，列表从下往上排列
                 -- "reverse" = 输入框在顶部，列表从上往下排列 (fzf-lua 默认通常是这个)
-                ["--layout"] = "default", 
+                ["--layout"] = "default",
                 ["--info"] = "inline",
+                ['--cycle'] = true
             },
         })
 
@@ -69,5 +70,6 @@ return {
         vim.keymap.set("n", "<leader>sq", fzf.quickfix, { desc = "[S]earch [Q]uickfix" })
         vim.keymap.set("n", "<leader>sm", fzf.marks, { desc = "[S]earch [M]arks" })
         vim.keymap.set("n", "<leader>s?", fzf.builtin, { desc = "[S]earch [?] Builtin" })
+        vim.keymap.set("n", "<leader>tt", fzf.resume, { desc = "Fzf-lua resume" })
     end,
 }
