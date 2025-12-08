@@ -3,22 +3,9 @@ return {
     version = "v1.*",
     event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
-        {
-            "L3MON4D3/LuaSnip",
-            version = "v2.*",
-            build = "make install_jsregexp",
-            dependencies = {
-                "ameiurl/friendly-snippets",
-            },
-            config = function()
-                require("luasnip.loaders.from_vscode").lazy_load()
-            end,
-        },
-        "giuxtaposition/blink-cmp-copilot",
+        "ameiurl/friendly-snippets",
+        -- "giuxtaposition/blink-cmp-copilot",
     },
-
-    ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
     opts = {
         keymap = {
             preset = "none",
@@ -51,22 +38,22 @@ return {
             },
         },
 
-        snippets = { preset = "luasnip" },
+        -- snippets = { preset = "luasnip" },
 
         sources = {
             -- 顺序：snippets, copilot, lsp, path, buffer
-            default = { "snippets", "copilot", "lsp", "path", "buffer" },
+            default = { "snippets", "lsp", "path", "buffer" },
             providers = {
                 snippets = {
                     name = "snippets",
                     score_offset = 100,  -- 最高优先级
                 },
-                copilot = {
-                    name = "copilot",
-                    module = "blink-cmp-copilot",
-                    score_offset = 90,   -- 第二优先级
-                    async = true,
-                },
+                -- copilot = {
+                --     name = "copilot",
+                --     module = "blink-cmp-copilot",
+                --     score_offset = 90,   -- 第二优先级
+                --     async = true,
+                -- },
                 lsp = {
                     name = "lsp",
                     score_offset = 80,   -- 第三优先级
