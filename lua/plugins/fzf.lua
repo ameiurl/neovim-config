@@ -3,7 +3,14 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
         local fzf = require("fzf-lua")
-
+        vim.keymap.set('n', '<leader>sf', function()
+			-- fzf.live_grep_resume({ multiprocess = true, debug = true })
+			fzf.grep({ search = "", fzf_opts = { ['--layout'] = 'default' } })
+		end, m)
+		vim.keymap.set('x', '<leader>sf', function()
+			-- fzf.live_grep_resume({ multiprocess = true, debug = true })
+			fzf.grep_visual({ fzf_opts = { ['--layout'] = 'default' } })
+		end, m)
         fzf.setup({
             -- === 1. 查找文件时的忽略配置 (Files) ===
             files = {
@@ -11,6 +18,9 @@ return {
                 -- --exclude h5: 忽略 h5 目录
                 -- --exclude "*.{...}": 忽略各种图片后缀
                 fd_opts = [[--color=never --type f --hidden --follow --exclude .git --exclude node_modules --exclude h5 --exclude "*.{png,jpg,jpeg,gif,svg,webp,ico}"]],
+				find_opts    = [[-type f -not -path '*/\.git/*' -printf '%P\n']],
+				rg_opts      = "--color=never --files --hidden --follow -g '!.git'",
+				-- fd_opts      = "--color=never --type f --hidden --follow --exclude .git",
             },
 
             -- === 2. 搜索内容时的忽略配置 (Grep / Live Grep) ===
@@ -22,14 +32,18 @@ return {
             },
             -- 1. 窗口样式设置 (保持悬浮窗)
             winopts = {
-                height = 0.85, -- 窗口高度
-                width = 0.80,  -- 窗口宽度
+                height = 1, -- 窗口高度
+                width = 1,  -- 窗口宽度
                 row = 0.5,     -- 垂直居中
                 col = 0.5,     -- 水平居中
                 border = "rounded", -- 边框样式: rounded, double, single, thicc
                 preview = {
                     layout = "flex", -- 自动适应预览位置
                 },
+				fullscreen = true,
+				vertical   = 'down:45%', -- up|down:size
+				horizontal = 'right:60%', -- right|left:size
+				hidden     = 'nohidden',
             },
             -- 2. 核心设置：把搜索框放到最底部
             fzf_opts = {

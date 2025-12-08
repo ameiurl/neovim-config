@@ -2,8 +2,6 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-        "Issafalcon/lsp-overloads.nvim",
-        "saghen/blink.cmp",  -- 添加 blink.cmp 依赖
         {
             "williamboman/mason.nvim",
             opts = {
@@ -153,8 +151,5 @@ return {
                 end, o)
             end,
         })
-
-        require("lsp-overloads").setup()
-        require('fidget').setup()
     end
 }
