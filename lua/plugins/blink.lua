@@ -71,33 +71,16 @@ return {
 
         cmdline = {
             enabled = true,
-            sources = function()
-                local type = vim.fn.getcmdtype()
-                if type == "/" or type == "?" then
-                    return { "buffer" }
-                end
-                if type == ":" then
-                    return { "cmdline", "path" }
-                end
-                return {}
-            end,
         },
 
         completion = {
             menu = {
                 border = "rounded",
-                draw = {
-                    columns = {
-                        { "kind_icon" },
-                        { "label", "label_description", gap = 1 },
-                        { "source_name" },
-                    },
-                },
             },
             documentation = {
                 auto_show = true,
                 auto_show_delay_ms = 200,
-                window = { border = "rounded" },
+                window = { max_height = 40, border = "rounded" },
             },
             ghost_text = { enabled = true },
         },
@@ -109,38 +92,6 @@ return {
 
         appearance = {
             nerd_font_variant = "mono",
-            kind_icons = {
-                Class         = ' ',
-                Color         = ' ',
-                Constant      = ' ',
-                Constructor   = ' ',
-                Enum          = ' ',
-                EnumMember    = ' ',
-                -- Event         =  '',
-                Event         = " ",
-                Field         = ' ',
-                File          = ' ',
-                Folder        = ' ',
-                Function      = ' ',
-                Interface     = ' ',
-                Keyword       = ' ',
-                Method        = ' ',
-                Module        = ' ',
-                -- Operator      =  '',
-                Operator      = "󰆕 ",
-                Property      = ' ',
-                Reference     = ' ',
-                -- Snippet       =  '﬍',
-                Snippet       = " ",
-                -- Struct        =  '',
-                Struct        = " ",
-                Text          = ' ',
-                TypeParameter = '𝙏 ',
-                Unit          = ' ',
-                Value         = ' ',
-                Variable      = ' ',
-                Copilot       = '',
-            }
         },
     },
 }
