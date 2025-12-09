@@ -96,9 +96,6 @@ return {
     },
     -- 使用 config 函数来应用高亮配置
     config = function(_, opts)
-        -- 1. 定义你的自定义颜色 (从 nvim-cmp 移植过来的配色)
-        local fgdark = "#2E3440"
-
         -- =========================================================
         --  这里添加 Documentation (文档) 窗口的背景颜色设置
         -- =========================================================
@@ -116,62 +113,51 @@ return {
         vim.api.nvim_set_hl(0, "BlinkCmpSignatureHelp", { bg = "#565656", fg = "#E9E9E9" })
         vim.api.nvim_set_hl(0, "BlinkCmpSignatureHelpBorder", { bg = "#565656", fg = "#E9E9E9" })
 
-        vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#82AAFF", bg = "NONE", bold = true })
-        vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#82AAFF", bg = "NONE", bold = true })
-        vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7E8294", bg = "NONE", strikethrough = true })
 
-        vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#808080", bg = "NONE", italic = true })
-        vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = fgdark, bg = "#B5585F" })
-        vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = fgdark, bg = "#B5585F" })
-        vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = fgdark, bg = "#B5585F" })
+        -- 匹配字符的高亮
+        vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { fg = "#82AAFF", bg = "NONE", bold = true })
+        -- 过期/废弃代码的高亮
+        vim.api.nvim_set_hl(0, "BlinkCmpLabelDeprecated", { fg = "#7E8294", bg = "NONE", strikethrough = true })
+        -- 菜单详情文字 (对应 CmpItemMenu)
+        vim.api.nvim_set_hl(0, "BlinkCmpLabelDetail", { fg = "#808080", bg = "NONE", italic = true })
 
-        vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = fgdark, bg = "#9FBD73" })
-        vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = fgdark, bg = "#9FBD73" })
-        vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = fgdark, bg = "#9FBD73" })
+        -- 1. 定义你的自定义颜色 (从 nvim-cmp 移植过来的配色)
+        -- local fgdark = "#2E3440"
+        --
+        -- -- 类型图标 (Kind) 的配色
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindField", { fg = fgdark, bg = "#B5585F" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindProperty", { fg = fgdark, bg = "#B5585F" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindEvent", { fg = fgdark, bg = "#B5585F" })
+        --
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindText", { fg = fgdark, bg = "#9FBD73" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindEnum", { fg = fgdark, bg = "#9FBD73" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindKeyword", { fg = fgdark, bg = "#9FBD73" })
+        --
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindConstant", { fg = fgdark, bg = "#D4BB6C" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindConstructor", { fg = fgdark, bg = "#D4BB6C" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindReference", { fg = fgdark, bg = "#D4BB6C" })
+        --
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindFunction", { fg = fgdark, bg = "#A377BF" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindStruct", { fg = fgdark, bg = "#A377BF" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindClass", { fg = fgdark, bg = "#A377BF" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindModule", { fg = fgdark, bg = "#A377BF" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindOperator", { fg = fgdark, bg = "#A377BF" })
+        --
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindVariable", { fg = fgdark, bg = "#cccccc" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindFile", { fg = fgdark, bg = "#7E8294" })
+        --
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindUnit", { fg = fgdark, bg = "#D4A959" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindSnippet", { fg = fgdark, bg = "#D4A959" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindFolder", { fg = fgdark, bg = "#D4A959" })
+        --
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindMethod", { fg = fgdark, bg = "#6C8ED4" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindValue", { fg = fgdark, bg = "#6C8ED4" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindEnumMember", { fg = fgdark, bg = "#6C8ED4" })
+        --
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindInterface", { fg = fgdark, bg = "#58B5A8" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindColor", { fg = fgdark, bg = "#58B5A8" })
+        -- vim.api.nvim_set_hl(0, "BlinkCmpKindTypeParameter", { fg = fgdark, bg = "#58B5A8" })
 
-        vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = fgdark, bg = "#D4BB6C" })
-        vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = fgdark, bg = "#D4BB6C" })
-        vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = fgdark, bg = "#D4BB6C" })
-
-        vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = fgdark, bg = "#A377BF" })
-        vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = fgdark, bg = "#A377BF" })
-        vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = fgdark, bg = "#A377BF" })
-        vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = fgdark, bg = "#A377BF" })
-        vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = fgdark, bg = "#A377BF" })
-
-        vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = fgdark, bg = "#cccccc" })
-        vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = fgdark, bg = "#7E8294" })
-
-        vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = fgdark, bg = "#D4A959" })
-        vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = fgdark, bg = "#D4A959" })
-        vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = fgdark, bg = "#D4A959" })
-
-        vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = fgdark, bg = "#6C8ED4" })
-        vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = fgdark, bg = "#6C8ED4" })
-        vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = fgdark, bg = "#6C8ED4" })
-
-        vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = fgdark, bg = "#58B5A8" })
-        vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = fgdark, bg = "#58B5A8" })
-        vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = fgdark, bg = "#58B5A8" })
-
-        -- 2. 启动 blink.cmp
         require("blink.cmp").setup(opts)
-
-        -- 3. [关键步骤] 将 Blink 的高亮组链接到上面定义的 CmpItem 颜色
-        -- 这样 Blink 才能识别并应用这些颜色
-        vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch", { link = "CmpItemAbbrMatch" })
-        vim.api.nvim_set_hl(0, "BlinkCmpLabelDeprecated", { link = "CmpItemAbbrDeprecated" })
-
-        -- 循环链接所有的 Kind 图标颜色
-        local kinds = {
-            "Field", "Property", "Event", "Text", "Enum", "Keyword", "Constant", "Constructor",
-            "Reference", "Function", "Struct", "Class", "Module", "Operator", "Variable",
-            "File", "Unit", "Snippet", "Folder", "Method", "Value", "EnumMember", "Interface",
-            "Color", "TypeParameter"
-        }
-        for _, kind in ipairs(kinds) do
-            -- 将 BlinkCmpKindFunction 链接到 CmpItemKindFunction 等等
-            vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind, { link = "CmpItemKind" .. kind })
-        end
     end,
 }
