@@ -63,3 +63,12 @@ map('x', 'p', [["_dP]])
 
 -- Select Last Copy
 map('n', 'gV', [[`[v`] ]])
+
+vim.keymap.set('n', '<leader>y', function()
+    -- 获取相对路径 ('%' 代表当前文件)
+    local path = vim.fn.expand('%')
+    -- 将路径写入系统剪贴板 ('+' 寄存器)
+    vim.fn.setreg('+', path)
+    -- (可选) 在命令行提示已复制的内容
+    vim.notify('已复制相对路径: ' .. path, vim.log.levels.INFO)
+end, { desc = '复制当前文件相对路径' })
