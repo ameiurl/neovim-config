@@ -65,10 +65,8 @@ map('x', 'p', [["_dP]])
 map('n', 'gV', [[`[v`] ]])
 
 vim.keymap.set('n', '<leader>y', function()
-    -- 获取相对路径 ('%' 代表当前文件)
-    local path = vim.fn.expand('%')
-    -- 将路径写入系统剪贴板 ('+' 寄存器)
+    -- '%:.' 意思是：获取当前文件名(%)，并将其转换为相对于当前目录的路径( :. )
+    local path = vim.fn.expand('%:.')
     vim.fn.setreg('+', path)
-    -- (可选) 在命令行提示已复制的内容
     vim.notify('已复制相对路径: ' .. path, vim.log.levels.INFO)
 end, { desc = '复制当前文件相对路径' })
