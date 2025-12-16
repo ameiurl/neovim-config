@@ -1,6 +1,8 @@
 {
+  "auto-session": { "branch": "main", "commit": "292492ab7af4bd8b9e37e28508bc8ce995722fd5" },
   "blink.cmp": { "branch": "main", "commit": "b19413d214068f316c78978b08264ed1c41830ec" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
+  "clever-f.vim": { "branch": "master", "commit": "6a3ac5e3688598af9411ab741737f98c47370c22" },
   "copilot.vim": { "branch": "release", "commit": "f89e977c87180519ba3b942200e3d05b17b1e2fc" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "fidget.nvim": { "branch": "main", "commit": "e32b672d8fd343f9d6a76944fedb8c61d7d8111a" },
@@ -30,7 +32,6 @@
   "render-markdown.nvim": { "branch": "main", "commit": "b2b135347e299ffbf7f4123fb7811899b0c9f4b8" },
   "seoul256.nvim": { "branch": "main", "commit": "26f1e3c6b018b9cd64fb67b06397bc1a1f0ac507" },
   "symbols-outline.nvim": { "branch": "master", "commit": "bc06396192d180fe8e0391e3defb7f11b1dc0639" },
-  "vim-eft": { "branch": "master", "commit": "419deb0c45141c11cfd2648b8523f520f8413ec2" },
   "vim-expand-region": { "branch": "master", "commit": "966513543de0ddc2d673b5528a056269e7917276" },
   "vim-fugitive": { "branch": "master", "commit": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" },
   "vim-instant-markdown": { "branch": "main", "commit": "e62da3d05500c0cce24f498e5c1184fe99cbe231" },
