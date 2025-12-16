@@ -99,20 +99,6 @@ vim.api.nvim_create_autocmd({ "InsertEnter"}, {
     group = vim.api.nvim_create_augroup("set_norelativenumber_number", {}),
 })
 
-
--- VIM/NeoVIM：解决LuaSnip下Tab按键跳转冲突问题
--- vim.api.nvim_create_autocmd('ModeChanged', {
---     pattern = '*',
---     callback = function()
---         if ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
---             and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
---             and not require('luasnip').session.jump_active
---         then
---             require('luasnip').unlink_current()
---         end
---     end
--- })
-
 local function preview_stack_trace()
     local line = vim.api.nvim_get_current_line()
     local filepath = nil
@@ -122,73 +108,73 @@ local function preview_stack_trace()
     -- === 1. 尝试匹配: 路径:行:列 ===
     filepath, line_nr, column_nr = string.match(line, "([^: (]+):(%d+):(%d+)")
 
-    -- === 2. 如果没匹配到，尝试匹配: 路径:行 ===
+    -- === 2. 尝试匹配: 路径:行 ===
     if not filepath then
         filepath, line_nr = string.match(line, "([^: (]+):(%d+)")
-        column_nr = 1 -- 默认第1列
+        if filepath then
+            column_nr = 1
+        end
     end
 
-    -- === 3. 如果还没匹配到，尝试提取看起来像路径的字符串 ===
+    -- === 3. 尝试匹配纯路径 (无行号) ===
     if not filepath then
-        -- 这里的正则意思：匹配连续的字符，直到遇到空格、冒号或括号
-        -- 你可以根据实际情况调整，这里假设路径里不含空格
         for word in string.gmatch(line, "([^: (]+)") do
-            -- 简单的过滤逻辑：只有包含 "package:" 或 ".dart" 或 "/" 的词才被视为路径
-            -- 防止把日志里的 "I/flutter" 或 "Error" 这种词当成文件打开
             if string.find(word, "^package:") or string.find(word, "%.dart") or string.find(word, "/") then
                 filepath = word
-                line_nr = 1
-                column_nr = 1
-                break -- 找到第一个像路径的就停止
+                -- 【重点修改】这里必须保持 nil，表示日志里没指定行号
+                line_nr = nil 
+                column_nr = nil
+                break
             end
         end
     end
 
     -- === 执行打开逻辑 ===
     if filepath then
-        -- 1. 处理 Flutter package 路径
+        -- 1. 路径清洗
         if string.match(filepath, "^package:") then
             filepath = string.gsub(filepath, "package:[^/]+/", "lib/")
         end
-        
-        -- 移除路径末尾可能残留的标点（如有些日志路径后面紧跟句号）
         filepath = string.gsub(filepath, "[%.%,]$", "")
 
         -- 2. 窗口切换
         local log_win_id = vim.api.nvim_get_current_win()
-        vim.cmd("wincmd p") -- 尝试跳回上一个窗口
+        vim.cmd("wincmd p")
         if vim.api.nvim_get_current_win() == log_win_id then
-            vim.cmd("vsplit") -- 如果没跳走，就垂直分屏
+            vim.cmd("vsplit")
         end
 
         -- 3. 打开文件
         local ok, _ = pcall(vim.cmd, "e " .. filepath)
         if ok then
-            -- 只有当确切抓取到行号时（或者默认设为1时）才跳转
             if line_nr then
-                pcall(vim.api.nvim_win_set_cursor, 0, { tonumber(line_nr), tonumber(column_nr) - 1 })
-                vim.cmd("normal! zz")
+                -- A. 情况：日志里明确写了行号 -> 强制跳转到那一行
+                pcall(vim.api.nvim_win_set_cursor, 0, { tonumber(line_nr), tonumber(column_nr or 1) - 1 })
+                vim.cmd("normal! zz") -- 居中显示
+            else
+                -- B. 情况：日志里没写行号 -> 使用你提供的逻辑跳转到最后编辑位置
+                -- 检查标记 '"' (上次退出位置) 是否大于1且小于文件总行数
+                if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+                    vim.cmd("normal! g'\"") -- 跳转
+                    vim.cmd("normal! zz")   -- 顺便居中一下，方便查看
+                end
             end
-            
-            -- 可选：跳回去 Log 窗口（注释掉下面这行则留在代码窗口）
-            -- vim.api.nvim_set_current_win(log_win_id)
         else
             print("无法打开文件: " .. filepath)
         end
     else
-        -- 如果没找到路径，就把回车当成普通的“向下移动”，方便看日志
+        -- 没找到路径，回车当作向下移动
         local key = vim.api.nvim_replace_termcodes("<Down>", true, false, true)
         vim.api.nvim_feedkeys(key, "n", false)
     end
 end
 
--- 配置自动命令 (针对 /tmp 临时文件或 Log 窗口)
+-- 保持原有的自动命令配置
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
         local buf_name = vim.api.nvim_buf_get_name(0)
         local buftype = vim.bo.buftype
-        -- 只要路径包含 /tmp/ 或者 也是 terminal/nofile 类型，就绑定回车
         if string.find(buf_name, "/tmp/") or buftype == "terminal" or buftype == "nofile" then
             vim.keymap.set("n", "<CR>", preview_stack_trace, { silent = true, noremap = true, buffer = true })
         end
