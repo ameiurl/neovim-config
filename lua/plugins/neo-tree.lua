@@ -226,7 +226,7 @@ return {
                     ["<space>"] = "none",
                     ["h"] = "parent_or_close",
                     ["l"] = "child_or_open",
-                    ["F"] = "find_in_dir",
+                    -- ["F"] = "find_in_dir",
                     -- ["h"] = {
                     -- "toggle_node",
                     -- nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
