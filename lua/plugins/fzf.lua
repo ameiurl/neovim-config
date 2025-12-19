@@ -71,5 +71,13 @@ return {
         vim.keymap.set("n", "<leader>sm", fzf.marks, { desc = "[S]earch [M]arks" })
         vim.keymap.set("n", "<leader>s?", fzf.builtin, { desc = "[S]earch [?] Builtin" })
         vim.keymap.set("n", "<leader>tt", fzf.resume, { desc = "Fzf-lua resume" })
+        vim.keymap.set('n', '<leader>gw', function()
+            require('fzf-lua').grep({
+                search = vim.fn.expand('<cword>'),
+                rg_opts = "--column --line-number --no-heading --color=always --smart-case --hidden --follow --no-ignore --glob '!.git/*'",
+                no_header = true,
+                no_header_i = true,
+            })
+        end, { desc = "Grep current word (include gitignored files)" })
     end,
 }
