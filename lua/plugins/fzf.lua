@@ -3,14 +3,6 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
         local fzf = require("fzf-lua")
-        vim.keymap.set('n', '<leader>sf', function()
-			-- fzf.live_grep_resume({ multiprocess = true, debug = true })
-			fzf.grep({ search = "", fzf_opts = { ['--layout'] = 'default' } })
-		end, m)
-		vim.keymap.set('x', '<leader>sf', function()
-			-- fzf.live_grep_resume({ multiprocess = true, debug = true })
-			fzf.grep_visual({ fzf_opts = { ['--layout'] = 'default' } })
-		end, m)
         fzf.setup({
             -- === 1. 查找文件时的忽略配置 (Files) ===
             files = {
@@ -72,12 +64,18 @@ return {
         vim.keymap.set("n", "<leader>s?", fzf.builtin, { desc = "[S]earch [?] Builtin" })
         vim.keymap.set("n", "<leader>tt", fzf.resume, { desc = "Fzf-lua resume" })
         vim.keymap.set('n', '<leader>gw', function()
-            require('fzf-lua').grep({
+            fzf.grep({
                 search = vim.fn.expand('<cword>'),
                 rg_opts = "--column --line-number --no-heading --color=always --smart-case --hidden --follow --no-ignore --glob '!.git/*'",
                 no_header = true,
                 no_header_i = true,
             })
         end, { desc = "Grep current word (include gitignored files)" })
+        vim.keymap.set('n', '<leader>sf', function()
+		    fzf.grep({ search = "", fzf_opts = { ['--layout'] = 'default' } })
+		end, m)
+		vim.keymap.set('x', '<leader>sf', function()
+			fzf.grep_visual({ fzf_opts = { ['--layout'] = 'default' } })
+		end, m)
     end,
 }
