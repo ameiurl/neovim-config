@@ -63,6 +63,7 @@ return {
         vim.keymap.set("n", "<leader>sm", fzf.marks, { desc = "[S]earch [M]arks" })
         vim.keymap.set("n", "<leader>s?", fzf.builtin, { desc = "[S]earch [?] Builtin" })
         vim.keymap.set("n", "<leader>tt", fzf.resume, { desc = "Fzf-lua resume" })
+        vim.keymap.set('n', '<leader>fk', ':FzfLua keymaps<CR>', { silent = true, desc = 'FzfLua keymaps' })
         vim.keymap.set('n', '<leader>gw', function()
             fzf.grep({
                 search = vim.fn.expand('<cword>'),
