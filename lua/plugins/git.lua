@@ -48,8 +48,8 @@ return {
 
                 -- Actions affecting git status of file that may be shown in tree
 
-                map({ 'n', 'v' }, '<leader>gs', reload_nvim_tree_after [[:Gitsigns stage_hunk<CR>]],
-                    { desc = "Gitsigns stage hunk" })
+                -- map({ 'n', 'v' }, '<leader>gs', reload_nvim_tree_after [[:Gitsigns stage_hunk<CR>]],
+                --     { desc = "Gitsigns stage hunk" })
                 map({ 'n', 'v' }, '<leader>gr', reload_nvim_tree_after [[:Gitsigns reset_hunk<CR>]],
                     { desc = "Gitsigns reset hunk" })
                 map('n', '<leader>gS', reload_nvim_tree_after(gs.stage_buffer),    { desc = "Gitsigns stage buffer" })
