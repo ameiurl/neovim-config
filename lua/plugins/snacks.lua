@@ -86,6 +86,25 @@ return {
       { "<leader>glA", function() Snacks.picker.git_log() end,                                 desc = "log" },
       { "<leader>glC", function() Snacks.picker.git_log_file() end,                            desc = "file commits" },
       { "<leader>gd",  function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
+      { "<c-/>", function() Snacks.terminal() end, desc = "Terminal" },
+      { "<c-_>", function() Snacks.terminal() end, desc = "which_key_ignore" },
+        vim.keymap.set({ "n" }, "<leader>fs", function()
+            Snacks.picker.lsp_symbols({
+                filter = {
+                    lua = {
+                        "Class",
+                        "Function",
+                        "Module",
+                    },
+                    python = {
+                        "Class",
+                        "Function",
+                        "Constant",
+                    },
+                    php = { "Class", "Function", "Method" }
+                },
+            })
+        end, { desc = "Find Symbols" })
     },
   }
 }

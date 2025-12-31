@@ -50,8 +50,8 @@ return {
 
                 -- map({ 'n', 'v' }, '<leader>gs', reload_nvim_tree_after [[:Gitsigns stage_hunk<CR>]],
                 --     { desc = "Gitsigns stage hunk" })
-                map({ 'n', 'v' }, '<leader>gr', reload_nvim_tree_after [[:Gitsigns reset_hunk<CR>]],
-                    { desc = "Gitsigns reset hunk" })
+                -- map({ 'n', 'v' }, '<leader>gr', reload_nvim_tree_after [[:Gitsigns reset_hunk<CR>]],
+                --     { desc = "Gitsigns reset hunk" })
                 map('n', '<leader>gS', reload_nvim_tree_after(gs.stage_buffer),    { desc = "Gitsigns stage buffer" })
                 map('n', '<leader>gu', reload_nvim_tree_after(gs.undo_stage_hunk), { desc = "Gitsigns undo stage hunk" })
                 map('n', '<leader>gR', reload_nvim_tree_after(gs.reset_buffer),    { desc = "Gitsigns reset buffer" })
@@ -66,6 +66,7 @@ return {
                 map('n', '<leader>gD', function() gs.diffthis('~') end, { desc = "Gitsigns diff of current buffer against HEAD~" })
                 map('n', '<leader>gX', gs.toggle_deleted,               { desc = "Gitsigns toggle show deleted lines" })
                 map('n', '<leader>gc', gs.setqflist,                    { desc = "Gitsigns list all hunks in buffer" })
+                map('n', '<leader>gr', gs.refresh,                      { desc = 'Refresh gitsigns' })
                 -- text object
                 map({ 'o', 'x' }, 'ic', [[<Cmd>Gitsigns select_hunk<CR>]])
             end
@@ -80,21 +81,19 @@ return {
                 current_line_blame_formatter = "⋮  <author>, <author_time> - (<abbrev_sha>) <summary>",
                 preview_config = { style = 'minimal', border = 'rounded' },
 
-                -- signs = {
-                -- 	add          = { hl = 'GitSignsAdd'   , text = '+', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
-                -- 	change       = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-                -- 	delete       = { hl = 'GitSignsDelete', text = '▁', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-                -- 	topdelete    = { hl = 'GitSignsDelete', text = '▔', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-                -- 	changedelete = { hl = 'GitSignsChange', text = '┋', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-                -- 	untracked    = { hl = 'GitSignsAdd'   , text = '', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
-                -- },
-
                 signs = {
-                    add          = {text = '+',},
-                    change       = {text = '┃',},
-                    delete       = {text = '▁',},
-                    topdelete    = {text = '▔',},
-                    changedelete = {text = '┋',},
+                    -- add          = {text = '+',},
+                    -- change       = {text = '┃',},
+                    -- delete       = {text = '▁',},
+                    -- topdelete    = {text = '▔',},
+                    -- changedelete = {text = '┋',},
+                    -- untracked    = {text = '',},
+
+                    add          = {text = '',},
+                    change       = {text = '',},
+                    delete       = {text = '',},
+                    topdelete    = {text = '󱅁',},
+                    changedelete = {text = '󰍷',},
                     untracked    = {text = '',},
                 },
                 on_attach = on_attach 
