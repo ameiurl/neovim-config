@@ -25,14 +25,12 @@ return {
         },
         previewers = {
           git = {
-            native = true, -- use native (terminal) or Neovim for previewing git diffs and commits
+            native = true,
           },
         },
         win = {
-          -- input window
           input = {
             keys = {
-              -- ["<Esc>"] = { "close", mode = { "n", "i" } },
               ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
               ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
               ["<c-b>"] = { "list_scroll_up", mode = { "i", "n" } },
@@ -43,33 +41,29 @@ return {
       },
       quickfile    = { enabled = false },
       scroll       = { enabled = true },
-      statuscolumn = {
-        enabled = false,
-      },
+      statuscolumn = { enabled = false, },
       words        = { enabled = false },
     },
     keys = {
-      -- ╭─────────────────────────────────────────────────────────╮
-      -- │ Lazygit                                                 │
-      -- ╰─────────────────────────────────────────────────────────╯
+      -- Lazygit                                                 
       { "<leader>gg",  function() Snacks.lazygit() end,                                        desc = "Lazygit" },
       { "<leader>gla", function() Snacks.lazygit.log() end,                                    desc = "Lazygit Log (cwd)" },
       { "<leader>glc", function() Snacks.lazygit.log_file() end,                               desc = "Lazygit Current File History" },
-      -- ╭─────────────────────────────────────────────────────────╮
-      -- │ Zen                                                     │
-      -- ╰─────────────────────────────────────────────────────────╯
+
+      -- Zen
       { "<leader>z",   function() Snacks.zen({ win = { width = 200 } }) end,                   desc = "Zen Mode" },
       { "<leader>Z",   function() Snacks.zen.zoom() end,                                       desc = "Zoom Mode" },
-      -- ╭─────────────────────────────────────────────────────────╮
-      -- │ Picker                                                  │
-      -- ╰─────────────────────────────────────────────────────────╯
+
+      -- Picker                                                  
       -- { "<C-e>",       function() Snacks.picker.explorer() end,                                desc = "explorer" },
       -- { "<C-p>",       function() Snacks.picker.smart() end,                                   desc = "smart files" },
       -- { "<S-p>",       function() Snacks.picker.grep() end,                                    desc = "grep" },
       -- { "<leader>pw",  function() Snacks.picker.grep_word() end,                               desc = "grep word",                   mode = { "n", "v" } },
 
+      -- Projects
       { "<leader>pl",  function() Snacks.picker.projects() end,                                desc = "projects list" },
 
+      -- Diagnostic Picker
       { "<leader>cd",  function() Snacks.picker.diagnostics() end,                             desc = "diagnostics" },
 
       -- { "<leader>sf",  function() Snacks.picker.files() end,                                   desc = "files" },
@@ -86,8 +80,11 @@ return {
       -- { "<leader>glA", function() Snacks.picker.git_log() end,                                 desc = "log" },
       -- { "<leader>glC", function() Snacks.picker.git_log_file() end,                            desc = "file commits" },
       -- { "<leader>gd",  function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
+
+      -- Terminal
       { "<c-/>",       function() Snacks.terminal() end,                                       desc = "Terminal" },
       { "<c-_>",       function() Snacks.terminal() end,                                       desc = "which_key_ignore" },
+
       -- LSP Symbols
       { "<leader>sl", function()
           Snacks.picker.lsp_symbols({
@@ -100,6 +97,8 @@ return {
         end,
         desc = "Find Symbols"
       },
+
+      -- Buffer management
       { "<leader>d", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
       -- { "<leader>bq", function() Snacks.bufdelete.pick() end, desc = "Delete Buffer (Pick)" },
       -- { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Pick Buffer" },
