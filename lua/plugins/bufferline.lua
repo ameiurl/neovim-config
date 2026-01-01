@@ -9,8 +9,8 @@ return {
 
         local bl = require('bufferline')
         keymaps = {
-            ['<localleader>bq'] = bl.close_with_pick,
-            ['<localleader>bb'] = bl.pick_buffer,
+            ['<Leader>bq'] = bl.close_with_pick,
+            ['<Leader>bb'] = bl.pick_buffer,
             ['<[b>']         = function() bl.cycle(-1) end,
             ['<]b>']         = function() bl.cycle( 1) end,
             ['<Leader>1']      = function() bl.go_to(1, true) end,
@@ -91,16 +91,6 @@ return {
                 end,
             },
         }
-
-        function close_current_buffer()
-            local current_buffer_id = vim.fn.bufnr("%")
-            vim.schedule(function()
-                vim.cmd("bd " .. current_buffer_id)
-            end)
-        end
-
-        -- vim.keymap.set("n", "<Tab>", "<Cmd>BufferLineCycleNext<CR>")
-        vim.keymap.set("n", "<leader>d", close_current_buffer)
     end
 }
 

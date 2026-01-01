@@ -88,15 +88,21 @@ return {
       -- { "<leader>gd",  function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
       { "<c-/>",       function() Snacks.terminal() end,                                       desc = "Terminal" },
       { "<c-_>",       function() Snacks.terminal() end,                                       desc = "which_key_ignore" },
-        vim.keymap.set({ "n" }, "<leader>sl", function()
-            Snacks.picker.lsp_symbols({
-                filter = {
-                    lua = { "Class", "Function", "Module", },
-                    python = { "Class", "Function", "Constant", },
-                    php = { "Class", "Function", "Method" }
-                },
-            })
-        end, { desc = "Find Symbols" })
+      -- LSP Symbols
+      { "<leader>sl", function()
+          Snacks.picker.lsp_symbols({
+            filter = {
+              lua = { "Class", "Function", "Module" },
+              python = { "Class", "Function", "Constant" },
+              php = { "Class", "Function", "Method" },
+            },
+          })
+        end,
+        desc = "Find Symbols"
+      },
+      { "<leader>d", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+      -- { "<leader>bq", function() Snacks.bufdelete.pick() end, desc = "Delete Buffer (Pick)" },
+      -- { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Pick Buffer" },
     },
   }
 }
