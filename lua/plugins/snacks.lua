@@ -4,13 +4,13 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-      bigfile      = { enabled = true },
-      dashboard    = { enabled = false },
-      indent       = { enabled = false },
-      input        = { enabled = false },
-      notifier     = { enabled = true },
-      explorer     = { enabled = false },
-      picker       = {
+      bigfile       = { enabled = true },
+      dashboard     = { enabled = false },
+      indent        = { enabled = false },
+      input         = { enabled = false },
+      notifier      = { enabled = true },
+      explorer      = { enabled = false },
+      picker        = {
         enabled = true,
         explorer = {
           opts = {
@@ -39,51 +39,31 @@ return {
           },
         },
       },
-      quickfile    = { enabled = false },
-      scroll       = { enabled = true },
-      statuscolumn = { enabled = false, },
-      words        = { enabled = false },
+      quickfile     = { enabled = false },
+      scroll        = { enabled = true },
+      statuscolumn  = { enabled = false },
+      words         = { enabled = false },
     },
     keys = {
-      -- Lazygit                                                 
-      { "<leader>gg",  function() Snacks.lazygit() end,                                        desc = "Lazygit" },
-      { "<leader>gla", function() Snacks.lazygit.log() end,                                    desc = "Lazygit Log (cwd)" },
-      { "<leader>glc", function() Snacks.lazygit.log_file() end,                               desc = "Lazygit Current File History" },
+      -- Lazygit
+      { "<leader>gg",  function() Snacks.lazygit() end, desc = "Lazygit" },
+      { "<leader>gla", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
+      { "<leader>glc", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
 
       -- Zen
-      { "<leader>z",   function() Snacks.zen({ win = { width = 200 } }) end,                   desc = "Zen Mode" },
-      { "<leader>Z",   function() Snacks.zen.zoom() end,                                       desc = "Zoom Mode" },
-
-      -- Picker                                                  
-      -- { "<C-e>",       function() Snacks.picker.explorer() end,                                desc = "explorer" },
-      -- { "<C-p>",       function() Snacks.picker.smart() end,                                   desc = "smart files" },
-      -- { "<S-p>",       function() Snacks.picker.grep() end,                                    desc = "grep" },
-      -- { "<leader>pw",  function() Snacks.picker.grep_word() end,                               desc = "grep word",                   mode = { "n", "v" } },
-
-      -- Projects
-      { "<leader>pl",  function() Snacks.picker.projects() end,                                desc = "projects list" },
+      { "<leader>z",   function() Snacks.zen({ win = { width = 200 } }) end, desc = "Zen Mode" },
+      { "<leader>Z",   function() Snacks.zen.zoom() end, desc = "Zoom Mode" },
 
       -- Diagnostic Picker
-      { "<leader>cd",  function() Snacks.picker.diagnostics() end,                             desc = "diagnostics" },
+      { "<leader>cd",  function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
 
-      -- { "<leader>sf",  function() Snacks.picker.files() end,                                   desc = "files" },
-      -- { "<leader>sb",  function() Snacks.picker.buffers() end,                                 desc = "buffers" },
-      -- { "<leader>sh",  function() Snacks.picker.recent() end,                                  desc = "recent files" },
-      -- { "<leader>sH",  function() Snacks.picker.command_history() end,                         desc = "command history" },
-      -- { "<leader>ss",  function() Snacks.picker.search_history() end,                          desc = "search history" },
-      -- { "<leader>sq",  function() Snacks.picker.qflist() end,                                  desc = "quickfix list" },
-      -- { "<leader>sc",  function() Snacks.picker.colorschemes() end,                            desc = "color schemes" },
-      -- { "<leader>sd",  function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "dotfiles" },
+      -- Buffer management
+      { "<leader>d", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
+      { "<leader>bq", function() Snacks.bufdelete.pick() end, desc = "Delete Buffer (Pick)" },
+      { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Pick Buffer" },
 
-      -- { "<leader>gf",  function() Snacks.picker.git_files() end,                               desc = "git files" },
-      -- { "<leader>gs",  function() Snacks.picker.git_status() end,                              desc = "git status" },
-      -- { "<leader>glA", function() Snacks.picker.git_log() end,                                 desc = "log" },
-      -- { "<leader>glC", function() Snacks.picker.git_log_file() end,                            desc = "file commits" },
-      -- { "<leader>gd",  function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
-
-      -- Terminal
-      { "<c-/>",       function() Snacks.terminal() end,                                       desc = "Terminal" },
-      { "<c-_>",       function() Snacks.terminal() end,                                       desc = "which_key_ignore" },
+      -- Projects
+      { "<leader>pl", function() Snacks.picker.projects() end, desc = "Projects List" },
 
       -- LSP Symbols
       { "<leader>sl", function()
@@ -98,10 +78,9 @@ return {
         desc = "Find Symbols"
       },
 
-      -- Buffer management
-      { "<leader>d", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-      -- { "<leader>bq", function() Snacks.bufdelete.pick() end, desc = "Delete Buffer (Pick)" },
-      -- { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Pick Buffer" },
+      -- Terminal
+      { "<c-/>", function() Snacks.terminal() end, desc = "Terminal" },
+      { "<c-_>", function() Snacks.terminal() end, desc = "which_key_ignore" },
     },
   }
 }
