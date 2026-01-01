@@ -43,7 +43,7 @@ return { -- Collection of various small independent plugins/modules
             -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
             -- - sd'   - [S]urround [D]elete [']quotes
             -- - sr)'  - [S]urround [R]eplace [)] [']
-            require("mini.surround").setup()
+            -- require("mini.surround").setup()
             -- vim.keymap.set("n", "<leader>d", function()
             --     require("mini.bufremove").delete(0, false)
             -- end, { desc = "Close buffer" })

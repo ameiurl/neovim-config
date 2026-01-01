@@ -66,7 +66,7 @@ return {
       { "<leader>pl", function() Snacks.picker.projects() end, desc = "Projects List" },
 
       -- LSP Symbols
-      { "<leader>sl", function()
+      { "<leader>sf", function()
           Snacks.picker.lsp_symbols({
             filter = {
               lua = { "Class", "Function", "Module" },

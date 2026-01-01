@@ -63,7 +63,7 @@ return {
         vim.keymap.set("n", "<leader>sm", fzf.marks, { desc = "[S]earch [M]arks" })
         vim.keymap.set("n", "<leader>s?", fzf.builtin, { desc = "[S]earch [?] Builtin" })
         vim.keymap.set("n", "<leader>tt", fzf.resume, { desc = "Fzf-lua resume" })
-        vim.keymap.set('n', '<leader>sf', function()
+        vim.keymap.set('n', '<leader>sh', function()
             fzf.grep({
                 search = vim.fn.expand('<cword>'),
                 rg_opts = "--column --line-number --no-heading --color=always --smart-case --hidden --follow --no-ignore --glob '!.git/*'",
