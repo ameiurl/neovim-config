@@ -81,26 +81,18 @@ return {
       -- { "<leader>sc",  function() Snacks.picker.colorschemes() end,                            desc = "color schemes" },
       -- { "<leader>sd",  function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "dotfiles" },
 
-      { "<leader>gf",  function() Snacks.picker.git_files() end,                               desc = "git files" },
-      { "<leader>gs",  function() Snacks.picker.git_status() end,                              desc = "git status" },
-      { "<leader>glA", function() Snacks.picker.git_log() end,                                 desc = "log" },
-      { "<leader>glC", function() Snacks.picker.git_log_file() end,                            desc = "file commits" },
-      { "<leader>gd",  function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
+      -- { "<leader>gf",  function() Snacks.picker.git_files() end,                               desc = "git files" },
+      -- { "<leader>gs",  function() Snacks.picker.git_status() end,                              desc = "git status" },
+      -- { "<leader>glA", function() Snacks.picker.git_log() end,                                 desc = "log" },
+      -- { "<leader>glC", function() Snacks.picker.git_log_file() end,                            desc = "file commits" },
+      -- { "<leader>gd",  function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
       { "<c-/>",       function() Snacks.terminal() end,                                       desc = "Terminal" },
       { "<c-_>",       function() Snacks.terminal() end,                                       desc = "which_key_ignore" },
         vim.keymap.set({ "n" }, "<leader>sl", function()
             Snacks.picker.lsp_symbols({
                 filter = {
-                    lua = {
-                        "Class",
-                        "Function",
-                        "Module",
-                    },
-                    python = {
-                        "Class",
-                        "Function",
-                        "Constant",
-                    },
+                    lua = { "Class", "Function", "Module", },
+                    python = { "Class", "Function", "Constant", },
                     php = { "Class", "Function", "Method" }
                 },
             })
