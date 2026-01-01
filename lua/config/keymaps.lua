@@ -70,3 +70,9 @@ vim.keymap.set('n', '<leader>y', function()
     vim.fn.setreg('+', path)
     vim.notify('已复制相对路径: ' .. path, vim.log.levels.INFO)
 end, { desc = '复制当前文件相对路径' })
+vim.keymap.set('n', '<leader>Y', function()
+    -- '%:p' 表示文件的绝对路径
+    local path = vim.fn.expand('%:p')
+    vim.fn.setreg('+', path)  -- 复制到系统剪贴板
+    vim.notify('已复制完整路径: ' .. path, vim.log.levels.INFO)
+end, { desc = '复制当前文件完整路径' })
