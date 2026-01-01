@@ -12,11 +12,11 @@ map('n', '<C-j>', [[<C-w>j]])
 map('n', '<C-k>', [[<C-w>k]])
 map('n', '<C-l>', [[<C-w>l]])
 
--- Window resizing with CTRL-Arrowkey
-map('n', '<C-S-Up>'   , [[2<C-w>-]])
-map('n', '<C-S-Down>' , [[2<C-w>+]])
-map('n', '<C-S-Left>' , [[2<C-w><]])
-map('n', '<C-S-Right>', [[2<C-w>>]])
+-- Resize splits
+map("n", "<A-Up>", ":resize -2<CR>")
+map("n", "<A-Down>", ":resize +2<CR>")
+map("n", "<A-Left>", ":vertical resize -2<CR>")
+map("n", "<A-Right>", ":vertical resize +2<CR>")
 
 -- insert -----------------------------------------------------------------------------
 map('i', '<C-h>', [[<Left>]])
