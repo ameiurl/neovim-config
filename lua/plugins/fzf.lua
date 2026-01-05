@@ -71,5 +71,76 @@ return {
                 no_header_i = true,
             })
         end, { desc = "Grep current word (include gitignored files)" })
+        vim.keymap.set("n", "<leader>sl", function()
+            local fzf = require("fzf-lua")
+            local lsp = vim.lsp
+            local bufnr = vim.api.nvim_get_current_buf()
+            local uri = vim.uri_from_bufnr(bufnr)
+            local params = { textDocument = vim.lsp.util.make_text_document_params() }
+
+            lsp.buf_request(bufnr, "textDocument/documentSymbol", params, function(_, result)
+                if not result or vim.tbl_isempty(result) then
+                    vim.notify("No symbols found", vim.log.levels.WARN)
+                    return
+                end
+
+                local items = {}
+                local icons = { [5] = " ", [6] = "󰊕 ", [12] = "󰊕 " }
+
+                local function add_symbols(symbols, parent)
+                    for _, s in ipairs(symbols) do
+                        if s.kind == 5 or s.kind == 6 or s.kind == 12 then
+                            local target_range = s.selectionRange or s.range
+                            local icon = icons[s.kind] or ""
+                            local name = parent and (parent .. "." .. s.name) or s.name
+
+                            table.insert(items, string.format(
+                                "%s:%d:%d: %s%s",
+                                vim.uri_to_fname(uri),
+                                target_range.start.line + 1,
+                                target_range.start.character + 1,
+                                icon,
+                                name
+                            ))
+                        end
+                        if s.children then
+                            add_symbols(s.children, s.kind == 5 and s.name or parent)
+                        end
+                    end
+                end
+
+                add_symbols(result)
+                if #items == 0 then return end
+
+                fzf.fzf_exec(items, {
+                    prompt = " Symbols> ",
+                    previewer = "builtin",
+                    actions = {
+                        ["default"] = function(selected)
+                            if not selected or #selected == 0 then return end
+
+                            local parts = vim.split(selected[1], ":")
+                            local line = tonumber(parts[2])
+                            local col = tonumber(parts[3])
+
+                            vim.api.nvim_win_set_cursor(0, { line, col - 1 })
+                            vim.cmd("normal! zz")
+                        end,
+                    },
+                    winopts = {
+                        height = 0.85,
+                        width = 0.85,
+                        preview = {
+                            layout = "flex",
+                            horizontal = "right:60%",
+                        },
+                    },
+                    fzf_opts = {
+                        ["--delimiter"] = ":",
+                        ["--with-nth"] = "4..",
+                    },
+                })
+            end)
+        end, { desc = "Find Classes & Functions" })
     end,
 }

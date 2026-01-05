@@ -66,17 +66,17 @@ return {
       { "<leader>pl", function() Snacks.picker.projects() end, desc = "Projects List" },
 
       -- LSP Symbols
-      { "<leader>sf", function()
-          Snacks.picker.lsp_symbols({
-            filter = {
-              lua = { "Class", "Function", "Module" },
-              python = { "Class", "Function", "Constant" },
-              php = { "Class", "Function", "Method" },
-            },
-          })
-        end,
-        desc = "Find Symbols"
-      },
+      -- { "<leader>sf", function()
+      --     Snacks.picker.lsp_symbols({
+      --       filter = {
+      --         lua = { "Class", "Function", "Module" },
+      --         python = { "Class", "Function", "Constant" },
+      --         php = { "Class", "Function", "Method" },
+      --       },
+      --     })
+      --   end,
+      --   desc = "Find Symbols"
+      -- },
 
       -- Terminal
       { "<c-/>", function() Snacks.terminal() end, desc = "Terminal" },
