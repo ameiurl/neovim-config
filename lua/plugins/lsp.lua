@@ -70,46 +70,33 @@ return {
             }
         })
 
-        -- 使用 blink.cmp 的 capabilities
         local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-        -- 1. Mason Setup
         require("mason").setup()
-
-        -- 2. Mason-LSPConfig Setup
         require("mason-lspconfig").setup({
-            ensure_installed = { "intelephense", "pyright", "gopls", "ts_ls", "vue_ls" },
+            ensure_installed = {"intelephense", "pyright", "gopls", "ts_ls", "vue_ls", "lua_ls" },
             automatic_installation = true,
         })
 
-        -- 3. LSP Config Setup
+        -- Simple servers
         local simple_servers = { "intelephense", "pyright", "gopls" }
         for _, server in ipairs(simple_servers) do
             vim.lsp.config(server, { capabilities = capabilities })
         end
 
-        -- ts_ls 配置
+        -- TypeScript/JavaScript (不处理 Vue)
         vim.lsp.config("ts_ls", {
             capabilities = capabilities,
-            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-            init_options = {
-                plugins = {
-                    {
-                        name = "@vue/typescript-plugin",
-                        location = vim.fn.stdpath("data")
-                            .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
-                        languages = { "vue" },
-                    },
-                },
-            },
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
         })
 
-        -- vue_ls 配置
-        vim.lsp.config("vue_ls", {
+        -- Vue (Takeover 模式)
+        vim.lsp.config("volar", {  -- 或 "vue_ls"，根据你系统中的名称
             capabilities = capabilities,
+            filetypes = { "vue" },
             init_options = {
                 vue = {
-                    hybridMode = true,
+                    hybridMode = false,
                 },
                 typescript = {
                     tsdk = vim.fn.stdpath("data")
@@ -118,22 +105,23 @@ return {
             },
         })
 
-        -- lua_ls 配置
+        -- Lua
         vim.lsp.config("lua_ls", {
             capabilities = capabilities,
             settings = {
                 Lua = {
-                    diagnostics = {
-                        disable = { 'undefined-global' },
+                    runtime = { version = "LuaJIT" },
+                    diagnostics = { globals = { "vim" } },
+                    workspace = {
+                        library = vim.api.nvim_get_runtime_file("", true),
+                        checkThirdParty = false,
                     },
+                    telemetry = { enable = false },
                 },
             },
         })
 
-        -- 4. Enable Servers
-        vim.lsp.enable({ "intelephense", "pyright", "gopls", "ts_ls", "vue_ls" })
-
-        -- 5. Keymaps
+        -- Keymaps
         vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(ev)
                 local b = ev.buf
