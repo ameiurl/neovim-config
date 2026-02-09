@@ -48,7 +48,7 @@ return {
         })
 
         -- === 按键映射 (保持之前的配置) ===
-        vim.keymap.set("n", "<leader>sb", fzf.buffers, { desc = "[S]earch [B]uffers" })
+        vim.keymap.set("n", "<leader>b",  fzf.buffers, { desc = "[S]earch [B]uffers" })
         vim.keymap.set("n", "<leader>f",  fzf.files, { desc = "[S]earch [F]iles" })
         vim.keymap.set("n", "<leader>so", fzf.oldfiles, { desc = "[S]earch [O]ldfiles" })
         vim.keymap.set("n", "<leader>sg", fzf.live_grep, { desc = "[S]earch [G]rep" })
@@ -71,6 +71,11 @@ return {
                 no_header_i = true,
             })
         end, { desc = "Grep current word (include gitignored files)" })
+        vim.keymap.set('n', '<leader>gh', function()
+            -- 方式1：最纯粹，只看当前文件的历史（最推荐）
+            fzf.git_bcommits()
+        end, { desc = "Git history (current file)" })
+        vim.keymap.set('n', '<leader>gl', fzf.git_commits, { desc = "Git history (all)" })
         vim.keymap.set("n", "<leader>sl", function()
             local fzf = require("fzf-lua")
             local lsp = vim.lsp
