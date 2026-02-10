@@ -74,12 +74,12 @@ return {
 
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = {"intelephense", "pyright", "gopls", "ts_ls", "vue_ls", "lua_ls" },
+            ensure_installed = {"intelephense", "ts_ls", "lua_ls" },
             automatic_installation = true,
         })
 
         -- Simple servers
-        local simple_servers = { "intelephense", "pyright", "gopls" }
+        local simple_servers = { "intelephense" }
         for _, server in ipairs(simple_servers) do
             vim.lsp.config(server, { capabilities = capabilities })
         end
@@ -91,7 +91,7 @@ return {
         })
 
         -- Vue (Takeover 模式)
-        vim.lsp.config("volar", {  -- 或 "vue_ls"，根据你系统中的名称
+        vim.lsp.config("vue_ls", {
             capabilities = capabilities,
             filetypes = { "vue" },
             init_options = {
