@@ -9,8 +9,8 @@ return {
 
         local bl = require('bufferline')
         keymaps = {
-            ['<Leader>bq'] = bl.close_with_pick,
-            ['<Leader>bb'] = bl.pick_buffer,
+            -- ['<Leader>bq'] = bl.close_with_pick,
+            -- ['<Leader>bb'] = bl.pick_buffer,
             ['<[b>']         = function() bl.cycle(-1) end,
             ['<]b>']         = function() bl.cycle( 1) end,
             ['<Leader>1']      = function() bl.go_to(1, true) end,

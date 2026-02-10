@@ -59,8 +59,8 @@ return {
 
       -- Buffer management
       { "<leader>d", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-      { "<leader>bq", function() Snacks.bufdelete.pick() end, desc = "Delete Buffer (Pick)" },
-      { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Pick Buffer" },
+      -- { "<leader>bq", function() Snacks.bufdelete.pick() end, desc = "Delete Buffer (Pick)" },
+      -- { "<leader>bb", function() Snacks.picker.buffers() end, desc = "Pick Buffer" },
 
       -- Projects
       { "<leader>pl", function() Snacks.picker.projects() end, desc = "Projects List" },
