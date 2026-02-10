@@ -74,7 +74,7 @@ return {
 
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = {"intelephense", "ts_ls", "lua_ls" },
+            ensure_installed = {"intelephense", "ts_ls", "vue_ls", "lua_ls" },
             automatic_installation = true,
         })
 
@@ -87,22 +87,22 @@ return {
         -- TypeScript/JavaScript (不处理 Vue)
         vim.lsp.config("ts_ls", {
             capabilities = capabilities,
-            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
         })
 
         -- Vue (Takeover 模式)
         vim.lsp.config("vue_ls", {
             capabilities = capabilities,
             filetypes = { "vue" },
-            init_options = {
-                vue = {
-                    hybridMode = false,
-                },
-                typescript = {
-                    tsdk = vim.fn.stdpath("data")
-                        .. "/mason/packages/vue-language-server/node_modules/typescript/lib"
-                },
-            },
+            -- init_options = {
+            --     vue = {
+            --         hybridMode = false,
+            --     },
+            --     typescript = {
+            --         tsdk = vim.fn.stdpath("data")
+            --             .. "/mason/packages/vue-language-server/node_modules/typescript/lib"
+            --     },
+            -- },
         })
 
         -- Lua
