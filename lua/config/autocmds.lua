@@ -1,4 +1,41 @@
 -- autocmds
+
+local augroup = vim.api.nvim_create_augroup("checktime", { clear = true })
+
+-- 场景A：切回窗口、关闭/离开内置终端
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = augroup,
+  callback = function()
+    if vim.bo.buftype == "" then
+      vim.cmd("silent! checktime")
+    end
+  end,
+})
+
+-- 场景B：切换到编辑缓冲区
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = augroup,
+  pattern = "*",
+  callback = function()
+    if vim.bo.buftype == "" then
+      vim.schedule(function()
+        vim.cmd("silent! checktime")
+      end)
+    end
+  end,
+})
+
+vim.opt.updatetime = 200  -- 光标停 0.5 秒就检查
+
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  group = augroup,
+  callback = function()
+    if vim.bo.buftype == "" then
+      vim.cmd("silent! checktime")
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight on yank",
 	callback = function()
@@ -226,13 +263,13 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- show cursor line only in active window
-local cursorGrp = vim.api.nvim_create_augroup("CursorLine", { clear = true })
-vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
-    pattern = "*",
-    command = "set cursorline",
-    group = cursorGrp,
-})
-vim.api.nvim_create_autocmd(
-    { "InsertEnter", "WinLeave" },
-    { pattern = "*", command = "set nocursorline", group = cursorGrp }
-)
+-- local cursorGrp = vim.api.nvim_create_augroup("CursorLine", { clear = true })
+-- vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+--     pattern = "*",
+--     command = "set cursorline",
+--     group = cursorGrp,
+-- })
+-- vim.api.nvim_create_autocmd(
+--     { "InsertEnter", "WinLeave" },
+--     { pattern = "*", command = "set nocursorline", group = cursorGrp }
+-- )
