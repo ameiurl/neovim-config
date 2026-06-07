@@ -25,8 +25,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
-vim.opt.updatetime = 200  -- 光标停 0.5 秒就检查
-
+-- 场景C：光标停在编辑区一段时间（兜底）
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   group = augroup,
   callback = function()
