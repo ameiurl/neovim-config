@@ -50,8 +50,14 @@ return {
 
                 map({ 'n', 'v' }, '<leader>gs', reload_nvim_tree_after [[:Gitsigns stage_hunk<CR>]],
                     { desc = "Gitsigns stage hunk" })
-                map({ 'n', 'v' }, '<leader>gr', reload_nvim_tree_after [[:Gitsigns reset_hunk<CR>]],
-                    { desc = "Gitsigns reset hunk" })
+                -- map({ 'n', 'v' }, '<leader>gr', reload_nvim_tree_after [[:Gitsigns reset_hunk<CR>]],
+                --     { desc = "Gitsigns reset hunk" })
+                -- map({ 'n', 'v' }, '<leader>gr', reload_nvim_tree_after [[:Gitsigns refresh<CR>]],
+                --     { desc = "Gitsigns refresh" })
+                map({ 'n', 'v' }, '<leader>gr', reload_nvim_tree_after(
+                    gs.detach(),
+                    gs.attach()
+                ), { desc = "Gitsigns full refresh (detach + attach)" })
                 map('n', '<leader>gS', reload_nvim_tree_after(gs.stage_buffer),    { desc = "Gitsigns stage buffer" })
                 map('n', '<leader>gu', reload_nvim_tree_after(gs.undo_stage_hunk), { desc = "Gitsigns undo stage hunk" })
                 map('n', '<leader>gR', reload_nvim_tree_after(gs.reset_buffer),    { desc = "Gitsigns reset buffer" })
