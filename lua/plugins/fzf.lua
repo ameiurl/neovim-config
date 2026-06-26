@@ -37,6 +37,17 @@ return {
 				horizontal = 'right:60%', -- right|left:size
 				hidden     = 'nohidden',
             },
+            -- === 3. 预览窗口滚动按键 ===
+            -- fzf 原生预览 (fullscreen 模式) 默认用 Shift+Up/Down 滚动，
+            -- 但很多终端不传 Shift+方向键，所以用 Ctrl+U/D 来滚动预览窗口。
+            keymap = {
+                fzf = {
+                    true,       -- 继承所有默认按键
+                    ["ctrl-u"]  = "preview-half-page-up",
+                    ["ctrl-d"]  = "preview-half-page-down",
+                },
+            },
+
             -- 2. 核心设置：把搜索框放到最底部
             fzf_opts = {
                 -- "default" = 输入框在底部，列表从下往上排列
