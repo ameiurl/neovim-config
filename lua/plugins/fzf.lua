@@ -31,6 +31,7 @@ return {
                 border = "rounded", -- 边框样式: rounded, double, single, thicc
                 preview = {
                     layout = "flex", -- 自动适应预览位置
+                    wrap   = true,   -- 预览窗口超长行自动换行
                 },
 				fullscreen = true,
 				vertical   = 'down:45%', -- up|down:size
