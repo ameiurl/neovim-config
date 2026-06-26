@@ -195,6 +195,8 @@ local function preview_stack_trace()
                     vim.cmd("normal! zz")   -- 顺便居中一下，方便查看
                 end
             end
+            -- 关闭原来的日志窗口
+            vim.api.nvim_win_close(log_win_id, false)
         else
             print("无法打开文件: " .. filepath)
         end
