@@ -155,7 +155,7 @@ local function preview_stack_trace()
     -- === 3. 尝试匹配纯路径 (无行号) ===
     if not filepath then
         for word in string.gmatch(line, "([^: (]+)") do
-            if string.find(word, "^package:") or string.find(word, "%.dart") or string.find(word, "/") then
+            if string.find(word, "^package:") or string.find(word, "%.[%a]+") or string.find(word, "/") then
                 filepath = word
                 -- 【重点修改】这里必须保持 nil，表示日志里没指定行号
                 line_nr = nil 
