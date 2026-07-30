@@ -10,6 +10,11 @@ return {
 			next_key = '<C-n>',
 			previous_key = '<C-p>',
 		}
+		-- C-k/C-j 浏览命令历史：wild 内先 reject/accept，再走原生 Up/Down
+		vim.cmd([[
+			cmap <expr> <C-k> wilder#in_context() ? "\<Up>" : "\<C-k>"
+			cmap <expr> <C-j> wilder#in_context() ? "\<Down>" : "\<C-j>"
+		]])
 		wilder.set_option('renderer', wilder.popupmenu_renderer(
 			wilder.popupmenu_palette_theme({
 				highlights = {

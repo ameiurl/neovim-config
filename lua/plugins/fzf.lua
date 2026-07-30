@@ -62,7 +62,15 @@ return {
         -- === 按键映射 (保持之前的配置) ===
         vim.keymap.set("n", "<leader>b",  fzf.buffers, { desc = "[S]earch [B]uffers" })
         vim.keymap.set("n", "<leader>f",  fzf.files, { desc = "[S]earch [F]iles" })
-        vim.keymap.set("n", "<leader>so", fzf.oldfiles, { desc = "[S]earch [O]ldfiles" })
+        vim.keymap.set("n", "<leader>th", fzf.oldfiles, { desc = "[S]earch [O]ldfiles" })
+        vim.keymap.set("n", "<leader>so", function()
+            local git_root = vim.fs.root(0, '.git')
+            if git_root then
+                fzf.oldfiles({ cwd = git_root, cwd_only = true })
+            else
+                fzf.oldfiles()
+            end
+        end, { desc = "[S]earch [O]ldfiles (git root)" })
         vim.keymap.set("n", "<leader>sg", fzf.live_grep, { desc = "[S]earch [G]rep" })
         vim.keymap.set("n", "<leader>sc", fzf.lgrep_curbuf, { desc = "[S]earch [C]urrent buffer" })
         -- 光标单词搜索
@@ -84,8 +92,47 @@ return {
             })
         end, { desc = "Grep current word (include gitignored files)" })
         vim.keymap.set('n', '<leader>gh', function()
-            -- 方式1：最纯粹，只看当前文件的历史（最推荐）
-            fzf.git_bcommits()
+            local bufnr = vim.api.nvim_get_current_buf()
+            local file = vim.fn.expand('%:p')
+            local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+            if git_root == '' then
+                vim.notify('Not in a git repository', vim.log.levels.ERROR)
+                return
+            end
+            local rel_path = file:sub(#git_root + 2)
+
+            fzf.git_bcommits({
+                cwd = git_root,
+                actions = {
+                    ['default'] = function(selected)
+                        if not selected or #selected == 0 then return end
+                        local commit = vim.split(selected[1], ' ')[1]
+
+                        local diff = vim.fn.systemlist(
+                            'git -C ' .. vim.fn.shellescape(git_root)
+                                .. ' show --color=never ' .. commit
+                                .. ' -- ' .. vim.fn.shellescape(rel_path)
+                        )
+
+                        local target_line = nil
+                        for _, line_text in ipairs(diff) do
+                            local new_start = line_text:match('^@@ %-[-]?%d+,?%d* %+(%d+)')
+                            if new_start then
+                                target_line = tonumber(new_start)
+                                break
+                            end
+                        end
+
+                        if target_line then
+                            vim.api.nvim_set_current_buf(bufnr)
+                            pcall(vim.api.nvim_win_set_cursor, 0, { target_line, 0 })
+                            vim.cmd('normal! zz')
+                        else
+                            vim.notify('No changes for current file in this commit', vim.log.levels.WARN)
+                        end
+                    end,
+                },
+            })
         end, { desc = "Git history (current file)" })
         vim.keymap.set('n', '<leader>gl', fzf.git_commits, { desc = "Git history (all)" })
         vim.keymap.set("n", "<leader>sl", function()
