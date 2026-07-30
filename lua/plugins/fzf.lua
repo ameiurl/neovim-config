@@ -207,7 +207,57 @@ return {
                 },
             })
         end, { desc = "Git history (current file)" })
-        vim.keymap.set('n', '<leader>gl', fzf.git_commits, { desc = "Git history (all)" })
+        vim.keymap.set('n', '<leader>gl', function()
+            local git_root = vim.fs.root(0, '.git')
+            if not git_root then
+                vim.notify('Not in a git repository', vim.log.levels.ERROR)
+                return
+            end
+            fzf.git_commits({
+                cwd = git_root,
+                actions = {
+                    ['default'] = function(selected)
+                        if not selected or #selected == 0 then return end
+                        local commit = vim.split(selected[1], ' ')[1]
+                        local files = vim.fn.systemlist(
+                            'git -C ' .. vim.fn.shellescape(git_root)
+                            .. ' diff-tree --no-commit-id --name-only -r ' .. commit
+                        )
+                        if #files == 0 then
+                            vim.notify('No files changed in this commit', vim.log.levels.WARN)
+                            return
+                        end
+                        fzf.fzf_exec(files, {
+                            cwd = git_root,
+                            prompt = ' Files in ' .. commit:sub(1, 7) .. '> ',
+                            previewer = 'builtin',
+                            actions = {
+                                ['default'] = function(fs)
+                                    if not fs or #fs == 0 then return end
+                                    local rel = fs[1]
+                                    vim.cmd('e ' .. vim.fn.fnameescape(git_root .. '/' .. rel))
+                                    -- 解析 diff 定位到第一个修改行
+                                    local diff = vim.fn.systemlist(
+                                        'git -C ' .. vim.fn.shellescape(git_root)
+                                        .. ' show --color=never ' .. commit
+                                        .. ' -- ' .. vim.fn.shellescape(rel)
+                                    )
+                                    for _, line_text in ipairs(diff) do
+                                        local new_start = line_text:match('^@@ %-[-]?%d+,?%d* %+(%d+)')
+                                        if new_start then
+                                            local target_line = tonumber(new_start)
+                                            pcall(vim.api.nvim_win_set_cursor, 0, { target_line, 0 })
+                                            vim.cmd('normal! zz')
+                                            break
+                                        end
+                                    end
+                                end,
+                            },
+                        })
+                    end,
+                },
+            })
+        end, { desc = "Git history (all)" })
         vim.keymap.set("n", "<leader>sl", function()
             local fzf = require("fzf-lua")
             local lsp = vim.lsp
