@@ -3,6 +3,24 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
         local fzf = require("fzf-lua")
+
+        -- 追踪本 session 打开过的文件（oldfiles 只在退出时写入，本方案补漏）
+        local session_opened = {}
+        vim.api.nvim_create_autocmd('BufReadPost', {
+            callback = function()
+                local f = vim.fn.expand('<afile>:p')
+                if f ~= '' then
+                    for i, v in ipairs(session_opened) do
+                        if v == f then
+                            table.remove(session_opened, i)
+                            break
+                        end
+                    end
+                    table.insert(session_opened, 1, f)
+                end
+            end,
+        })
+
         fzf.setup({
             -- === 1. 查找文件时的忽略配置 (Files) ===
             files = {
@@ -66,7 +84,62 @@ return {
         vim.keymap.set("n", "<leader>so", function()
             local git_root = vim.fs.root(0, '.git')
             if git_root then
-                fzf.oldfiles({ cwd = git_root, cwd_only = true })
+                local seen = {}
+                local items = {}
+                local prefix_len = #git_root + 2 -- "/" after git_root
+                local function add_file(path)
+                    if vim.startswith(path, git_root) and vim.fn.filereadable(path) == 1 then
+                        local rel = path:sub(prefix_len)
+                        if not seen[rel] then
+                            seen[rel] = true
+                            table.insert(items, rel)
+                        end
+                    end
+                end
+                -- 本 session 打开过的文件（最近的排最前）
+                for _, f in ipairs(session_opened) do
+                    add_file(f)
+                end
+                -- oldfiles 已是时间倒序，先加入
+                for _, f in ipairs(vim.v.oldfiles) do
+                    add_file(f)
+                end
+                -- 当前 session 所有 buffer（含 unlisted），按 lastused 倒序插到最前面
+                local session_files = {}
+                for _, info in ipairs(vim.fn.getbufinfo()) do
+                    if info.buftype == '' and info.name ~= '' then
+                        local rel = info.name:sub(prefix_len)
+                        if vim.startswith(info.name, git_root) and vim.fn.filereadable(info.name) == 1 then
+                            -- 从旧位置移除
+                            for i, item in ipairs(items) do
+                                if item == rel then
+                                    table.remove(items, i)
+                                    break
+                                end
+                            end
+                            session_files[#session_files + 1] = { rel = rel, lastused = info.lastused }
+                        end
+                    end
+                end
+                -- lastused 倒序，最近操作的排最前
+                table.sort(session_files, function(a, b) return a.lastused > b.lastused end)
+                for i = #session_files, 1, -1 do
+                    local rel = session_files[i].rel
+                    seen[rel] = true
+                    table.insert(items, 1, rel)
+                end
+                fzf.fzf_exec(items, {
+                    cwd = git_root,
+                    prompt = ' Oldfiles> ',
+                    previewer = 'builtin',
+                    actions = {
+                        ['default'] = function(selected)
+                            if selected and #selected > 0 then
+                                vim.cmd('e ' .. vim.fn.fnameescape(git_root .. '/' .. selected[1]))
+                            end
+                        end,
+                    },
+                })
             else
                 fzf.oldfiles()
             end
