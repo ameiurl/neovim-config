@@ -227,10 +227,12 @@ return {
                             vim.notify('No files changed in this commit', vim.log.levels.WARN)
                             return
                         end
+                        local show_cmd = 'git -C ' .. vim.fn.shellescape(git_root)
+                            .. ' show --color=always ' .. commit .. ' -- {}'
                         fzf.fzf_exec(files, {
                             cwd = git_root,
                             prompt = ' Files in ' .. commit:sub(1, 7) .. '> ',
-                            previewer = 'builtin',
+                            preview = show_cmd,
                             actions = {
                                 ['default'] = function(fs)
                                     if not fs or #fs == 0 then return end
