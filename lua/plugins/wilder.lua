@@ -14,6 +14,8 @@ return {
 		vim.cmd([[
 			cmap <expr> <C-k> wilder#in_context() ? "\<Up>" : "\<C-k>"
 			cmap <expr> <C-j> wilder#in_context() ? "\<Down>" : "\<C-j>"
+			cmap <expr> <C-h> wilder#in_context() ? "\<Left>" : "\<C-h>"
+			cmap <expr> <C-l> wilder#in_context() ? "\<Right>" : "\<C-l>"
 		]])
 		wilder.set_option('renderer', wilder.popupmenu_renderer(
 			wilder.popupmenu_palette_theme({
