@@ -33,7 +33,19 @@ return {
 				-- fd_opts      = "--color=never --type f --hidden --follow --exclude .git",
             },
 
-            -- === 2. 搜索内容时的忽略配置 (Grep / Live Grep) ===
+            -- === 2. Git Status 操作按键 ===
+            git = {
+                status = {
+                    actions = {
+                        ["ctrl-s"] = { fn = require("fzf-lua").actions.git_stage_unstage, reload = true },
+                        ["left"]   = { fn = require("fzf-lua").actions.git_stage, reload = true },
+                        ["right"]  = { fn = require("fzf-lua").actions.git_unstage, reload = true },
+                        ["ctrl-x"] = { fn = require("fzf-lua").actions.git_reset, reload = true },
+                    },
+                },
+            },
+
+            -- === 3. 搜索内容时的忽略配置 (Grep / Live Grep) ===
             grep = {
                 -- 这里使用 rg (ripgrep) 命令的参数
                 -- --glob "!h5/**": 排除 h5 目录
@@ -150,7 +162,6 @@ return {
         vim.keymap.set("n", "<leader>sw", fzf.grep_cword, { desc = "[S]earch current [W]ord" })
         vim.keymap.set("v", "<leader>sw", fzf.grep_visual, { desc = "[S]earch [W]ord selection" })
 
-        vim.keymap.set("n", "<leader>st", fzf.git_status, { desc = "[S]earch Gi[t] Status" })
         vim.keymap.set("n", "<leader>sd", fzf.diagnostics_document, { desc = "[S]earch [D]iagnostics" })
         vim.keymap.set("n", "<leader>sq", fzf.quickfix, { desc = "[S]earch [Q]uickfix" })
         vim.keymap.set("n", "<leader>sm", fzf.marks, { desc = "[S]earch [M]arks" })
@@ -164,6 +175,7 @@ return {
                 no_header_i = true,
             })
         end, { desc = "Grep current word (include gitignored files)" })
+        vim.keymap.set("n", "<leader>st", fzf.git_status, { desc = "[S]earch Gi[t] Status" })
         vim.keymap.set('n', '<leader>gh', function()
             local bufnr = vim.api.nvim_get_current_buf()
             local file = vim.fn.expand('%:p')
