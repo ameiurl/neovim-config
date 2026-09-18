@@ -74,7 +74,8 @@ return {
 
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = {"intelephense", "ts_ls", "vue_ls", "lua_ls" },
+            -- ensure_installed = {"intelephense", "ts_ls", "vue_ls", "lua_ls" },
+            ensure_installed = {"intelephense", "ts_ls" },
             automatic_installation = true,
         })
 
@@ -87,39 +88,31 @@ return {
         -- TypeScript/JavaScript (不处理 Vue)
         vim.lsp.config("ts_ls", {
             capabilities = capabilities,
-            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+            -- filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
         })
 
         -- Vue (Takeover 模式)
-        vim.lsp.config("vue_ls", {
-            capabilities = capabilities,
-            filetypes = { "vue" },
-            -- init_options = {
-            --     vue = {
-            --         hybridMode = false,
-            --     },
-            --     typescript = {
-            --         tsdk = vim.fn.stdpath("data")
-            --             .. "/mason/packages/vue-language-server/node_modules/typescript/lib"
-            --     },
-            -- },
-        })
+        -- vim.lsp.config("vue_ls", {
+        --     capabilities = capabilities,
+        --     filetypes = { "vue" },
+        -- })
 
         -- Lua
-        vim.lsp.config("lua_ls", {
-            capabilities = capabilities,
-            settings = {
-                Lua = {
-                    runtime = { version = "LuaJIT" },
-                    diagnostics = { globals = { "vim" } },
-                    workspace = {
-                        library = vim.api.nvim_get_runtime_file("", true),
-                        checkThirdParty = false,
-                    },
-                    telemetry = { enable = false },
-                },
-            },
-        })
+        -- vim.lsp.config("lua_ls", {
+        --     capabilities = capabilities,
+        --     settings = {
+        --         Lua = {
+        --             runtime = { version = "LuaJIT" },
+        --             diagnostics = { globals = { "vim" } },
+        --             workspace = {
+        --                 library = vim.api.nvim_get_runtime_file("", true),
+        --                 checkThirdParty = false,
+        --             },
+        --             telemetry = { enable = false },
+        --         },
+        --     },
+        -- })
 
         -- Keymaps
         vim.api.nvim_create_autocmd("LspAttach", {
