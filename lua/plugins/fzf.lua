@@ -21,6 +21,12 @@ return {
             end,
         })
 
+        -- grep 类搜索共用的排除规则（grep / live_grep / <leader>sh 都拼这一份）
+        -- 想放开某个后缀，删掉对应的 !*.xxx，或改成 !*.min.js 这种更窄的写法
+        local rg_exclude = " --glob '!**/h5/**'"
+            .. " --glob '!*.{png,jpg,jpeg,gif,svg,webp,ico}'"
+            .. " --glob '!*.js'"
+
         fzf.setup({
             -- === 1. 查找文件时的忽略配置 (Files) ===
             files = {
@@ -48,9 +54,8 @@ return {
             -- === 3. 搜索内容时的忽略配置 (Grep / Live Grep) ===
             grep = {
                 -- 这里使用 rg (ripgrep) 命令的参数
-                -- --glob "!h5/**": 排除 h5 目录
-                -- --glob "!*.{...}": 排除图片文件
-                rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 --glob '!h5/**' --glob '!*.{png,jpg,jpeg,gif,svg,webp,ico}'",
+                -- 排除规则统一放在上面的 rg_exclude 里
+                rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096" .. rg_exclude,
             },
             -- 1. 窗口样式设置 (保持悬浮窗)
             winopts = {
@@ -170,7 +175,7 @@ return {
         vim.keymap.set('n', '<leader>sh', function()
             fzf.grep({
                 search = vim.fn.expand('<cword>'),
-                rg_opts = "--column --line-number --no-heading --color=always --smart-case --hidden --follow --no-ignore --glob '!.git/*'",
+                rg_opts = "--column --line-number --no-heading --color=always --smart-case --hidden --follow --no-ignore --glob '!.git/*'" .. rg_exclude,
                 no_header = true,
                 no_header_i = true,
             })
