@@ -12,8 +12,10 @@ return {
 		}
 		-- C-k/C-j 浏览命令历史：wild 内先 reject/accept，再走原生 Up/Down
 		vim.cmd([[
-			cmap <expr> <C-k> wilder#in_context() ? "\<Up>" : "\<C-k>"
-			cmap <expr> <C-j> wilder#in_context() ? "\<Down>" : "\<C-j>"
+			cmap <expr> <C-j> wilder#in_context() ? "\<Up>" : "\<C-k>"
+			cmap <expr> <C-k> wilder#in_context() ? "\<Down>" : "\<C-j>"
+			cmap <expr> <C-p> wilder#in_context() ? "\<Up>" : "\<C-k>"
+			cmap <expr> <C-n> wilder#in_context() ? "\<Down>" : "\<C-j>"
 			cmap <expr> <C-h> wilder#in_context() ? "\<Left>" : "\<C-h>"
 			cmap <expr> <C-l> wilder#in_context() ? "\<Right>" : "\<C-l>"
 		]])
