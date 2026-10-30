@@ -1,5 +1,8 @@
 return {
-	'gelguy/wilder.nvim',
+	-- fork 自带 nvim 0.12 修复（user command 的 complete funcref 等）
+	"wookayin/wilder.nvim",
+	-- pin 到具体 commit，避免个人 fork 的 master 漂移
+	commit = "b255fe65ee12bd6bba228b6b60c9803a60f2f347",
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},

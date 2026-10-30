@@ -70,7 +70,8 @@ return {
         },
 
         cmdline = {
-            enabled = true,
+            -- 命令行交给 wilder，避免两套补全抢按键
+            enabled = false,
         },
 
         completion = {
