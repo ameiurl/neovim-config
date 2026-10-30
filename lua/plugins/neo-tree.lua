@@ -218,6 +218,12 @@ return {
                     nowait = true,
                 },
                 mappings = {
+                    -- 新版 neo-tree 默认把 <Tab> 映射为 "select"（buffer-local + nowait），
+                    -- 会盖掉全局 keys 里的 :Neotree toggle，导致树里按 Tab 只能多选、关不掉。
+                    -- 这里覆盖为关闭当前 neo-tree 窗口，实现“Tab 开 / Tab 关”。
+                    ["<Tab>"] = "close_window",
+                    -- 原 <Tab> 的多选功能挪到 <S-Tab>，不需要可删掉
+                    ["<S-Tab>"] = "select",
                     ["<space>"] = "none",
                     ["h"] = "parent_or_close",
                     ["l"] = "child_or_open",
