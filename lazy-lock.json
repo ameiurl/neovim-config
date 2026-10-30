@@ -27,7 +27,6 @@
   "render-markdown.nvim": { "branch": "main", "commit": "07d088bf8bdadd159eb807b90eaee86a4778383f" },
   "seoul256.nvim": { "branch": "main", "commit": "26f1e3c6b018b9cd64fb67b06397bc1a1f0ac507" },
   "snacks.nvim": { "branch": "main", "commit": "e226b3dc563e449bf26b6db65c221acbc27ae57b" },
-  "vim-expand-region": { "branch": "master", "commit": "966513543de0ddc2d673b5528a056269e7917276" },
   "vim-fugitive": { "branch": "master", "commit": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" },
   "vim-instant-markdown": { "branch": "main", "commit": "e62da3d05500c0cce24f498e5c1184fe99cbe231" },
   "vim-matchup": { "branch": "master", "commit": "1c276e12b49a83c1bdca74351187b8adea5da4b9" },

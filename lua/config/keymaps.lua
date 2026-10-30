@@ -58,6 +58,9 @@ map('n', '<C-o>', [[<Cmd>b#<CR>]])
 map('v', '<', [[<gv]])
 map('v', '>', [[>gv]])
 
+-- 选区逐级扩大（原 vim-expand-region，现改用内置 treesitter 增量选择 an / in）
+vim.keymap.set('v', 'v', 'an', { remap = true, silent = true, desc = 'Expand selection' })
+
 -- Overwrite paste
 map('x', 'p', [["_dP]])
 

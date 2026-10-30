@@ -8,11 +8,9 @@ return {
         end
 
         local bl = require('bufferline')
-        keymaps = {
+        local keymaps = {
             -- ['<Leader>bq'] = bl.close_with_pick,
             -- ['<Leader>bb'] = bl.pick_buffer,
-            ['<[b>']         = function() bl.cycle(-1) end,
-            ['<]b>']         = function() bl.cycle( 1) end,
             ['<Leader>1']      = function() bl.go_to(1, true) end,
             ['<Leader>2']      = function() bl.go_to(2, true) end,
             ['<Leader>3']      = function() bl.go_to(3, true) end,
@@ -25,7 +23,6 @@ return {
             ['<Leader>0']      = function() bl.go_to(-1, true) end,
         }
 
-        -- local keymaps = require('maps').bufferline
         for lhs, rhs in pairs(keymaps) do
             vim.keymap.set('n', lhs, rhs, { silent = true, remap = false })
         end
