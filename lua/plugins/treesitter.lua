@@ -25,6 +25,10 @@ return {
             "css", "scss", "html",
             "markdown", "markdown_inline",
             "php", "vue",
+            -- nvim 0.12 的 ftplugin/lua.lua 会自动开启 treesitter 高亮，
+            -- 缺 lua parser 或版本过旧会直接让打开 lua 文件报错
+            "lua", "luadoc",
+            "vim", "vimdoc", "bash", "json",
         }
 
         ts.setup({})
