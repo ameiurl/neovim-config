@@ -79,11 +79,26 @@ return {
             automatic_installation = true,
         })
 
-        -- Simple servers
-        local simple_servers = { "intelephense" }
-        for _, server in ipairs(simple_servers) do
-            vim.lsp.config(server, { capabilities = capabilities })
-        end
+        -- PHP：vendor 照常索引（要补全/跳转），只排掉 node_modules、.git 这类目录
+        vim.lsp.config("intelephense", {
+            capabilities = capabilities,
+            init_options = {
+                -- 索引落盘。默认是 os.tmpdir()，重启就没了 → 每个新会话全量重扫
+                storagePath = vim.fn.stdpath("cache") .. "/intelephense",
+            },
+            settings = {
+                intelephense = {
+                    files = {
+                        exclude = {
+                            "**/.git/**",
+                            "**/node_modules/**",
+                            "**/vendor/**/vendor/**",
+                            "**/vendor/**/{Tests,tests}/**",
+                        },
+                    },
+                },
+            },
+        })
 
         -- TypeScript/JavaScript (不处理 Vue)
         vim.lsp.config("ts_ls", {

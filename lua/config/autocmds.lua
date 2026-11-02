@@ -26,7 +26,9 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- 场景C：光标停在编辑区一段时间（兜底）
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+-- 不要挂 CursorHoldI：插入模式下每 200ms 触发一次 checktime，
+-- 配合 autoread 会在打字中途重载被外部改写的文件，明显发涩
+vim.api.nvim_create_autocmd("CursorHold", {
   group = augroup,
   callback = function()
     if vim.bo.buftype == "" then
@@ -88,37 +90,6 @@ vim.api.nvim_create_autocmd("BufHidden", {
       end)
     end
   end,
-})
-
-vim.filetype.add({
-	desc = "Set filetype to bigfile for files larger than 1MB",
-	pattern = {
-		[".*"] = {
-			function(path, buf)
-				return vim.bo[buf].filetype ~= "bigfile"
-						and path
-						and vim.fn.getfsize(path) > 1024 * 1024 -- 1MB
-						and "bigfile"
-					or nil
-			end,
-		},
-	},
-})
-
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-	desc = "Disable some features for big files",
-    group = vim.api.nvim_create_augroup("bigfile", {}),
-	pattern = 'bigfile',
-	callback = function(ev)
-		vim.opt.cursorline = false
-		vim.opt.cursorcolumn = false
-		vim.opt.list = false
-		vim.opt.wrap = false
-		vim.b.minianimate_disable = true
-		vim.schedule(function()
-			vim.bo[ev.buf].syntax = vim.filetype.match({ buf = ev.buf }) or ''
-		end)
-	end,
 })
 
 vim.api.nvim_create_autocmd("InsertLeave", {
@@ -247,20 +218,6 @@ vim.api.nvim_create_autocmd("FileType", {
     -- 按 q：关闭 Quickfix 窗口
     vim.keymap.set("n", "q", ":close<CR>", opts)
   end,
-})
-
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'BlinkCmpMenuOpen',
-    callback = function()
-        vim.b.copilot_suggestion_hidden = true
-    end,
-})
-
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'BlinkCmpMenuClose',
-    callback = function()
-        vim.b.copilot_suggestion_hidden = false
-    end,
 })
 
 -- show cursor line only in active window

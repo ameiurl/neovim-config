@@ -103,7 +103,8 @@ return {
         })
 
         require("treesitter-context").setup({
-            mode = "cursor",
+            -- cursor 模式每次移动光标都重算上下文；大文件上掉帧，用 topline 只在滚动时更新
+            mode = "topline",
             patterns = {
                 lua = {
                     "variable_declaration",
