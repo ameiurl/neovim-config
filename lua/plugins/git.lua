@@ -94,6 +94,9 @@ return {
 
             gitsigns.setup {
                 numhl = true,
+                -- 超过这个行数就不算 diff（商场项目里有 400~500KB 的单个 php 文件，
+                -- 每次改动都全量 diff 会明显吃 CPU）
+                max_file_length = 5000,
                 current_line_blame = false,
                 current_line_blame_opts = {
                     delay = 200,

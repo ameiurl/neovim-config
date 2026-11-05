@@ -36,13 +36,12 @@ return {
 				reverse = 0,         -- set to 1 to reverse the order of the list, use in combination with 'prompt_position'
 			})
 		))
-		wilder.set_option('pipeline', {
-			wilder.branch(
-				wilder.cmdline_pipeline({
-					language = 'vim',
-					fuzzy = 1,
-				}), wilder.search_pipeline()
-			),
-		})
+		-- 只配了 modes = { ':' }，搜索管线用不上；
+		-- 而 wilder.search_pipeline() 启动时会探测 python3，
+		-- 把 python3 provider 拉起来（实测 +200ms 启动），所以只保留命令行管线。
+		wilder.set_option('pipeline', wilder.cmdline_pipeline({
+			language = 'vim',
+			fuzzy = 1,
+		}))
 	end
 }

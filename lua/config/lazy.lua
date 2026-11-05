@@ -13,8 +13,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup('plugins', {
     checker = {
-        -- automatically check for plugin updates
-        enabled = true,
+        -- 自动检查插件更新默认每小时对 30+ 个仓库跑一遍 git，
+        -- 2 核机器上会明显抢资源；需要时手动 :Lazy check
+        enabled = false,
         -- get a notification when new updates are found
         notify = false,
     },

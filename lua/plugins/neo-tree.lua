@@ -322,7 +322,9 @@ return {
                 -- "open_current",  -- netrw disabled, opening a directory opens within the
                 -- window like netrw would, regardless of window.position
                 -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-                use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
+                -- 关掉 OS 级文件监听：本项目根目录被 rsync 持续写入（runtime/cache、logs），
+                -- watcher 会不停触发树刷新；neo-tree 仍会靠 nvim 的 autocmd 事件更新。
+                use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
                 -- instead of relying on nvim autocmd events.
                 window = {
                     mappings = {
