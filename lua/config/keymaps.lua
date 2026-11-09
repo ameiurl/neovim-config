@@ -7,10 +7,8 @@ end
 
 -- Normal -----------------------------------------------------------------------------
 -- Better window navigation
-map('n', '<C-h>', [[<C-w>h]])
-map('n', '<C-j>', [[<C-w>j]])
-map('n', '<C-k>', [[<C-w>k]])
-map('n', '<C-l>', [[<C-w>l]])
+-- <C-h/j/k/l> 改由 vim-tmux-navigator 统一处理（nvim 窗口 <-> tmux pane）
+-- 映射定义见 lua/plugins/tmux-navigator.lua
 
 -- Resize splits
 map("n", "<A-Up>", ":resize -2<CR>")
