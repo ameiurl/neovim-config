@@ -38,18 +38,34 @@ return { -- Collection of various small independent plugins/modules
                     start_with_preview = 'gA',
                 },
             })
+
+            -- Smooth scrolling (replacement for snacks.scroll)
+            local animate = require("mini.animate")
+            animate.setup({
+                cursor = { enable = false },
+                scroll = {
+                    enable = true,
+                    timing = animate.gen_timing.linear({ duration = 200, unit = "total" }),
+                },
+                resize = { enable = false },
+                open = { enable = false },
+                close = { enable = false },
+            })
             -- Add/delete/replace surroundings (brackets, quotes, etc.)
             --
             -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
             -- - sd'   - [S]urround [D]elete [']quotes
             -- - sr)'  - [S]urround [R]eplace [)] [']
             -- require("mini.surround").setup()
-            -- vim.keymap.set("n", "<leader>d", function()
-            --     require("mini.bufremove").delete(0, false)
-            -- end, { desc = "Close buffer" })
-            -- vim.keymap.set("n", "<leader>D", function()
-            --     require("mini.bufremove").delete(0, true)
-            -- end, { desc = "Force close buffer" })
+
+            -- Delete buffer without changing window layout
+            require("mini.bufremove").setup()
+            vim.keymap.set("n", "<leader>d", function()
+                require("mini.bufremove").delete(0, false)
+            end, { desc = "Close buffer" })
+            vim.keymap.set("n", "<leader>D", function()
+                require("mini.bufremove").delete(0, true)
+            end, { desc = "Force close buffer" })
             -- -- ... and there is more!
             --  Check out: https://github.com/echasnovski/mini.nvim
 
