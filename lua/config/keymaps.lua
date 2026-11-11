@@ -32,9 +32,13 @@ map('n', '*', [[*zz]])
 map('n', '#', [[#zz]])
 map('n', 'g*', [[g*zz]])
 
--- Fast scrolling
-map('n', '<C-e>', [[5<C-e>]])
-map('n', '<C-y>', [[5<C-y>]])
+-- Fast scrolling（5 行/次，带 neoscroll 动画；原来直接 5<C-e> 是瞬移）
+map('n', '<C-e>', function()
+	require("neoscroll").scroll(5, { move_cursor = false, duration = 120 })
+end, { desc = 'Smooth scroll 5 lines down' })
+map('n', '<C-y>', function()
+	require("neoscroll").scroll(-5, { move_cursor = false, duration = 120 })
+end, { desc = 'Smooth scroll 5 lines up' })
 map('n', 'K', [[<Esc>5<up>]])
 map('n', 'J', [[<Esc>5<down>]])
 

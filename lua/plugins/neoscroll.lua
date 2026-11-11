@@ -1,8 +1,8 @@
 return {
 	"karb94/neoscroll.nvim",
 	opts = {
-		-- 只接管整屏/半屏滚动；<C-e>/<C-y> 留给 keymaps.lua 里的 5 行快速滚动，
-		-- 否则 neoscroll 的映射会把它覆盖成 1 行动画。
+		-- 只接管整屏/半屏滚动；<C-e>/<C-y> 的 5 行快速滚动在 keymaps.lua 里
+		-- 用 neoscroll.scroll(±5) 自定义映射，避免被这里的默认映射覆盖成 1 行。
 		mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>" },
 		hide_cursor = true,             -- 滚动时隐藏光标，视觉更顺
 		stop_eof = true,                -- 向下滚到 <EOF> 就停
