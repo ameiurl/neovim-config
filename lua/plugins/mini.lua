@@ -39,18 +39,9 @@ return { -- Collection of various small independent plugins/modules
                 },
             })
 
-            -- Smooth scrolling (replacement for snacks.scroll)
-            local animate = require("mini.animate")
-            animate.setup({
-                cursor = { enable = false },
-                scroll = {
-                    enable = true,
-                    timing = animate.gen_timing.linear({ duration = 200, unit = "total" }),
-                },
-                resize = { enable = false },
-                open = { enable = false },
-                close = { enable = false },
-            })
+            -- 滚动动画改用 neoscroll，见 lua/plugins/neoscroll.lua
+            -- （mini.animate 的 scroll 会在连续滚动时回卷到动画起点，
+            --   鼠标滚轮一快就完全不动，实测 20 次滚轮 0 行位移，已弃用）
 
             -- Git diff: signs + hunk actions (replaces gitsigns.nvim)
             require("mini.diff").setup({
