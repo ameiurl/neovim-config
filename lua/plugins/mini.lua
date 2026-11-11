@@ -169,6 +169,128 @@ return { -- Collection of various small independent plugins/modules
                 end,
             })
 
+            -- Sessions (replaces auto-session): one global session per cwd
+            vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+
+            local sessions = require("mini.sessions")
+            sessions.setup({
+                autoread = false,  -- handled below, per cwd
+                autowrite = false, -- handled below, per cwd
+                directory = vim.fn.stdpath("data") .. "/sessions",
+                file = "", -- don't create Session.vim in project roots
+                verbose = { read = false, write = false, delete = true },
+                hooks = {
+                    post = {
+                        read = function()
+                            -- Refresh LSP / treesitter after restoring a session
+                            vim.defer_fn(function()
+                                if vim.bo.buftype == "" then pcall(vim.cmd, "edit") end
+                            end, 100)
+                        end,
+                    },
+                },
+            })
+
+            if vim.g.mini_sessions_autosave == nil then vim.g.mini_sessions_autosave = true end
+            if vim.g.mini_sessions_autorestore == nil then vim.g.mini_sessions_autorestore = true end
+
+            -- Same escaping as auto-session, so existing session files still work
+            local function percent_encode(str)
+                return (str:gsub("([/\\:*?\"'<>+ |%.%%])", function(c)
+                    return string.format("%%%02X", string.byte(c))
+                end))
+            end
+
+            local function percent_decode(str)
+                return (str:gsub("%%(%x%x)", function(hex)
+                    return string.char(tonumber(hex, 16))
+                end))
+            end
+
+            local function cwd_session_name()
+                local cwd = vim.fn.getcwd(-1, -1)
+                if cwd ~= "/" then cwd = cwd:gsub("(.)/$", "%1") end
+                return percent_encode(cwd) .. ".vim"
+            end
+
+            local function current_session_name()
+                if vim.v.this_session ~= "" then
+                    return vim.fn.fnamemodify(vim.v.this_session, ":t")
+                end
+                return cwd_session_name()
+            end
+
+            local function save_session()
+                sessions.write(current_session_name(), { force = true, verbose = true })
+            end
+
+            local function toggle_autosave()
+                vim.g.mini_sessions_autosave = not vim.g.mini_sessions_autosave
+                vim.notify("Session autosave " .. (vim.g.mini_sessions_autosave and "on" or "off"))
+            end
+
+            local function select_session()
+                local items = {}
+                for name, data in pairs(sessions.detected) do
+                    items[#items + 1] = {
+                        name = name,
+                        label = vim.fn.fnamemodify(percent_decode((name:gsub("%.vim$", ""))), ":~"),
+                        time = data.modify_time,
+                    }
+                end
+                if #items == 0 then
+                    vim.notify("No sessions found", vim.log.levels.INFO)
+                    return
+                end
+                table.sort(items, function(a, b) return a.time > b.time end)
+                vim.ui.select(items, {
+                    prompt = "Session",
+                    format_item = function(item) return item.label end,
+                }, function(item)
+                    if item ~= nil then sessions.read(item.name, { force = false }) end
+                end)
+            end
+
+            vim.keymap.set("n", "<leader>wr", select_session, { desc = "Session search" })
+            vim.keymap.set("n", "<leader>ws", save_session, { desc = "Save session" })
+            vim.keymap.set("n", "<leader>wa", toggle_autosave, { desc = "Toggle session autosave" })
+
+            local session_group = vim.api.nvim_create_augroup("mini_sessions_cwd", { clear = true })
+
+            vim.api.nvim_create_autocmd("VimLeavePre", {
+                group = session_group,
+                callback = function()
+                    if not vim.g.mini_sessions_autosave then return end
+                    pcall(sessions.write, current_session_name(), { force = true, verbose = false })
+                end,
+            })
+
+            local function nothing_shown()
+                if vim.fn.argc() > 0 then return false end
+                local listed = vim.tbl_filter(function(buf)
+                    return vim.fn.buflisted(buf) == 1
+                end, vim.api.nvim_list_bufs())
+                if #listed > 1 then return false end
+                if vim.bo.filetype ~= "" then return false end
+                local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                if #lines > 1 then return false end
+                return #lines == 0 or lines[1] == ""
+            end
+
+            vim.api.nvim_create_autocmd("VimEnter", {
+                group = session_group,
+                callback = function()
+                    if not vim.g.mini_sessions_autorestore then return end
+                    vim.schedule(function()
+                        if not nothing_shown() then return end
+                        local name = cwd_session_name()
+                        if sessions.detected[name] then
+                            pcall(sessions.read, name, { force = true })
+                        end
+                    end)
+                end,
+            })
+
             -- Add/delete/replace surroundings (brackets, quotes, etc.)
             --
             -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
